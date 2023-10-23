@@ -1,0 +1,98 @@
+.container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #051622;
+}
+
+.wrapper {
+    height: 132px;
+    left: 405px;
+    top: 332px;
+    position: absolute;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 16.50px;
+    display: inline-flex;
+}
+
+.inner-wrapper {
+    align-self: stretch;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 16.50px;
+    display: flex;
+}
+
+.select-company {
+    width: 917.81px;
+    text-align: center;
+    color: #1BA098;
+    font-size: 48px;
+    font-family: Inter;
+    font-weight: 800;
+    line-height: 64px;
+    word-wrap: break-word;
+}
+
+.option-wrapper {
+    width: 384.86px;
+    height: 85px;
+    padding-right: 0.92px;
+    left: 672px;
+    top: 515px;
+    position: absolute;
+    border-radius: 18.89px;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+}
+
+.option-inner-wrapper {
+    padding-left: 37.78px;
+    padding-right: 37.78px;
+    padding-top: 18.89px;
+    padding-bottom: 18.89px;
+    background: white;
+    border-radius: 18.89px;
+    border: 2.36px rgba(0, 0, 0, 0.10) solid;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 18.89px;
+    display: inline-flex;
+}
+
+.option {
+    color: #5533FF;
+    font-size: 37.78px;
+    font-family: Fira Sans;
+    font-weight: 500;
+    line-height: 47.22px;
+    word-wrap: break-word;
+}
+
+.dropdown {
+    width: 42.50px;
+    height: 42.50px;
+    position: relative;
+    opacity: 0.50;
+}
+
+.dropdown-box {
+    width: 28.33px;
+    height: 14.17px;
+    left: 7.08px;
+    top: 15.94px;
+    position: absolute;
+    border: 4.72px #5533FF solid;
+}
+
+.exterior {
+    width: 100px;
+    height: 100px;
+    left: 601px;
+    top: 298px;
+    position: absolute;
+}

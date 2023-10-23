@@ -1,0 +1,126 @@
+* {
+    font-family: Mulish;
+    background: var(--background-color);
+}
+
+
+.container {
+    width: 100%;
+    height: 100%;
+    position: flex;
+    background: #051622;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+    width: 795px;
+    height: 183px;
+    position: relative;
+    text-align: center;
+}
+
+.title {
+    color: #1BA098;
+    font-size: 72px;
+    font-family: Mulish;
+    font-weight: 400;
+    line-height: 108px;
+    word-wrap: break-word
+}
+
+.subtitle {
+    color: #1BA098;
+    font-size: 48px;
+    font-family: Mulish;
+    font-weight: 400;
+    line-height: 72px;
+    word-wrap: break-word
+}
+
+.logo {
+    width: 168px;
+    height: 168px;
+    left: 780px;
+    top: 357px;
+    position: absolute
+}
+
+.username {
+    left: 818px;
+    top: 564px;
+    position: absolute;
+    color: rgba(27, 160, 152, 0.75);
+    font-size: 20px;
+    font-family: Mulish;
+    font-weight: 400;
+    line-height: 30px;
+   
+     word-wrap: break-word
+}
+
+.login {
+    text-align: center;
+    color: white;
+    font-size: 15px;
+    font-family: Mulish;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 15px;
+    letter-spacing: 1.25px;
+    word-wrap: break-word
+}
+
+.password {
+    left: 818px;
+    top: 653px;
+    position: absolute;
+    color: rgba(27, 160, 152, 0.75);
+    font-size: 20px;
+    font-family: Mulish;
+    font-weight: 400;
+    line-height: 30px;
+    word-wrap: break-word
+}
+
+.spacing-username {
+    width: 234px; 
+    height: 0px; 
+    left: 747px; 
+    top: 600px; 
+    position: absolute; 
+    border: 5px white solid
+}
+
+.spacing-password {
+    width: 234px; 
+    height: 0px; 
+    left: 747px; 
+    top: 689px; 
+    position: absolute; 
+    border: 5px white solid
+}
+
+.login-border {
+    width: 160px; 
+    height: 52px; 
+    padding-left: 53px; 
+    padding-right: 55px; 
+    left: 784px; 
+    top: 824px; 
+    position: absolute; 
+    border-radius: 50px; 
+    border: 2px #1BA098 solid; 
+    justify-content: center; 
+    align-items: center; 
+    display: inline-flex
+}
+
+
+/* .form-box {
+    width: 100%; 
+    height: 100%; 
+    box-shadow: 4px 4px 10px 5px rgba(202.94, 202.94, 202.94, 0.49); 
+    border-radius: 15px; 
+    border: 5px #DEB992 solid
+} */
