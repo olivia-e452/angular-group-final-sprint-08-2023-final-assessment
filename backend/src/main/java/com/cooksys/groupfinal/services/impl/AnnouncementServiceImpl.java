@@ -8,11 +8,13 @@ import com.cooksys.groupfinal.dtos.AnnouncementDto;
 import com.cooksys.groupfinal.dtos.AnnouncementRequestDto;
 import com.cooksys.groupfinal.entities.Announcement;
 import com.cooksys.groupfinal.entities.Credentials;
+import com.cooksys.groupfinal.entities.Company;
 import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.mappers.AnnouncementMapper;
 import com.cooksys.groupfinal.mappers.CredentialsMapper;
 import com.cooksys.groupfinal.repositories.AnnouncementRepository;
+import com.cooksys.groupfinal.repositories.CompanyRepository;
 import com.cooksys.groupfinal.repositories.UserRepository;
 import com.cooksys.groupfinal.services.AnnouncementService;
 
@@ -24,9 +26,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	
 	private final AnnouncementMapper announcementMapper;
 	private final AnnouncementRepository announcementRepository;
-	
 	private final CredentialsMapper credentialsMapper;
-	
+	private final CompanyRepository companyRepository;
 	private final UserRepository userRepository;
 	
 	@Override
@@ -46,18 +47,13 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         	throw new BadRequestException("provided credentials are null");
         }
         
-        //check if profile was provided in Dto
-        if(announcementRequestDto.getAuthor().getProfile() == null) {
-        	throw new BadRequestException("provided profile is null");
-        }
-        
 		//verify author credentials
 		Credentials credentials = credentialsMapper.dtoToEntity(announcementRequestDto.getAuthor().getCredentials());
         
 		//check if user exists in DB with provided username
 		Optional<User> optionalUser = userRepository.findByCredentialsUsernameAndActiveTrue(credentials.getUsername());
-		if(optionalUser.get() == null) {
-			throw new BadRequestException("user with propvided credentials not found");
+		if(optionalUser.isEmpty()) {
+			throw new BadRequestException("user with provided username not found");
 		}
 		User user = optionalUser.get();
 		
@@ -72,10 +68,30 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		
 		if (user.isAdmin()) {
 			//find out which company id they are currently logged in with
-			//picking first company id for now.
-			newAnnouncement.setCompany(user.getCompanies().iterator().next());
+			//optional parameter in announcement request DTO -> must be present for admin user
 			
+			//check that current company name was provided
+			if(announcementRequestDto.getCompanyName() == null) {
+				throw new BadRequestException("current company of admin user not provided in request body");
+			}
+			
+			//get company from repository based on provided company name
+			Optional<Company> optionalCompany = companyRepository.findByName(announcementRequestDto.getCompanyName());
+			
+			//check that current company name exists in DB
+			if(optionalCompany.isEmpty()) {
+				throw new BadRequestException("provided current company of admin user does not exists in database");
+			}
+			
+			//check that user belongs to provided company
+			Company curCompany = optionalCompany.get();
+			if(!(user.getCompanies().contains(curCompany))) {
+				throw new BadRequestException("user does not belong to provided company");
+			}
+			
+			newAnnouncement.setCompany(curCompany);
 		} else {
+			//user only belongs to one company -> get from list
 			if(user.getCompanies().isEmpty()) {
 				throw new BadRequestException("user is not assigned to any companies. cannot post announcement");
 			}

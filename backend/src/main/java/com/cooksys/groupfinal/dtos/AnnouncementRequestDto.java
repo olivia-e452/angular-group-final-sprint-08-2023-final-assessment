@@ -12,5 +12,7 @@ public class AnnouncementRequestDto {
 	private String message;
 	
 	private UserRequestDto author;
-
+	
+	//only required if user is admin -> must specify current company they are viewing
+	private String companyName;
 }
