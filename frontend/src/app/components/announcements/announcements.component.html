@@ -1,1 +1,37 @@
-<p>announcements works!</p>
+<div *ngIf="announcementsToDisplay; else loadingTemplate">
+    <div class="announcements__container">
+        <h1>Announcements</h1>
+        <div *ngIf="user.admin" class="button__container">
+            <button (click)="openModal()">New</button>
+        </div>
+        <div *ngIf="modalOpen" class="modal">
+            <form (submit)="handleNewAnnouncement()" class="modal__content">
+                <span class="close__icon" title="Close" (click)="closeModal()">&#10006;</span>
+                <input 
+                    type="text" 
+                    [(ngModel)]="announcementToCreate" 
+                    placeholder="Announcement" 
+                    required 
+                    class="modal__input"
+                >
+                <div class="submit-button__container">
+                    <button type="submit" class="submit-button">Submit</button>
+                </div>
+            </form>
+        </div>
+        <div *ngFor="let announcement of announcementsToDisplay" class="announcement__container">
+            <div class="announcement__card">
+                <div class="author-date__container">
+                    <h3>{{ announcement.author }}</h3>
+                    <span>{{ announcement.date }}</span>
+                </div>
+                <p class="announcement__content">{{ announcement.content }}</p>
+            </div>      
+        </div>
+    </div>
+  </div>
+  
+  <ng-template #loadingTemplate>
+    <h1>Loading...</h1>
+  </ng-template>
+  
