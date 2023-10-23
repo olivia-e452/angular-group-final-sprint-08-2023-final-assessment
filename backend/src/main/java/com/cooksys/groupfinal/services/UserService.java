@@ -1,7 +1,5 @@
 package com.cooksys.groupfinal.services;
 
-import java.util.ArrayList;
-
 import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.ProfileDto;
@@ -20,7 +18,5 @@ public interface UserService {
 	FullUserDto editUserProfile(String username, ProfileDto profileDto);
 
 	FullUserDto editUserCredentials(String username, CredentialsDto credentialsDto);
-
-	FullUserDto addUserCompanies(String username, ArrayList<Long> companyIds);
    
 }

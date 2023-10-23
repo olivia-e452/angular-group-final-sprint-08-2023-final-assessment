@@ -56,9 +56,4 @@ public class UserController {
 	public FullUserDto editUserCredentials(@PathVariable String username, @RequestBody CredentialsDto credentialsDto) {
 		return userService.editUserCredentials(username, credentialsDto);
 	}
-	
-	@PostMapping("/{username}/companies")
-	public FullUserDto addUserCompanies(@PathVariable String username, @RequestBody ArrayList<Long> companyIds) {
-		return userService.addUserCompanies(username, companyIds);
-	}
 }

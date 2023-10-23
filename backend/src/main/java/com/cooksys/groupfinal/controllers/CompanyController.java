@@ -3,6 +3,7 @@ package com.cooksys.groupfinal.controllers;
 import java.util.Set;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,6 +41,11 @@ public class CompanyController {
 	@GetMapping("/{companyId}/teams/{teamId}/projects") 
 	public Set<ProjectDto> getAllProjects(@PathVariable Long companyId, @PathVariable Long teamId) {
 		return companyService.getAllProjects(companyId, teamId);
+	}
+	
+	@PostMapping("/{id}/users/{username}")
+	public FullUserDto addUserToCompany(@PathVariable Long id, @PathVariable String username) {
+		return companyService.addUserToCompany(id, username);
 	}
 
 }

@@ -147,35 +147,6 @@
 					"response": []
 				},
 				{
-					"name": "POST /users/{username}/companies",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[6]",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/users/morgott/companies",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"users",
-								"morgott",
-								"companies"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "PATCH /users/{username}/profile",
 					"request": {
 						"method": "PATCH",
@@ -312,6 +283,35 @@
 						"teams",
 						"11",
 						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /company/{id}/users/{username}",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[6]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/morgott/companies",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"morgott",
+						"companies"
 					]
 				}
 			},
