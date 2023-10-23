@@ -12,5 +12,7 @@ import com.cooksys.groupfinal.entities.User;
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 	
 	Optional<Company> findByName(String name);
+	
+	Optional<User> findById(String username);
 
 }
