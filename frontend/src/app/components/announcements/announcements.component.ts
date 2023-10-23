@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 type Announcement = {
   author: string;
@@ -23,7 +23,7 @@ export class AnnouncementsComponent {
 
     user: User | undefined;
     announcementsToDisplay: Announcement[] | undefined;
-    announcementToCreate: Announcement | undefined;
+    @Input() announcementToCreate: Announcement | undefined;
     modalOpen = false;
   
     constructor() { }

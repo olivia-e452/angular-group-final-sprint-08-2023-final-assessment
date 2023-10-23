@@ -1,7 +1,7 @@
 <div *ngIf="announcementsToDisplay; else loadingTemplate">
     <div class="announcements__container">
         <h1>Announcements</h1>
-        <div *ngIf="user.admin" class="button__container">
+        <div *ngIf="user?.admin" class="button__container">
             <button (click)="openModal()">New</button>
         </div>
         <div *ngIf="modalOpen" class="modal">
