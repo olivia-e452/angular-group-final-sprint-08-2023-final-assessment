@@ -1,16 +1,12 @@
 package com.cooksys.groupfinal.controllers;
-
 import java.util.Set;
 
+import com.cooksys.groupfinal.dtos.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cooksys.groupfinal.dtos.AnnouncementDto;
-import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.ProjectDto;
-import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.services.CompanyService;
 
 import lombok.RequiredArgsConstructor;
@@ -41,5 +37,10 @@ public class CompanyController {
 	public Set<ProjectDto> getAllProjects(@PathVariable Long companyId, @PathVariable Long teamId) {
 		return companyService.getAllProjects(companyId, teamId);
 	}
+
+    @GetMapping
+    public Set<CompanyDto> getAllCompanies() {
+        return companyService.getAllCompanies();
+    }
 
 }
