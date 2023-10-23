@@ -30,6 +30,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	private final CompanyRepository companyRepository;
 	private final UserRepository userRepository;
 	
+	//POST announcement
 	@Override
 	public AnnouncementDto addAnnouncement(AnnouncementRequestDto announcementRequestDto) {
 		//check if title is provided in dto
@@ -100,7 +101,60 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		
 		//save announcement to repository and return dto
 		return announcementMapper.entityToDto(announcementRepository.saveAndFlush(newAnnouncement));
+	}
+	
+	//PATCH announcement
+	public AnnouncementDto patchAnnouncement(Long id, AnnouncementRequestDto announcementRequestDto) {
+		//check if title is provided in dto
+        if(announcementRequestDto.getTitle() == null) {
+        	throw new BadRequestException("provided title is null");
+        }
 		
+        //check if message is provided in dto
+        if(announcementRequestDto.getMessage() == null) {
+        	throw new BadRequestException("provided message is null");
+        }
+        
+		//check if credentials are provided in dto
+        if(announcementRequestDto.getAuthor().getCredentials() == null) {
+        	throw new BadRequestException("provided credentials are null");
+        }
+        
+		//verify author credentials
+		Credentials credentials = credentialsMapper.dtoToEntity(announcementRequestDto.getAuthor().getCredentials());
+        
+		//check if user exists in DB with provided username
+		Optional<User> optionalUser = userRepository.findByCredentialsUsernameAndActiveTrue(credentials.getUsername());
+		if(optionalUser.isEmpty()) {
+			throw new BadRequestException("user with provided username not found");
+		}
+		User user = optionalUser.get();
+		
+		//check if password matches
+		if(!(credentials.getPassword().equals(user.getCredentials().getPassword()))) {
+			throw new BadRequestException("incorrect password provided for user");
+		}
+		
+		//check if announcement with provided ID exists
+		Optional<Announcement> optionalAnnouncement = announcementRepository.findById(id);
+		if(optionalAnnouncement.isEmpty()) {
+			throw new BadRequestException("announcement with provided ID not found in database");
+		}
+		Announcement announcement = optionalAnnouncement.get();
+		
+		//check that author of announcement matches author of patch announcement
+		Announcement newAnnouncement = announcementMapper.requestDtoToEntity(announcementRequestDto);
+		if(!(announcement.getAuthor().getCredentials().equals(newAnnouncement.getAuthor().getCredentials()))) {
+			throw new BadRequestException("provided credentials do not match announcement author's credentials. "
+										+ "only the author of an announcement can make changes to the announcement");
+		}
+		
+		//apply changes to announcement title and/or message
+		announcement.setTitle(newAnnouncement.getTitle());
+		announcement.setMessage(newAnnouncement.getMessage());
+		
+		//save announcement to repository and return dto
+		return announcementMapper.entityToDto(announcementRepository.saveAndFlush(announcement));
 	}
 
 }

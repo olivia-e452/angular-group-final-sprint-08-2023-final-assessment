@@ -7,4 +7,6 @@ public interface AnnouncementService {
 
 	AnnouncementDto addAnnouncement(AnnouncementRequestDto announcementRequestDto);
 
+	AnnouncementDto patchAnnouncement(Long id, AnnouncementRequestDto announcementRequestDto);
+
 }
