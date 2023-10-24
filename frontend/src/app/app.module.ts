@@ -11,6 +11,7 @@ import { AnnouncementsComponent } from './components/announcements/announcements
 const routes: Routes = [
  // { path: "", component: LoginComponent },
   { path: "", component: CompanyComponent },
+  { path: "announcements", component: AnnouncementsComponent },
 ]
 
 @NgModule({

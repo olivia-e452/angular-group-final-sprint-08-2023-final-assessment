@@ -1,0 +1,119 @@
+h1 {
+    font-family: 'Mulish';
+    font-weight: 400;
+    font-size: 48px;
+    color: #1BA098;
+    flex-grow: 1;  
+    text-align: center;
+    margin-bottom: 0px
+}
+
+.announcements {
+    display: flex;
+    flex-direction: column ;
+    align-items: center;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-bottom: 1px solid #DEB992;
+    padding-bottom: 20px;
+}
+
+.button__container {
+    align-self: flex-end;
+    margin-right: 20px;
+}
+
+button {
+    font-family: 'Mulish';
+    width: 100px;
+    height: 32px;
+    color: #FFFFFFBF;
+    background-color: #1BA098;
+    border-radius: 10px;
+
+}
+
+.announcement__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    padding: 0px 50px 0px 50px;
+
+}
+.announcement__card {
+    width: 100%;
+    color: #FFFFFF;
+    background-color: #0B2D45;
+    padding: 40px;
+    border-radius: 20px;
+}
+
+.author-date__container {
+    font-family: 'Mulish';
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.announcement__content {
+    font-family: 'Inter';
+    size: 18px;
+}
+
+.modal__wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #0B2D45 ;
+    border-radius: 12px;
+    width: 50%;
+    height: 40%;
+}
+
+.close__icon {
+    align-self: flex-end
+}
+
+.modal__content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 80%;
+    font-family: 'Mulish';
+    color: #DEB992;
+    gap: 30px;
+
+}
+
+.modal__input {
+    border: none;
+    border-bottom: 1px solid #DEB992;
+    outline: none;
+    background-color: transparent;
+    color: #FFFFFF;
+}
+
+.submit-button__container {
+    margin-top: auto;
+    align-self: center;
+    margin-bottom: 20px;
+}
