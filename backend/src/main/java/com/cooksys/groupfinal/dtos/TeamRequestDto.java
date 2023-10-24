@@ -2,7 +2,6 @@ package com.cooksys.groupfinal.dtos;
 
 import java.util.Set;
 
-import com.cooksys.groupfinal.entities.Team;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,7 +15,7 @@ public class TeamRequestDto {
 
     private Set<Long> teammateIds;
 
-    private BasicUserDto requestingUser;
+    private Long companyId;
 
     private CredentialsDto userCredentials;
 

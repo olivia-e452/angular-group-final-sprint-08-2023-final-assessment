@@ -12,17 +12,17 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/team")
 @RequiredArgsConstructor
 public class TeamController {
-	
-	private final TeamService teamService;
 
-	@PostMapping
-	public TeamDto createTeam(@RequestBody TeamRequestDto teamRequestDto){
-		return teamService.createTeam(teamRequestDto);
-	}
+    private final TeamService teamService;
 
-	@PatchMapping("/update/{id}")
-	public TeamDto updateTeam(@PathVariable Long id, @RequestBody TeamRequestDto teamRequestDto){
-		return teamService.updateTeam(id, teamRequestDto);
-	}
+    @PostMapping
+    public TeamDto createTeam(@RequestBody TeamRequestDto teamRequestDto) {
+        return teamService.createTeam(teamRequestDto);
+    }
+
+    @PatchMapping("/update/{id}")
+    public TeamDto updateTeam(@PathVariable Long id, @RequestBody TeamRequestDto teamRequestDto) {
+        return teamService.updateTeam(id, teamRequestDto);
+    }
 
 }
