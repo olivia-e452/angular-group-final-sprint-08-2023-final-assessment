@@ -21,3 +21,18 @@ type User = {
     status: string;
 };
 
+type Team = {
+    id: number,
+    name: string,
+    description: string,
+    users: [User]
+}
+
+type Project = {
+    id: number,
+    name: string,
+    description: string,
+    active: boolean,
+    team: Team
+}
+

@@ -8,6 +8,8 @@ import { CompanyComponent } from './components/company/company.component';
 import { AnnouncementsComponent } from './components/announcements/announcements.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AnnouncementModalComponent } from './components/announcement-modal/announcement-modal.component';
+import { ProjectsComponent } from './components/projects/projects.component';
+import { EditProjectComponent } from './components/edit-project/edit-project.component';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { AnnouncementModalComponent } from './components/announcement-modal/anno
     CompanyComponent,
     AnnouncementsComponent,
     AnnouncementModalComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProjectsComponent,
+    EditProjectComponent
   ],
   imports: [
     BrowserModule,
