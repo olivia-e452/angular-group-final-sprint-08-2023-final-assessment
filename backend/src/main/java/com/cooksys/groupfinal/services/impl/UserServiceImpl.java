@@ -40,18 +40,19 @@ public class UserServiceImpl implements UserService {
         return user.get();
     }
 	
-	private boolean validateUsername(String username) {
-        Optional<User> user = userRepository.findByCredentialsUsername(username);
-        if (user.isEmpty()) {
-            return false;
-        }
-        return true;
-	}
-	
-	private boolean validateCredentials(CredentialsDto credentialsDto) {
+	private void credentialsErrorChecking(CredentialsDto credentialsDto) {
 		if (credentialsDto == null || credentialsDto.getUsername() == null || credentialsDto.getPassword() == null) {
             throw new BadRequestException("A username and password are required.");
         }
+	}
+	
+	private boolean validateUsername(String username) {
+        Optional<User> user = userRepository.findByCredentialsUsername(username);
+        return user.isPresent();
+	}
+	
+	private boolean validateCredentials(CredentialsDto credentialsDto) {
+		credentialsErrorChecking(credentialsDto);
         Credentials credentialsToValidate = credentialsMapper.dtoToEntity(credentialsDto);
         User userToValidate = findUser(credentialsDto.getUsername());
         if (!userToValidate.getCredentials().equals(credentialsToValidate)) {
@@ -85,9 +86,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public FullUserDto createUser(UserRequestDto userRequestDto) {
-		if (userRequestDto.getCredentials() == null || userRequestDto.getCredentials().getUsername() == null || userRequestDto.getCredentials().getPassword()== null) {
-			throw new BadRequestException("A username and password are required.");
-		}
+		credentialsErrorChecking(userRequestDto.getCredentials());
 		if (validateUsername(userRequestDto.getCredentials().getUsername())) {
 			throw new BadRequestException("A user with this username already exists.");
 		}
@@ -105,6 +104,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public FullUserDto editUserCredentials(String username, CredentialsDto credentialsDto) {
+		credentialsErrorChecking(credentialsDto);
 		User user = findUser(username);
 		user.setCredentials(credentialsMapper.dtoToEntity(credentialsDto));
 		return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(user));
