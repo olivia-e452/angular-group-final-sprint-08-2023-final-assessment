@@ -4,7 +4,21 @@
 }
 
 .navbar-brand img {
-    width: 30%;
+    max-width: 15%;
+    margin-left: 2vw;
+    display: inline-block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+h3 {
+    color: #F24E1E;
+    font-size: 20px;
+    font-family: Mulish;
+    font-weight: 400;
+    line-height: 36px;
+    word-wrap: break-word;
+    display: inline-block;
     margin-left: 2vw;
 }
 
@@ -21,25 +35,28 @@
     box-shadow: none !important;
 }
 
-.offcanvas{
+.offcanvas {
     height: 40vh;
     background: linear-gradient(0deg, rgba(13, 58, 89, 0.50) 0%, rgba(13, 58, 89, 0.50) 100%), linear-gradient(0deg, rgba(13, 58, 89, 0.50) 0%, rgba(13, 58, 89, 0.50) 100%), rgba(13, 58, 89, 0.50) !important;
 }
 
-.offcanvas-body{
+.offcanvas-body {
     padding: 0 !important;
 }
 
 .navbar-nav {
     align-items: center;
+    text-align: center;
 }
 
-.nav-item{
+.nav-item {
     padding-bottom: 1%;
     padding-top: 1%;
+    border-bottom: 2px #1BA098 solid;
+    width: 80%
 }
 
-.nav-item a {
+a {
     text-decoration: none;
     color: rgba(27, 160, 152, 1);
     font-family: Mulish;
@@ -47,4 +64,14 @@
     font-style: normal;
     font-weight: 400;
     line-height: 150%;
+}
+
+.logout-btn{
+    font-family: Mulish;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    padding-bottom: 2%;
+    padding-top: 4px;
 }
