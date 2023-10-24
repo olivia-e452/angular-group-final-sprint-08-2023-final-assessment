@@ -7,6 +7,7 @@ import { LoginComponent } from '../app/components/login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { CompanyComponent } from './components/company/company.component';
 import { AnnouncementsComponent } from './components/announcements/announcements.component';
+import { AnnouncementModalComponent } from './components/announcement-modal/announcement-modal.component';
 
 const routes: Routes = [
  // { path: "", component: LoginComponent },
@@ -19,7 +20,8 @@ const routes: Routes = [
     AppComponent,
     LoginComponent,
     CompanyComponent,
-    AnnouncementsComponent
+    AnnouncementsComponent,
+    AnnouncementModalComponent
   ],
   imports: [
     BrowserModule,

@@ -1,26 +1,6 @@
 import { Component } from '@angular/core';
 
-const DEFAULT_ANNOUNCEMENT: Announcement = {
-  id: 0,  
-  date: '',  
-  title: '',
-  message: '',
-  author: {
-    id: 0, 
-    profile: {
-      firstname: '',
-      lastname: '',
-      email: '',
-      phone: ''
-    },
-    isAdmin: false,
-    active: false,
-    status: ''
-  }
-};
-
 const DEFAULT_USER: User = {
-  id: 0,
   profile: {
     firstname: '',
     lastname: '',
@@ -103,7 +83,6 @@ const DUMMY_ANNOUNCEMENTS: Announcement[] = [
   },
 ];
 
-
 @Component({
   selector: 'app-announcements',
   templateUrl: './announcements.component.html',
@@ -113,7 +92,7 @@ export class AnnouncementsComponent {
 
     user: User = DEFAULT_USER;
     announcementsToDisplay: Announcement[] | undefined;
-    announcementToCreate: Announcement = DEFAULT_ANNOUNCEMENT
+    // announcementToCreate: Announcement = DEFAULT_ANNOUNCEMENT
     modalOpen = false;
   
     constructor() { }
@@ -136,27 +115,13 @@ export class AnnouncementsComponent {
       // this.announcementsToDisplay = await fetchFromAPI('GET', company, 'announcements')
     }
   
-    handleNewAnnouncement(): void {
-      
-      // TODO: look at requestDTO to see how to send data to backend
-      this.announcementToCreate.author = this.user;
-      this.announcementToCreate.date = new Date().toString();
-      console.log(this.announcementToCreate)
-      
-      const company = localStorage.getItem('company');
-      // fetchFromAPI('POST', company, 'announcements', { announcement: this.announcementToCreate })
-      
-      this.closeModal();
-    }
-  
     openModal(): void {
       this.modalOpen = true;
     }
   
-    closeModal(): void {
-      this.announcementToCreate.title = '';
-      this.announcementToCreate.message = '';
+    modalWasClosed(): void {
       this.modalOpen = false;
+      this.getAnnouncements();
     }
 
 }

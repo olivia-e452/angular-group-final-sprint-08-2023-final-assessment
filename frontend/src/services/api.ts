@@ -9,6 +9,7 @@ export default async function fetchFromAPI(method: string, endpoint: string, bod
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
     }
+    console.log("options", options, "url", url)
     try {
         const response = await fetch(url, options)
         const data = await response.json()
