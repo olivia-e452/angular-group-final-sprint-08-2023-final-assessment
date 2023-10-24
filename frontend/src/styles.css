@@ -14,6 +14,8 @@
     src: url("assets/fonts/FiraSans-Regular.ttf");
 }
 
+@import "~bootstrap/dist/css/bootstrap.css";
+
 :root {
     --background-color: #051622;
 }

@@ -4,16 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from '../app/components/login/login.component';
-import { RouterModule, Routes } from '@angular/router';
 import { CompanyComponent } from './components/company/company.component';
 import { AnnouncementsComponent } from './components/announcements/announcements.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { AnnouncementModalComponent } from './components/announcement-modal/announcement-modal.component';
 
-const routes: Routes = [
- // { path: "", component: LoginComponent },
-  { path: "", component: CompanyComponent },
-  { path: "announcements", component: AnnouncementsComponent },
-]
 
 @NgModule({
   declarations: [
@@ -21,12 +16,12 @@ const routes: Routes = [
     LoginComponent,
     CompanyComponent,
     AnnouncementsComponent,
-    AnnouncementModalComponent
+    AnnouncementModalComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(routes),
     FormsModule,
   ],
 
