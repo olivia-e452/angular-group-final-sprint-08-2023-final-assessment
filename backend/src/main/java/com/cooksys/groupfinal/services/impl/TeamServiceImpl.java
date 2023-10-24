@@ -102,36 +102,49 @@ public class TeamServiceImpl implements TeamService {
         if (optionalTeamToEdit.isEmpty()) {
             throw new NotFoundException("Team with this ID not found.");
         }
-
-        //Todo add checks for if user is active, if editingUser is part of the company, etc.
         Team teamToEdit = optionalTeamToEdit.get();
-        // Not sure what all fields to allow to be changed. For now just Teammates and Description.
+        // Edit the team based on provided request details.
         if (teamRequestDto.getDescription() != null) {
             teamToEdit.setDescription(teamRequestDto.getDescription());
         }
+        // Ensure teammates are part of the company
+        Company usersCompany = teamToEdit.getCompany();
         if (teamRequestDto.getTeammateIds() != null) {
+            for (Long userId : teamRequestDto.getTeammateIds()) {
+                Optional<User> optUser = userRepository.findById(userId);
+                if (optUser.isEmpty() || !optUser.get().getCompanies().contains(usersCompany)) {
+                    throw new NotAuthorizedException("One or more users are not part of the team's company.");
+                }
+            }
             Set<User> teammates = new HashSet<>(userRepository.findAllById(teamRequestDto.getTeammateIds()));
             teamToEdit.setTeammates(teammates);
         }
 
-        Optional<User> optionalUser = userRepository.findByCredentialsUsernameAndActiveTrue(teamRequestDto
-                .getUserCredentials().getUsername());
+        Optional<User> optionalUser = userRepository.findByCredentialsUsernameAndActiveTrue(teamRequestDto.getUserCredentials().getUsername());
         if (optionalUser.isEmpty()) {
             throw new NotFoundException("User with provided username not found.");
         }
-        User editingUser = optionalUser.get();
 
+        User editingUser = optionalUser.get();
+        // Check the editingUser's credentials
         if (!editingUser.getCredentials().getPassword().equals(teamRequestDto.getUserCredentials().getPassword())) {
             throw new NotAuthorizedException("Incorrect password.");
         }
 
+        // Check if the user is an admin
         if (!(editingUser.isAdmin())) {
-            throw new NotAuthorizedException("Admin privileges needed to edit a team.");
+            throw new NotAuthorizedException("Admin privileges are needed to edit a team.");
         }
 
+        // Check that the admin editing the team is part of the company that the team belongs to
+        Company teamCompany = teamToEdit.getCompany();
+        if (!editingUser.getCompanies().contains(teamCompany)) {
+            throw new NotAuthorizedException("User not authorized to edit a team in this company.");
+        }
 
         Team updatedTeam = teamRepository.save(teamToEdit);
         return teamMapper.entityToDto(updatedTeam);
     }
+
 
 }
