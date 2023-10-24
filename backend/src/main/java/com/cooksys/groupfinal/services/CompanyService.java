@@ -13,6 +13,8 @@ public interface CompanyService {
 	Set<TeamDto> getAllTeams(Long id);
 
 	Set<ProjectDto> getAllProjects(Long companyId, Long teamId);
-
-    Set<CompanyDto> getAllCompanies();
+  
+  Set<CompanyDto> getAllCompanies();
+  
+	FullUserDto addUserToCompany(Long id, String username);
 }

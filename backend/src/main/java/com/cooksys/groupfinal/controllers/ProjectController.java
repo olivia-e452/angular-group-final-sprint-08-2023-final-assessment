@@ -1,17 +1,47 @@
 package com.cooksys.groupfinal.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.cooksys.groupfinal.dtos.ProjectDto;
 import com.cooksys.groupfinal.services.ProjectService;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("/company")
 @RequiredArgsConstructor
 public class ProjectController {
 	
 	private final ProjectService projectService;
 
+	@GetMapping("/{companyId}/teams/{teamId}/projects/team")
+	@CrossOrigin(origins="*")
+
+	public List<ProjectDto> getAllProjectsByTeam(
+			@PathVariable Long companyId,
+			@PathVariable Long teamId
+	){
+		return projectService.getAllProjectsByTeam(companyId,teamId);
+	}
+
+	@PostMapping("/{companyId}/teams/{teamId}/projects")
+	@CrossOrigin(origins="*")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ProjectDto addProjectToTheTeam(@PathVariable Long companyId,
+										  @PathVariable Long teamId,
+										  @RequestBody ProjectDto projectDto ){
+		return projectService.addProjectToTheTeam(companyId,teamId,projectDto);
+	}
+
+	@PatchMapping("/{companyId}/teams/{teamId}/projects/{projectId}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@CrossOrigin(origins="*")
+	public ProjectDto editProject(@PathVariable Long companyId,
+								  @PathVariable Long teamId,
+								  @PathVariable Long projectId,
+								  @RequestBody ProjectDto projectDto){
+
+		return projectService.editProject(companyId,teamId,projectId,projectDto);
+	}
 }

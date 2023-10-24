@@ -16,9 +16,11 @@ import com.cooksys.groupfinal.entities.Company;
 import com.cooksys.groupfinal.entities.Project;
 import com.cooksys.groupfinal.entities.Team;
 import com.cooksys.groupfinal.entities.User;
+import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
 import com.cooksys.groupfinal.repositories.CompanyRepository;
 import com.cooksys.groupfinal.repositories.TeamRepository;
+import com.cooksys.groupfinal.repositories.UserRepository;
 import com.cooksys.groupfinal.services.CompanyService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,7 @@ public class CompanyServiceImpl implements CompanyService {
 	private final CompanyRepository companyRepository;
 	private final CompanyMapper companyMapper;
 	private final TeamRepository teamRepository;
+	private final UserRepository userRepository;
 	private final FullUserMapper fullUserMapper;
 	private final AnnouncementMapper announcementMapper;
 	private final TeamMapper teamMapper;
@@ -41,6 +44,14 @@ public class CompanyServiceImpl implements CompanyService {
             throw new NotFoundException("A company with the provided id does not exist.");
         }
         return company.get();
+    }
+	
+	private User findUser(String username) {
+        Optional<User> user = userRepository.findByCredentialsUsernameAndActiveTrue(username);
+        if (user.isEmpty()) {
+            throw new NotFoundException("The username provided does not belong to an active user.");
+        }
+        return user.get();
     }
 	
 	private Team findTeam(Long id) {
@@ -90,8 +101,16 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public Set<CompanyDto> getAllCompanies() {
-		Set<Company> allCompanies = new HashSet<>(companyRepository.findAll());
+    Set<Company> allCompanies = new HashSet<>(companyRepository.findAll());
 
 		return companyMapper.entitiesToDtos(allCompanies);
+	}
+
+	public FullUserDto addUserToCompany(Long id, String username) {
+		Company company = findCompany(id);
+		User user = findUser(username);
+		company.getEmployees().add(user);
+		companyRepository.saveAndFlush(company);
+		return fullUserMapper.entityToFullUserDto(user);
 	}
 }

@@ -6,17 +6,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.cooksys.groupfinal.dtos.TeamDto;
+import com.cooksys.groupfinal.dtos.TeamRequestDto;
+import org.springframework.web.bind.annotation.*;
 import com.cooksys.groupfinal.services.TeamService;
 import lombok.RequiredArgsConstructor;
-
 import java.util.Set;
 
 @RestController
 @RequestMapping("/team")
 @RequiredArgsConstructor
 public class TeamController {
-	
-	private final TeamService teamService;
+
+    private final TeamService teamService;
+
+    @PostMapping
+    public TeamDto createTeam(@RequestBody TeamRequestDto teamRequestDto) {
+        return teamService.createTeam(teamRequestDto);
+    }
+
+    @PatchMapping("/update/{id}")
+    public TeamDto updateTeam(@PathVariable Long id, @RequestBody TeamRequestDto teamRequestDto) {
+        return teamService.updateTeam(id, teamRequestDto);
+    }
 
 	@GetMapping("/{id}/users")
 	public Set<BasicUserDto> getAllTeamMembers(@PathVariable Long id) {
