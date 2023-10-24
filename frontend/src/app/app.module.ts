@@ -8,11 +8,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { CompanyComponent } from './components/company/company.component';
 import { AnnouncementsComponent } from './components/announcements/announcements.component';
 import { AnnouncementModalComponent } from './components/announcement-modal/announcement-modal.component';
+import { TeamsComponent } from './components/teams/teams.component';
 
 const routes: Routes = [
  // { path: "", component: LoginComponent },
   { path: "", component: CompanyComponent },
   { path: "announcements", component: AnnouncementsComponent },
+  { path: "teams", component: TeamsComponent },
 ]
 
 @NgModule({
@@ -21,7 +23,8 @@ const routes: Routes = [
     LoginComponent,
     CompanyComponent,
     AnnouncementsComponent,
-    AnnouncementModalComponent
+    AnnouncementModalComponent,
+    TeamsComponent
   ],
   imports: [
     BrowserModule,
