@@ -106,6 +106,9 @@ public class UserServiceImpl implements UserService {
 	public FullUserDto editUserCredentials(String username, CredentialsDto credentialsDto) {
 		credentialsErrorChecking(credentialsDto);
 		User user = findUser(username);
+		if (username != credentialsDto.getUsername() && validateUsername(credentialsDto.getUsername())) {
+			throw new BadRequestException("A user with the newly entered username already exists.");
+		}
 		user.setCredentials(credentialsMapper.dtoToEntity(credentialsDto));
 		return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(user));
 	}
