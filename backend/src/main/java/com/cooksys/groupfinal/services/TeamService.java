@@ -7,5 +7,5 @@ public interface TeamService {
 
     TeamDto createTeam(TeamRequestDto teamRequestDto);
 
-    TeamDto updateTeam(Long id, TeamRequestDto teamRequestDto);
+    TeamDto editTeamMembersByTeamId(Long teamId, TeamRequestDto teamRequestDto);
 }
