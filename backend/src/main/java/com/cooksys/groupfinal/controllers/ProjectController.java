@@ -15,6 +15,7 @@ public class ProjectController {
 	
 	private final ProjectService projectService;
 
+	// duplicate endpoint; same function as an endpoint in CompanyController
 	@GetMapping("/{companyId}/teams/{teamId}/projects/team")
 	@CrossOrigin(origins="*")
 

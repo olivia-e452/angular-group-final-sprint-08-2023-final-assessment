@@ -10,7 +10,7 @@ public interface TeamService {
 
     TeamDto createTeam(TeamRequestDto teamRequestDto);
 
-    TeamDto editTeamMembersByTeamId(Long teamId, TeamRequestDto teamRequestDto);
+    TeamDto editTeamByTeamId(Long teamId, TeamRequestDto teamRequestDto);
     
     Set<BasicUserDto> getAllTeamMembers(Long id);
 }

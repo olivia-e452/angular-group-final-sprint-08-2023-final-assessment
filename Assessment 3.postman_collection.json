@@ -7,6 +7,284 @@
 	},
 	"item": [
 		{
+			"name": "Announcement Requests",
+			"item": [
+				{
+					"name": "POST /announcements/add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"announce\",\r\n    \"message\": \"words\",\r\n    \"author\": {\r\n        \"credentials\": {\r\n            \"username\": \"cousingreg\",\r\n            \"password\": \"mosteligiblebachelor\"\r\n        }\r\n    },\r\n    \"companyName\": \"waystar|ROYCO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/announcements/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"announcements",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH announcements/update/{id}",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"edited\",\r\n    \"message\": \"new words\",\r\n    \"author\": {\r\n        \"credentials\": {\r\n            \"username\": \"temporaryceoofwaystar\",\r\n            \"password\": \"idontgetpaidenoughforthis\"\r\n        }\r\n    },\r\n    \"companyName\": \"waystar|ROYCO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/announcements/update/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"announcements",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Company Requests",
+			"item": [
+				{
+					"name": "GET /company",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/company/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"company",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /company/id/users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/company/6/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"company",
+								"6",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /company/id/announcements",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/company/6/announcements",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"company",
+								"6",
+								"announcements"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /company/id/teams",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/company/6/teams",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"company",
+								"6",
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /company/companyId/teams/teamId/projects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/company/6/teams/11/projects",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"company",
+								"6",
+								"teams",
+								"11",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /company/{id}/users/{username}",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[6]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/company/7/users/pinky",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"company",
+								"7",
+								"users",
+								"pinky"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Team Requests",
+			"item": [
+				{
+					"name": "POST /teams",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"mohgwyn dynasty\",\r\n    \"description\": \"team description\",\r\n    \"teammateIds\": [26, 19, 23],\r\n    \"companyId\": 6,\r\n    \"userCredentials\": {\r\n        \"username\": \"temporaryceoofwaystar\",\r\n        \"password\": \"idontgetpaidenoughforthis\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/teams",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH /teams/{id}",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"volcano manor\",\r\n    \"description\": \"team description2.0\",\r\n    \"teammateIds\": [26, 19, 21],\r\n    \"companyId\": 6,\r\n    \"userCredentials\": {\r\n        \"username\": \"temporaryceoofwaystar\",\r\n        \"password\": \"idontgetpaidenoughforthis\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/teams/14",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"teams",
+								"14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /teams/{id}/users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/teams/14/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"teams",
+								"14",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "User Requests",
 			"item": [
 				{
@@ -147,6 +425,48 @@
 					"response": []
 				},
 				{
+					"name": "PATCH /users/{username}/active/{boolean}",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/pinky/active/true",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"pinky",
+								"active",
+								"true"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH /users/{username}/admin/{boolean}",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/pinky/admin/true",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"pinky",
+								"admin",
+								"true"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "PATCH /users/{username}/profile",
 					"request": {
 						"method": "PATCH",
@@ -207,116 +527,72 @@
 			]
 		},
 		{
-			"name": "GET /company/id/users",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/company/6/users",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"company",
-						"6",
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET /company/id/announcements",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/company/6/announcements",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"company",
-						"6",
-						"announcements"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET /company/id/teams",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/company/6/teams",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"company",
-						"6",
-						"teams"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET /company/companyId/teams/teamId/projects",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/company/6/teams/11/projects",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"company",
-						"6",
-						"teams",
-						"11",
-						"projects"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "POST /company/{id}/users/{username}",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "[6]",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Project Request",
+			"item": [
+				{
+					"name": "POST /company/{companyId}/teams/{teamId}/projects",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"new project\",\r\n    \"description\": \"do things\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/company/6/teams/11/projects",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"company",
+								"6",
+								"teams",
+								"11",
+								"projects"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "localhost:8080/company/7/users/pinky",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"company",
-						"7",
-						"users",
-						"pinky"
-					]
+				{
+					"name": "PATCH /company/{companyId}/teams/{teamId}/projects/{projectId}",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"new project edited\",\r\n    \"description\": \"do more things\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/company/6/teams/11/projects/8",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"company",
+								"6",
+								"teams",
+								"11",
+								"projects",
+								"8"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }
