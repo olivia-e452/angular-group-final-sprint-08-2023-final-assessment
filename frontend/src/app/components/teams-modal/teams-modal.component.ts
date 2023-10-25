@@ -1,5 +1,7 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import fetchFromAPI from 'src/services/api';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 interface Profile {
   firstName: string,
@@ -16,6 +18,13 @@ interface User {
     status: string
   }
 
+  interface Team {
+    id: number,
+    name: string,
+    description: string,
+    teammates: User[]
+  }
+
 @Component({
   selector: 'app-teams-modal',
   templateUrl: './teams-modal.component.html',
@@ -23,11 +32,22 @@ interface User {
 })
 export class TeamsModalComponent {
 
+  teamData: Team[] | undefined;
   memberData: User[] | undefined;
   selectedMembers: User[] = [];
+  teamName: string = '';
+  teamDescription: string = '';
+  teamForm: FormGroup;
 
   @Output() close = new EventEmitter<void>();
   @Input() showModal: boolean = false;
+
+  constructor(private formBuilder: FormBuilder) {
+    this.teamForm = this.formBuilder.group({
+      teamName: ['', Validators.required],
+      teamDescription: ['', Validators.required]
+    })
+  }
 
 
   async ngOnInit(): Promise<void> {
@@ -65,8 +85,28 @@ removeMember(member: User): void {
   }
 }
 
-// onSubmit() : void {
-//   this.teamData = await fetchFromAPI("POST", "/teams");
+async onSubmit() : Promise<void> {
 
-// }
+  if (this.teamForm.valid) {
+
+    const credentials = await fetchFromAPI("GET", "users/thisismycompany/profile/credentials")
+    console.log(credentials);
+
+    const body = {
+      name: this.teamForm.get('teamName')?.value,
+      description: this.teamForm.get('teamDescription')?.value,
+      teammateIds: this.selectedMembers.map(member => member.id),
+      companyId: 6,
+      userCredentials: credentials
+    }
+    this.teamData = await fetchFromAPI("POST", "teams", body);
+    this.onClose();
+  } else {
+    console.error("Form is invalid");
+  }
+
+}
+
+
+// {username}/profile/credentials
 }
