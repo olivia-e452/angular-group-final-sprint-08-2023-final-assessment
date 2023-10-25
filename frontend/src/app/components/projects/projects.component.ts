@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserService } from 'path-to-service-file';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-projects',
