@@ -1,0 +1,111 @@
+.modal-container {
+    width: 100%;
+    max-width: 800px;
+    background: #0b2d45;
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+}
+
+.input-label {
+    color: #deb992;
+    font-family: Mulish;
+    font-weight: 400;
+    margin-top: 1rem;
+}
+
+.input-field {
+    width: 100%;
+    border: 1px solid #deb992;
+    background: transparent;
+    color: #deb992;
+    margin-bottom: 1rem;
+}
+
+.select-members {
+    font-size: 48px;
+    font-family: Inter;
+    font-weight: 800;
+    color: #deb992;
+}
+
+.dropdown-field {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.selected-members {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.member-card {
+    padding: 0.5rem;
+    background: #1ba098;
+    border-radius: 10px;
+    color: white;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.submit-btn {
+    margin-top: 1rem;
+    padding: 0.5rem 2rem;
+    background: #1ba098;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Add to your existing styles */
+select.dropdown-field {
+    width: 100%;
+    background: transparent;
+    border: 1px solid #deb992;
+    color: #deb992;
+    padding: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    appearance: none;  /* Removes the default OS styling on dropdown */
+}
+
+.exit-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    cursor: pointer;
+}
+
+.exit-button-bg {
+    width: 55px;
+    height: 55px;
+    background: #F24E1E;
+    position: absolute;
+}
+
+.exit-button-cross {
+    width: 16.53px;
+    height: 16.53px;
+    background: #FFFFFF;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    clip-path: polygon(0% 45%, 45% 0%, 55% 0%, 100% 45%, 55% 100%, 45% 100%, 0% 55%, 0% 45%);
+}
+
+
+/* Add this style to your teams-modal.component.css */
+div[appModalOutsideClick] {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);  /* semi-transparent background */
+}

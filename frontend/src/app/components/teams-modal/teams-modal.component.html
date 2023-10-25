@@ -1,0 +1,30 @@
+<div (click)="onOutsideClick($event)">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+        <!-- Exit Button -->
+        <div class="exit-button" (click)="onClose()">
+            <div class="exit-button-bg"></div>
+            <div class="exit-button-cross"></div>
+        </div>
+
+        <!-- Team Name -->
+        <label class="input-label">Team Name</label>
+        <input class="input-field" type="text" placeholder="Team Name">
+
+        <!-- Description -->
+        <label class="input-label">Description</label>
+        <input class="input-field" type="text" placeholder="Description">
+
+        <!-- Members Dropdown -->
+        <div class="select-members">Select Members</div>
+        <select (change)="onMemberSelect($event)" class="dropdown-field">
+            <option *ngFor="let member of members" [value]="member">{{ member }}</option>
+        </select>
+
+        <!-- Selected Members -->
+        <div class="selected-members">
+            <div *ngFor="let selected of selectedMembers" class="member-card">{{ selected }}</div>
+        </div>
+        <!-- Submit Button -->
+        <button class="submit-btn">Submit</button>
+    </div>
+</div>

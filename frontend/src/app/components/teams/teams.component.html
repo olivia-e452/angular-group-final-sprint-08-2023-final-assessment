@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <div class="team-card">
+        <div class="team-card" (click)="openModal()">
             <div class="team-card-border"></div>
             <div class="plus-container">
                 <div class="horizontal-line"></div>
@@ -35,4 +35,5 @@
         </div>
         <div class="ghost-card"></div>
     </div>
+    <app-teams-modal *ngIf="showModal" (close)="closeModal()"></app-teams-modal>
 </div>

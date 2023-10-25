@@ -10,6 +10,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { AnnouncementModalComponent } from './components/announcement-modal/announcement-modal.component';
 import { TeamsComponent } from './components/teams/teams.component';
 import { RouterModule, Routes } from '@angular/router';
+import { TeamsModalComponent } from './components/teams-modal/teams-modal.component';
 
 const routes: Routes = [
   { path: "", component: CompanyComponent },
@@ -25,13 +26,14 @@ const routes: Routes = [
     AnnouncementsComponent,
     AnnouncementModalComponent,
     NavbarComponent,
-    TeamsComponent
+    TeamsComponent,
+    TeamsModalComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
   ],
 
   providers: [],
