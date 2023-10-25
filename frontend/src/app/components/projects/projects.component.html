@@ -1,0 +1,29 @@
+<body>
+<div class="main-container">
+    <a class="breadcrumb" routerLink="/teams">&lt; Back</a>
+    <div class="header">Projects for {{team.name}} </div>
+    <div class="projects-container">
+        <div *ngIf="user.isAdmin" class="new-button-container">
+            <button class="new-button" (click)="toggleNew()">New</button>
+        </div>
+        <div *ngFor="let project of projects" class="project-item">
+            <div class="divider"></div>
+            <div class="project-content">
+                <div class="project-info">
+                    <div class="project-name-status">
+                        <div class="project-name">{{ project.name }}</div>
+                        <div class="project-status" [class.active]="project.active" [class.inactive]="!project.active">{{ project.active ? 'Active' : 'Inactive' }}</div>
+                    </div>
+                    <div class="project-description">{{ project.description }}</div>
+                </div>
+
+                <button class="edit-button" (click)="toggleEdit(project)">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="popup" *ngIf="showEdit">
+    <app-edit-project [team]= "team" [project]="selectedProject" [isNew] = "showNew" (modalClosed)="toggleEdit(selectedProject)"></app-edit-project>
+</div>  
+</body>
+
