@@ -18,7 +18,7 @@ export class ProjectsComponent implements OnInit{
   user: User;
 
   constructor(private route: ActivatedRoute, private userService: UserService){
-    this.user = this.userService.getCurrentUser();
+    this.user = this.userService.getUser();
   }
 
   ngOnInit(): void {
@@ -42,7 +42,10 @@ export class ProjectsComponent implements OnInit{
     console.log("getting projects");
     return [];
   }
-  toggleEdit(project: Project) {
+  toggleEdit(project: Project | null) {
+    if (project === null) {
+      return;
+    }
     this.selectedProject = project;
     this.showEdit = !this.showEdit;
     this.showNew = false;

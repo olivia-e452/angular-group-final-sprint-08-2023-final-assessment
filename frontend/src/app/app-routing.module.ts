@@ -13,7 +13,7 @@ const routes: Routes = [
    { path: "home", component: AnnouncementsComponent },
    { path: "teams", component: TeamsComponent },
    { path: "announcements", component: AnnouncementsComponent },
-   { path: "userRegistry", component: UserRegistryComponent}
+   { path: "userRegistry", component: UserRegistryComponent},
    { path: "projects/:teamid", component: ProjectsComponent },
  ]
 

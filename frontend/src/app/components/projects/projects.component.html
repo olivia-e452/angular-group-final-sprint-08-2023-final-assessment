@@ -1,7 +1,7 @@
 <body>
 <div class="main-container">
     <a class="breadcrumb" routerLink="/teams">&lt; Back</a>
-    <div class="header">Projects for {{team.name}} </div>
+    <div class="header">Projects for {{getTeam().name}} </div>
     <div class="projects-container">
         <div *ngIf="user.isAdmin" class="new-button-container">
             <button class="new-button" (click)="toggleNew()">New</button>
