@@ -9,16 +9,17 @@ import { AnnouncementsComponent } from './components/announcements/announcements
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AnnouncementModalComponent } from './components/announcement-modal/announcement-modal.component';
 import { TeamsComponent } from './components/teams/teams.component';
-import { RouterModule, Routes } from '@angular/router';
 import { TeamsModalComponent } from './components/teams-modal/teams-modal.component';
+import { Routes } from '@angular/router';
 import { UserRegistryComponent } from './components/user-registry/user-registry.component';
 import { AddUserComponent } from './components/add-user/add-user.component';
 import { UserModalComponent } from './components/user-modal/user-modal.component';
+import { RouterModule } from '@angular/router';
+import { ProjectsComponent } from './components/projects/projects.component';
+import { EditProjectComponent } from './components/edit-project/edit-project.component';
 
 const routes: Routes = [
   { path: "", component: CompanyComponent },
-  { path: "announcements", component: AnnouncementsComponent },
-  { path: "teams", component: TeamsComponent },
 ];
 
 @NgModule({
@@ -34,6 +35,8 @@ const routes: Routes = [
     UserRegistryComponent,
     AddUserComponent,
     UserModalComponent,
+    ProjectsComponent,
+    EditProjectComponent
   ],
   imports: [
     BrowserModule,

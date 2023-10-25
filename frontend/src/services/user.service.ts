@@ -199,6 +199,8 @@ export class UserService {
     this.user = await fetchFromAPI('GET', `users/${username}`);
   }
 
+  // getters and setters for team, project, users, etc.
+
   getUser() {
     return this.user;
   }
@@ -219,13 +221,37 @@ export class UserService {
     return DUMMY_ANNOUNCEMENTS
   }
 
+  // API calls, etc.
+  
   async createNewAnnouncement(announcementToCreate: Announcement) {
     const response: Announcement = await fetchFromAPI('POST', `company/${this.company?.id}/announcements`, announcementToCreate)
     console.log(`Announcement created with id: ${response}`) 
   }
-  // getters and setters for team, project, users, etc.
 
-  // API calls, etc.
+  getProjects = async() => {
+    let projects : Project[] = [];
+    //if (this.user.teams !== undefined) {
+    //  for (let i = 0; i < this.user.teams.length; i++) {
+    //     const endpoint = `company/${this.company?.id}/teams/${this.user.teams[i]}/projects/team`;
+        const endpoint = `company/6/teams/11/projects/team`;
+        const response = await fetchFromAPI('GET', endpoint);
+        projects.push.apply(projects, response);
+    // }
+    //}
+    return projects;
+  }
 
+  async createNewProject(projectToCreate: Project) {
+    //const endpoint = `company/${this.company?.id}/teams/${projectToCreate.team.id}/projects`;
+    const endpoint = `company/6/teams/11/projects`;
+    const response = await fetchFromAPI('POST', endpoint, projectToCreate);
+    return response;
+  }
 
+  async editProject(editedProject: Project) {
+    //const endpoint = `company/${this.company?.id}/teams/${editedProject.team.id}/projects/${editedProject.id}`;
+    const endpoint = `company/6/teams/11/projects/${editedProject.id}`;
+    const response = await fetchFromAPI('PATCH', endpoint, editedProject);
+    return response;
+  }
 }

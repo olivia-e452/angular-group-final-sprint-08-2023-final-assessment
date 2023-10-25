@@ -1,32 +1,79 @@
-.modal-container {
+form {
+    margin: 0;
+    padding: 0;
     width: 100%;
-    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.modal-container {
+    width: 60vh;
+    max-width: 900px;
     background: #0b2d45;
     border-radius: 20px;
-    padding: 2rem;
+    padding: 3rem;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 10vh;
 }
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.input-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
 
 .input-label {
     color: #deb992;
     font-family: Mulish;
     font-weight: 400;
     margin-top: 1rem;
+    text-align: left;
+    width: 60%;
+    padding-left: 0.5rem;
 }
 
 .input-field {
-    width: 100%;
-    border: 1px solid #deb992;
+    width: 60%;
+    border: none;
+    border-bottom: 1px solid #deb992;
     background: transparent;
     color: #deb992;
     margin-bottom: 1rem;
 }
 
 .select-members {
-    font-size: 48px;
+    font-size: 25px;
     font-family: Inter;
     font-weight: 800;
     color: #deb992;
+
+}
+
+.close_icon {
+    align-self: flex-end;
+    position: absolute;
+    top: 1rem;
+    right:1rem;
+}
+
+.close_icon:hover {
+    cursor: pointer;
 }
 
 .dropdown-field {
@@ -36,9 +83,11 @@
 
 .selected-members {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     gap: 1rem;
     margin-top: 1rem;
+    width: 150px;
 }
 
 .member-card {
@@ -47,6 +96,9 @@
     border-radius: 10px;
     color: white;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    width: 100px;
+    height: 35px;
+    text-align: center;
 }
 
 .submit-btn {
@@ -59,7 +111,7 @@
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-/* Add to your existing styles */
+
 select.dropdown-field {
     width: 100%;
     background: transparent;
@@ -68,7 +120,7 @@ select.dropdown-field {
     padding: 0.5rem;
     font-size: 1rem;
     margin-bottom: 1rem;
-    appearance: none;  /* Removes the default OS styling on dropdown */
+    appearance: none;
 }
 
 .exit-button {
@@ -97,7 +149,7 @@ select.dropdown-field {
 }
 
 
-/* Add this style to your teams-modal.component.css */
+
 div[appModalOutsideClick] {
     position: fixed;
     top: 0;
@@ -107,5 +159,23 @@ div[appModalOutsideClick] {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.3);  /* semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+
+.member-close {
+    display: inline-block;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+.member-close svg {
+    vertical-align: middle;
+}
+
+.member-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    gap: 0.25rem;
 }

@@ -48,7 +48,7 @@ type Team = {
 };
 
 type Project = {
-  id: number;
+  id?: number;
   name: string;
   description: string;
   active: boolean;
