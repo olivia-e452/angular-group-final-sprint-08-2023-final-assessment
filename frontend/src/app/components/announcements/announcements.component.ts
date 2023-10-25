@@ -53,8 +53,13 @@ export class AnnouncementsComponent {
       this.company = this.userService.getCompany();
       
       //this.announcementsToDisplay = JSON.parse(localStorage.getItem('announcements') || '[]');
-      this.announcementsToDisplay = await this.userService.getAnnouncements();
+      //this.announcementsToDisplay = await this.userService.getAnnouncements();
+      //console.log(this.announcementsToDisplay)
+
+      //actual data from API call -> hardcoded to get company id 6's announcements for now
+      this.announcementsToDisplay = await fetchFromAPI("GET", "company/6/announcements");
       console.log(this.announcementsToDisplay)
+
     }
 
     // setDummyData(): void {
