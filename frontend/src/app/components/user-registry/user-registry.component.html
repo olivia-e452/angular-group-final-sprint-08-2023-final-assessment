@@ -1,0 +1,29 @@
+<div class = 'container'>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Active</th>
+                <th>Admin</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.active ? 'Yes' : 'No' }}</td>
+                <td>{{ user.admin ? 'Yes' : 'No' }}</td>
+                <td>{{ user.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <button (click)="toggleModal()">Add User</button>
+</div>
+<app-user-modal [showModal]="showModal" (closeModal)="onCloseModal()">
+    <app-add-user>
+    </app-add-user>
+</app-user-modal>
+
+

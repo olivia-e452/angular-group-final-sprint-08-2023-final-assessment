@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from '../app/components/login/login.component';
@@ -11,6 +11,10 @@ import { AnnouncementModalComponent } from './components/announcement-modal/anno
 import { TeamsComponent } from './components/teams/teams.component';
 import { TeamsModalComponent } from './components/teams-modal/teams-modal.component';
 import { Routes } from '@angular/router';
+import { UserRegistryComponent } from './components/user-registry/user-registry.component';
+import { AddUserComponent } from './components/add-user/add-user.component';
+import { UserModalComponent } from './components/user-modal/user-modal.component';
+import { RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: "", component: CompanyComponent },
@@ -26,11 +30,16 @@ const routes: Routes = [
     NavbarComponent,
     TeamsComponent,
     TeamsModalComponent,
+    UserRegistryComponent,
+    AddUserComponent,
+    UserModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forRoot(routes),
   ],
 
   providers: [],
