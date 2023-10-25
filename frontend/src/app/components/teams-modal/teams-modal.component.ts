@@ -1,4 +1,20 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
+import fetchFromAPI from 'src/services/api';
+
+interface Profile {
+  firstName: string,
+  lastName: string,
+  email:string,
+  phone: string
+}
+
+interface User {
+    id: number,
+    profile: Profile,
+    isAdmin: boolean,
+    active: boolean,
+    status: string
+  }
 
 @Component({
   selector: 'app-teams-modal',
@@ -7,20 +23,30 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 })
 export class TeamsModalComponent {
 
-  members: string[] = ['Chris P.', 'Will M.', 'Helena M.', 'Will2', 'asdx'];
-  selectedMembers: string[] = [];
+  memberData: User[] | undefined;
+  selectedMembers: User[] = [];
 
   @Output() close = new EventEmitter<void>();
   @Input() showModal: boolean = false;
+
+
+  async ngOnInit(): Promise<void> {
+    this.memberData = await fetchFromAPI("GET", "company/6/users");
+    console.log(this.selectedMembers + 'selected members');
+    console.log(JSON.stringify(this.memberData));
+  }
 
   onClose() {
     this.close.emit();
   }
 
   onMemberSelect(event: any) {
-    const selected = event.target.value;
-    if (this.selectedMembers.indexOf(selected) === -1) {
-      this.selectedMembers.push(selected);
+    console.log("member selection triggered");
+    const selectedId = Number(event.target.value);
+    const selectedMember = this.memberData?.find(member => member.id === selectedId)
+    if (selectedMember && this.selectedMembers.indexOf(selectedMember) === -1) {
+      this.selectedMembers.push(selectedMember);
+      console.log(this.selectedMembers)
     }
   }
 
@@ -30,12 +56,17 @@ export class TeamsModalComponent {
     }
 }
 
-removeMember(member: string): void {
-  const index = this.selectedMembers.indexOf(member);
+removeMember(member: User): void {
+  console.log(this.selectedMembers + 'before')
+  const index = this.selectedMembers.findIndex((m: User) => m.id === member.id);
   if (index > -1) {
       this.selectedMembers.splice(index, 1);
+      console.log(this.selectedMembers)
   }
 }
 
+// onSubmit() : void {
+//   this.teamData = await fetchFromAPI("POST", "/teams");
 
+// }
 }

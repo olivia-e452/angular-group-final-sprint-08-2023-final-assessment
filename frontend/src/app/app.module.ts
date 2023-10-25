@@ -16,6 +16,8 @@ import { AddUserComponent } from './components/add-user/add-user.component';
 import { UserModalComponent } from './components/user-modal/user-modal.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { ProjectsComponent } from './components/projects/projects.component';
+import { EditProjectComponent } from './components/edit-project/edit-project.component';
 
 const routes: Routes = [
   { path: "", component: CompanyComponent },
@@ -33,7 +35,9 @@ const routes: Routes = [
     TeamsModalComponent,
     UserRegistryComponent,
     AddUserComponent,
-    UserModalComponent
+    UserModalComponent,
+    ProjectsComponent,
+    EditProjectComponent
   ],
   imports: [
     BrowserModule,

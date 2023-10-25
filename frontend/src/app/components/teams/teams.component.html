@@ -1,28 +1,20 @@
 <div class="main-container">
     <div class="title">Teams</div>
     <div class="flex-container">
-
-    <div *ngFor="let team of teamData"><p>{{ team }}</p></div>
-        <div class="team-card">
-            <div class="team-header">
-                <div class="team-name">Team1</div>
-                <div class="number-of-projects"># of Projects: 4</div>
-            </div>
-            <div class="members">Members</div>
-            <div class="members-list">
-                <div class="name-position">
-                    <div class="name-container">
-                        <div class="member-name">Chris P.</div>
-                    </div>
+        <div *ngFor="let team of teamData">
+            <div class="team-card">
+                <div class="team-header">
+                    <div class="team-name">{{ team.name }}</div>
+                    <div class="number-of-projects"># of Projects: 4</div>
                 </div>
-                <div class="name-position">
-                    <div class="name-container">
-                        <div class="member-name">Helena M.</div>
-                    </div>
-                </div>
-                <div class="name-position">
-                    <div class="name-container">
-                        <div class="member-name">Helena M.</div>
+                <div class="members">Members</div>
+                <div class="members-list">
+                    <div *ngFor="let member of team.teammates">
+                        <div class="name-position">
+                            <div class="name-container">
+                                <div class="member-name">{{ member.profile.firstName }} {{ member.profile.lastName[0] }}.</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -36,6 +28,5 @@
             <div class="team-text">New Team</div>
         </div>
         <div class="ghost-card"></div>
+        <app-teams-modal *ngIf="showModal" (close)="closeModal()"></app-teams-modal>
     </div>
-    <app-teams-modal *ngIf="showModal" (close)="closeModal()"></app-teams-modal>
-</div>

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { TeamsServiceService } from 'src/services/teams-service.service';
+import fetchFromAPI from 'src/services/api';
 
 interface Profile {
-  firstname: string,
-  lastname: string,
+  firstName: string,
+  lastName: string,
   email:string,
   phone: string
 }
@@ -20,7 +21,7 @@ interface Team {
   id: number,
   name: string,
   description: string,
-  users: [User]
+  teammates: User[]
 }
 
 
@@ -34,15 +35,13 @@ export class TeamsComponent {
   userData: any = {};
   teamData: Team[] | undefined;
 
-  constructor(private teamService: TeamsServiceService) { }
+  constructor() { }
 
   showModal: boolean = false;
 
-  NgOnInit(): void {
-    console.log('testing')
-    this.teamService.getTeams(18).subscribe(data => {
-      this.teamData = data;
-    });
+  async ngOnInit(): Promise<void> {
+    this.teamData = await fetchFromAPI("GET", "company/6/teams");
+    console.log(this.teamData);
   }
 
 

@@ -27,12 +27,12 @@
             <label class="select-members" for="members-dropdown">Select Members</label>
             <select id="members-dropdown" (change)="onMemberSelect($event)" class="dropdown-field">
             <option value="" disabled selected>Pick an option</option>
-                <option *ngFor="let member of members" [value]="member">{{ member }}</option>
+                <option *ngFor="let member of memberData" [value]="member.id">{{ member.profile.firstName }} {{ member.profile.lastName[0] }}.</option>
             </select>
             <div class="selected-members">
                 <div *ngFor="let selected of selectedMembers" class="member-wrapper">
                     <div class="member-card">
-                        <span class="member-name">{{ selected }}</span>
+                        <span class="member-name">{{ selected.profile.firstName }} {{ selected.profile.lastName[0] }}</span>
                     </div>
                     <span class="member-close" (click)="removeMember(selected)">
                         <svg width="40" height="40" viewBox="0 0 43 42" fill="none">
