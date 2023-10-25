@@ -10,8 +10,14 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { AnnouncementModalComponent } from './components/announcement-modal/announcement-modal.component';
 import { TeamsComponent } from './components/teams/teams.component';
 import { RouterModule, Routes } from '@angular/router';
+import { AddUserModalComponent } from './components/add-user-modal/add-user-modal.component';
+import { AddUserComponent } from './components/add-user/add-user.component';
+import { UserRegistryComponent } from './components/user-registry/user-registry.component';
+import { ReactiveFormsModule } from '@angular/forms'
 
-const routes: Routes = [
+
+
+const routes: Routes = [ 
   { path: "", component: CompanyComponent },
   { path: "announcements", component: AnnouncementsComponent },
   { path: "teams", component: TeamsComponent },
@@ -25,7 +31,11 @@ const routes: Routes = [
     AnnouncementsComponent,
     AnnouncementModalComponent,
     NavbarComponent,
-    TeamsComponent
+    TeamsComponent,
+    AddUserModalComponent,
+    AddUserComponent,
+    UserRegistryComponent,
+    ReactiveFormsModule
   ],
   imports: [
     BrowserModule,
