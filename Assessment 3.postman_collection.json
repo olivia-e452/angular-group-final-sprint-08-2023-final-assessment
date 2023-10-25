@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "410107c2-40aa-4a9e-9bd7-0cbb73e5dcc6",
+		"_postman_id": "ff7a4894-7b69-4ca0-8576-6da2947c4209",
 		"name": "Assessment 3",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "29809642"
@@ -303,15 +303,16 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/users/morgott/companies",
+					"raw": "localhost:8080/company/7/users/pinky",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"company",
+						"7",
 						"users",
-						"morgott",
-						"companies"
+						"pinky"
 					]
 				}
 			},
