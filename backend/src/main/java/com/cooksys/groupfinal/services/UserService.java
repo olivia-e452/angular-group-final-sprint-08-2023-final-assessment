@@ -22,5 +22,6 @@ public interface UserService {
 	FullUserDto editUserAdmin(String username, boolean adminStatus);
 
 	FullUserDto editUserActive(String username, boolean activeStatus);
-   
+
+    CredentialsDto getUserCredentials(String username);
 }
