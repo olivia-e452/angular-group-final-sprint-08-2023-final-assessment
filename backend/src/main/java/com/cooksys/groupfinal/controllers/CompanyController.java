@@ -48,5 +48,5 @@ public class CompanyController {
     public Set<CompanyDto> getAllCompanies() {
         return companyService.getAllCompanies();
     }
-
+    
 }

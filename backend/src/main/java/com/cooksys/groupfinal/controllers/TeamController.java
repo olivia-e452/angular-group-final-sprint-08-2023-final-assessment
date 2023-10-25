@@ -34,4 +34,9 @@ public class TeamController {
 	public Set<BasicUserDto> getAllTeamMembers(@PathVariable Long id) {
 		return teamService.getAllTeamMembers(id);
 	}
+
+    @GetMapping("/{id}")
+    public TeamDto getTeamInformation(@PathVariable Long id) {
+        return teamService.getTeamInfo(id);
+    }
 }
