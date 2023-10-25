@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import fetchFromAPI from 'src/services/api';
+import { UserService } from 'src/services/user.service';
 
 const DEFAULT_ANNOUNCEMENT: Announcement = {  
   date: '',  
@@ -29,10 +30,10 @@ export class AnnouncementModalComponent {
   @Input() user: User | undefined;
   @Input() modalOpen: boolean = false;
   @Output() modalClosed = new EventEmitter<void>();
-  // @Input() postEndpoint: string = '';
+
   announcementToCreate: Announcement = DEFAULT_ANNOUNCEMENT;
-  // thinToCreate: Thing = DEFAULT_THING;
-  constructor() { }
+  
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
   }
@@ -43,22 +44,10 @@ export class AnnouncementModalComponent {
     this.announcementToCreate.date = new Date().toString();
     console.log("a2c", this.announcementToCreate)
     
-    // available via a service
-    // const company = localStorage.getItem('company');
-    const companyId = 22342
-    fetchFromAPI('POST', `company/${companyId}/announcements`, this.announcementToCreate)
+    // company set in service from previous page
+    this.userService.createNewAnnouncement(this.announcementToCreate);
     this.closeModal();
   }
-
-  /* possible implementation for reuse
-  
-  handleNewThing(): void {
-    this.thingToCreate = buildThing();
-    fetchFromAPI('POST', this.postEndpoint, this.thingToCreate)
-    this.closeModal()
-  }
-  
-  */
 
   closeModal(): void {
     this.announcementToCreate.title = '';

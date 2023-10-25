@@ -204,7 +204,7 @@ export class UserService {
   }
 
   setCompany(companyId: number) {
-    this.company = this.user.companies!.find(company => company.id === companyId);
+    this.company = this.user.companies?.find(company => company.id === companyId);
   }
 
   getCompany() {
@@ -214,10 +214,15 @@ export class UserService {
   // dummy announcements for testing
   async getAnnouncements(): Promise<Announcement[]> {
     // const endpoint = `company/${this.company!.id}/announcements`;
+    // const response = await fetchFromAPI('GET', endpoint, 'announcements')
+    // parse response and return
     return DUMMY_ANNOUNCEMENTS
-    // await fetchFromAPI('GET', endpoint, 'announcements')
   }
 
+  async createNewAnnouncement(announcementToCreate: Announcement) {
+    const response: Announcement = await fetchFromAPI('POST', `company/${this.company?.id}/announcements`, announcementToCreate)
+    console.log(`Announcement created with id: ${response.id}`) 
+  }
   // getters and setters for team, project, users, etc.
 
   // API calls, etc.
