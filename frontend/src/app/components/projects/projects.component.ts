@@ -17,6 +17,8 @@ export class ProjectsComponent implements OnInit{
   team: Team | null = null;
   user: User;
 
+  reloadProjects : boolean = false;
+
   constructor(private route: ActivatedRoute, private userService: UserService){
     this.user = this.userService.getUser();
   }
@@ -25,23 +27,52 @@ export class ProjectsComponent implements OnInit{
     this.teamId = this.route.snapshot.paramMap.get('teamid');
     if (this.teamId != null){
       this.team = this.getTeam();
-      this.projects = this.getProjects();
+      this.getProjects();
     }
   }
 
   getTeam(): Team {
     return {
-      id: -1,
-      name: '',
+      id: 11,
+      name: 'TeamName',
       description: '',
       users: [this.user]
     }
   }
-  getProjects(): Project[]{
+
+  getProjects() {
     //fetchprojects
     console.log("getting projects");
-    return [];
+    this.reloadProjects = true;
+    this.userService.getProjects().then((result) => {
+      this.projects = result;
+      this.reloadProjects = false;
+    });
   }
+
+  getSelectedProject(): Project {
+    if (this.selectedProject !== null) {
+      return this.selectedProject;
+    }
+    let newProject : Project = {
+      "name": "",
+      "description": "",
+      "team": this.team === null ? {"id": -1, "name": "", "description": "", users: []} : this.team,
+      "active": true,
+    }
+    return newProject;
+  }
+
+  modalClosed(closeType : String) {
+    console.log(closeType);
+    this.showEdit = false;
+    if (closeType === "NONE") {
+    }
+    else {
+      this.getProjects();
+    }
+  }
+
   toggleEdit(project: Project | null) {
     if (project === null) {
       return;

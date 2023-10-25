@@ -228,26 +228,29 @@ export class UserService {
     console.log(`Announcement created with id: ${response}`) 
   }
 
-  async getProjects(): Promise<Project[]> {
+  getProjects = async() => {
     let projects : Project[] = [];
-    if (this.user.teams !== undefined) {
-     for (let i = 0; i < this.user.teams.length; i++) {
-        const endpoint = `company/${this.company?.id}/teams/${this.user.teams[i].id}/projects/team`;
+    //if (this.user.teams !== undefined) {
+    //  for (let i = 0; i < this.user.teams.length; i++) {
+    //     const endpoint = `company/${this.company?.id}/teams/${this.user.teams[i]}/projects/team`;
+        const endpoint = `company/6/teams/11/projects/team`;
         const response = await fetchFromAPI('GET', endpoint);
         projects.push.apply(projects, response);
-     }
-    }
+    // }
+    //}
     return projects;
   }
 
   async createNewProject(projectToCreate: Project) {
-    const endpoint = `company/${this.company?.id}/teams/${projectToCreate.team.id}/projects`;
+    //const endpoint = `company/${this.company?.id}/teams/${projectToCreate.team.id}/projects`;
+    const endpoint = `company/6/teams/11/projects`;
     const response = await fetchFromAPI('POST', endpoint, projectToCreate);
     return response;
   }
 
   async editProject(editedProject: Project) {
-    const endpoint = `company/${this.company?.id}/teams/${editedProject.team.id}/projects/${editedProject.id}`;
+    //const endpoint = `company/${this.company?.id}/teams/${editedProject.team.id}/projects/${editedProject.id}`;
+    const endpoint = `company/11/teams/6/projects/${editedProject.id}`;
     const response = await fetchFromAPI('PATCH', endpoint, editedProject);
     return response;
   }
