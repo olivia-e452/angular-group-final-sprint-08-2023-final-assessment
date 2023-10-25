@@ -11,37 +11,45 @@ import { UserService } from 'src/services/user.service';
 export class ProjectsComponent implements OnInit{
   showEdit: boolean = false;
   showNew: boolean = false;
+  reloadProjects : boolean = false;
   projects: Project[] = [];
   selectedProject: Project | null = null;
-  teamId: string| null = '';
-  team: Team | null = null;
+  teamId: number = -1;
+  team: Team = {
+    id: -1,
+    name: '',
+    description: '',
+    users: []
+  }
   user: User;
-
-  reloadProjects : boolean = false;
 
   constructor(private route: ActivatedRoute, private userService: UserService){
     this.user = this.userService.getUser();
   }
 
   ngOnInit(): void {
-    this.teamId = this.route.snapshot.paramMap.get('teamid');
+    this.teamId = Number(this.route.snapshot.paramMap.get('teamid'));
     if (this.teamId != null){
-      this.team = this.getTeam();
-      this.getProjects();
+      this.fetchTeam();
     }
+    this.fetchProjects();
   }
 
   getTeam(): Team {
-    return {
-      id: 11,
-      name: 'TeamName',
-      description: '',
-      users: [this.user]
-    }
+    return this.team;
   }
 
-  getProjects() {
-    //fetchprojects
+  getProjects(): Project[] {
+    return this.projects;
+  }
+
+  fetchTeam(): void {
+    this.userService.getTeamById(this.teamId).then((result) => {
+      this.team = result;
+    });
+  }
+
+  fetchProjects(): void {
     console.log("getting projects");
     this.reloadProjects = true;
     this.userService.getProjects().then((result) => {
@@ -58,7 +66,7 @@ export class ProjectsComponent implements OnInit{
       "name": "",
       "description": "",
       "active": true,
-      "team": this.team === null ? {"id": -1, "name": "", "description": "", users: []} : this.team,
+      "team": this.team,
     }
     return newProject;
   }
@@ -67,7 +75,7 @@ export class ProjectsComponent implements OnInit{
     console.log(closeType);
     this.showEdit = false;
     if (closeType !== "NONE") {
-      this.getProjects();
+      this.fetchProjects();
     }
   }
 
@@ -85,12 +93,7 @@ export class ProjectsComponent implements OnInit{
       name: '',
       active: true,
       description: '',
-      team: {
-        id: -1,
-        name: '',
-        description: '',
-        users: [this.user]
-      }
+      team: this.team
     }
     this.showNew = true;
     this.showEdit = true;

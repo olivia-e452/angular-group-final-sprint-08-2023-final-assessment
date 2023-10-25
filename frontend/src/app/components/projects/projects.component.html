@@ -6,7 +6,7 @@
         <div *ngIf="user.isAdmin" class="new-button-container">
             <button class="new-button" (click)="toggleNew()">New</button>
         </div>
-        <div *ngFor="let project of projects" class="project-item">
+        <div *ngFor="let project of getProjects()" class="project-item">
             <div class="divider"></div>
             <div class="project-content">
                 <div class="project-info">

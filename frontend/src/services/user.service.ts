@@ -254,4 +254,10 @@ export class UserService {
     const response = await fetchFromAPI('PATCH', endpoint, editedProject);
     return response;
   }
+
+  getTeamById = async(id : number) => {
+      const endpoint = `teams/${id}`;
+      const response = await fetchFromAPI('GET', endpoint);
+      return response;
+  }
 }

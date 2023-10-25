@@ -33,16 +33,6 @@ export class EditProjectComponent {
       return;
     }
 
-    if (this.project === null) {
-        this.project = {
-        "id": this.project.id,
-        "name": this.projectName,
-        "description": this.projectDescription,
-        "active": this.selectedStatus,
-        "team": this.team
-      }
-    }
-
     this.project.name = this.projectName;
     this.project.description = this.projectDescription;
     this.project.active = this.selectedStatus;
@@ -51,8 +41,6 @@ export class EditProjectComponent {
       await this.userService.createNewProject(this.project);
       this.closeModal("NEW");
     } else{
-      this.project.name = this.projectName;
-      this.project.description = this.projectDescription;
       await this.userService.editProject(this.project);
       this.closeModal("EDIT");
     }
@@ -60,12 +48,11 @@ export class EditProjectComponent {
   }
 
   closeModal(closeType : String): void {
-    console.log("close");
+    console.log("close: " + closeType);
     this.modalClosed.emit(closeType);
   }
 
   setProjectStatus(selectedStatus : any) {
     this.selectedStatus = (selectedStatus === "No" ? false : true);
-    console.log(this.selectedStatus);
   }
 }
