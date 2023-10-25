@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-teams-modal',
@@ -7,10 +7,11 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 export class TeamsModalComponent {
 
-  members: string[] = ['Chris P.', 'Will M.', 'Helena M.'];
+  members: string[] = ['Chris P.', 'Will M.', 'Helena M.', 'Will2', 'asdx'];
   selectedMembers: string[] = [];
 
   @Output() close = new EventEmitter<void>();
+  @Input() showModal: boolean = false;
 
   onClose() {
     this.close.emit();
@@ -24,11 +25,17 @@ export class TeamsModalComponent {
   }
 
   onOutsideClick(event: MouseEvent) {
-    // Check if the click was outside the modal
     if ((event.target as HTMLElement).classList.contains('modal-container')) {
-        // Logic to close the modal
         this.onClose();
     }
 }
+
+removeMember(member: string): void {
+  const index = this.selectedMembers.indexOf(member);
+  if (index > -1) {
+      this.selectedMembers.splice(index, 1);
+  }
+}
+
 
 }

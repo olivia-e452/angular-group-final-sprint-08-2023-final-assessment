@@ -9,13 +9,11 @@ import { AnnouncementsComponent } from './components/announcements/announcements
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AnnouncementModalComponent } from './components/announcement-modal/announcement-modal.component';
 import { TeamsComponent } from './components/teams/teams.component';
-import { RouterModule, Routes } from '@angular/router';
 import { TeamsModalComponent } from './components/teams-modal/teams-modal.component';
+import { Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: "", component: CompanyComponent },
-  { path: "announcements", component: AnnouncementsComponent },
-  { path: "teams", component: TeamsComponent },
 ];
 
 @NgModule({
@@ -33,7 +31,6 @@ const routes: Routes = [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    RouterModule.forRoot(routes),
   ],
 
   providers: [],
