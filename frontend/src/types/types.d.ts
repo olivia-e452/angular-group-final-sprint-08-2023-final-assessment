@@ -1,10 +1,19 @@
-type Announcement = {
-  id?: number;
-  date: string;
+interface Announcement {
+  
   title: string;
   message: string;
   author: User;
-};
+}
+
+interface NewAnnouncement extends Announcement {
+    companyName?: string;
+}
+
+interface DisplayAnnouncement extends Announcement {
+    id: number;
+    date: string;
+}
+
 
 type UserProfile = {
   firstname: string;

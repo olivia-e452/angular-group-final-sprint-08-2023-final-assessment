@@ -38,7 +38,7 @@ const DUMMY_USER: User = {
 export class AnnouncementsComponent {
 
     user: User = DEFAULT_USER;
-    announcementsToDisplay: Announcement[] | undefined;
+    announcementsToDisplay: DisplayAnnouncement[] | undefined;
     company: Company | undefined;
     modalOpen = false;
   

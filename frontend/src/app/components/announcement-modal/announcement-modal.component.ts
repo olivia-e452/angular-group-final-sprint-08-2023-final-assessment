@@ -2,8 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import fetchFromAPI from 'src/services/api';
 import { UserService } from 'src/services/user.service';
 
-const DEFAULT_ANNOUNCEMENT: Announcement = {  
-  date: '',  
+const DEFAULT_ANNOUNCEMENT: NewAnnouncement = {   
   title: '',
   message: '',
   author: {
@@ -17,7 +16,8 @@ const DEFAULT_ANNOUNCEMENT: Announcement = {
     isAdmin: false,
     active: false,
     status: ''
-  }
+  },
+  companyName: ''
 };
 
 @Component({
@@ -30,7 +30,7 @@ export class AnnouncementModalComponent {
   @Input() modalOpen: boolean = false;
   @Output() modalClosed = new EventEmitter<void>();
 
-  announcementToCreate: Announcement = DEFAULT_ANNOUNCEMENT;
+  announcementToCreate: NewAnnouncement = DEFAULT_ANNOUNCEMENT;
   
   constructor(private userService: UserService) { }
 
@@ -42,9 +42,10 @@ export class AnnouncementModalComponent {
     // TODO: look at requestDTO to see how to send data to backend
     
     this.announcementToCreate.author = this.userService.getUser();
-    this.announcementToCreate.date = new Date().toString();
+    if (this.announcementToCreate.author.isAdmin) {
+      this.announcementToCreate.companyName = this.userService.getCompany()?.name;
+    }
     console.log("a2c", this.announcementToCreate)
-    
     // company set in service from previous page
     this.userService.createNewAnnouncement(this.announcementToCreate);
     this.closeModal();

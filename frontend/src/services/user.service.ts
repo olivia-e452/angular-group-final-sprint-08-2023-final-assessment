@@ -66,7 +66,7 @@ const dummyUser: User = {
   ]
 }
 
-const DUMMY_ANNOUNCEMENTS: Announcement[] = [
+const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
   {
     "id": 201,
     "date": "2023-10-24T09:15:30Z",
@@ -212,7 +212,7 @@ export class UserService {
   }
 
   // dummy announcements for testing
-  async getAnnouncements(): Promise<Announcement[]> {
+  async getAnnouncements(): Promise<DisplayAnnouncement[]> {
     // const endpoint = `company/${this.company!.id}/announcements`;
     // const response = await fetchFromAPI('GET', endpoint, 'announcements')
     // parse response and return
@@ -221,7 +221,7 @@ export class UserService {
 
   async createNewAnnouncement(announcementToCreate: Announcement) {
     const response: Announcement = await fetchFromAPI('POST', `company/${this.company?.id}/announcements`, announcementToCreate)
-    console.log(`Announcement created with id: ${response.id}`) 
+    console.log(`Announcement created with id: ${response}`) 
   }
   // getters and setters for team, project, users, etc.
 
