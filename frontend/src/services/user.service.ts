@@ -187,6 +187,8 @@ export class UserService {
   // dummy user for testing
   user: User = dummyUser;
   company: Company | undefined;
+  
+  // sample fields, you may need something else derived from a user or other API call
   team: Team | undefined;
   project: Project | undefined;
 
