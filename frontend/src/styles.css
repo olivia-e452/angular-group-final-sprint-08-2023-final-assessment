@@ -27,7 +27,7 @@ html, body {
 }
 
 body {
-  background-color: var(--background-color);
+  background-color: var(--background-color)!important;
 }
 
 *{

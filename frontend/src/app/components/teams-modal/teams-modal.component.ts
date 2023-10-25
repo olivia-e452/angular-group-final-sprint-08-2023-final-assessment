@@ -41,6 +41,7 @@ export class TeamsModalComponent {
 
   @Output() close = new EventEmitter<void>();
   @Input() showModal: boolean = false;
+  // @Output() newTeamCreated = new EventEmitter<Team>();
 
   constructor(private formBuilder: FormBuilder) {
     this.teamForm = this.formBuilder.group({
@@ -101,6 +102,7 @@ async onSubmit() : Promise<void> {
     }
     this.teamData = await fetchFromAPI("POST", "teams", body);
     alert('Team created successfully');
+    // this.newTeamCreated.emit(this.teamData);
     this.onClose();
   } else {
     console.error("Form is invalid");
