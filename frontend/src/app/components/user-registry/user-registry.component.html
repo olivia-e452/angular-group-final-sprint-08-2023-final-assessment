@@ -19,11 +19,9 @@
             </tr>
         </tbody>
     </table>
-    <button (click)="toggleModal()">Add User</button>
+    <button (click)="openModal()">Add User</button>
 </div>
-<app-user-modal [showModal]="showModal" (closeModal)="onCloseModal()">
-    <app-add-user>
-    </app-add-user>
-</app-user-modal>
+<app-user-modal *ngIf="showModal" [showModal]="showModal" (close)="CloseModal()">
+  </app-user-modal>
 
 

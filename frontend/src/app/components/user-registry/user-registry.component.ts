@@ -38,12 +38,11 @@ export class UserRegistryComponent {
   }
   
 
-  toggleModal() {
-    console.log("hi")
-    this.showModal = true
+  openModal() {
+    this.showModal = true;
   }
 
-  onCloseModal() {
+  CloseModal() {
     this.showModal = false
   }
 

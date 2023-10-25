@@ -33,7 +33,7 @@ const routes: Routes = [
     TeamsModalComponent,
     UserRegistryComponent,
     AddUserComponent,
-    UserModalComponent
+    UserModalComponent,
   ],
   imports: [
     BrowserModule,

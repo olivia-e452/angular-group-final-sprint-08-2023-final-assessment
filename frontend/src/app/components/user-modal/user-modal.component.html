@@ -1,8 +1,27 @@
 
-<div *ngIf="showModal" class="modal-overlay">
-  <div class="modal user-card">
-    <!-- Display user information here -->
-    <ng-content></ng-content>
-    <button class="close-button" (click)="onCloseModal()">X</button>
+<div class="container">
+  <h1></h1>
+    <div class="input">
+      <form class="form-box" [formGroup]="register" (ngSubmit)="onSubmit()">
+        <div>
+          <input placeholder="first name" id="firstName" formControlName="firstName" type="string">
+          <input placeholder="last name" id="lastName" formControlName="lastName" type="string">
+        </div>
+        <div>
+          <input placeholder="email" id="email" formControlName="email" type="string">
+        </div>
+        <div>
+          <input placeholder="password" id="password" formControlName="password" type="password">
+          <input placeholder="confirm password" id="confirmPassword" formControlName="confirmPassword" type="password">
+        </div>
+        <div>
+          <h1 id="question">Make user an admin role?</h1>
+          <select formControlName="adminRole">
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   </div>
-</div>
