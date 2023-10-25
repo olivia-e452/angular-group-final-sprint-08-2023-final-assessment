@@ -7,10 +7,8 @@ import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.dtos.TeamRequestDto;
 
 public interface TeamService {
-  
-  Set<BasicUserDto> getAllTeamMembers(Long id);
-  
-  TeamDto createTeam(TeamRequestDto teamRequestDto);
-  
-  TeamDto updateTeam(Long id, TeamRequestDto teamRequestDto);
+
+    TeamDto createTeam(TeamRequestDto teamRequestDto);
+
+    TeamDto editTeamMembersByTeamId(Long teamId, TeamRequestDto teamRequestDto);
 }

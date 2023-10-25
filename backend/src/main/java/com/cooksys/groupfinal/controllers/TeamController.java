@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/team")
+@RequestMapping("/teams")
 @RequiredArgsConstructor
 public class TeamController {
 
@@ -25,9 +25,9 @@ public class TeamController {
         return teamService.createTeam(teamRequestDto);
     }
 
-    @PatchMapping("/update/{id}")
-    public TeamDto updateTeam(@PathVariable Long id, @RequestBody TeamRequestDto teamRequestDto) {
-        return teamService.updateTeam(id, teamRequestDto);
+    @PatchMapping("/{teamId}")
+    public TeamDto editTeamMembersByTeamId(@PathVariable Long teamId, @RequestBody TeamRequestDto teamRequestDto) {
+        return teamService.editTeamMembersByTeamId(teamId, teamRequestDto);
     }
 
 	@GetMapping("/{id}/users")
