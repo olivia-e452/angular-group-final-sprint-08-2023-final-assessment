@@ -100,6 +100,7 @@ async onSubmit() : Promise<void> {
       userCredentials: credentials
     }
     this.teamData = await fetchFromAPI("POST", "teams", body);
+    alert('Team created successfully');
     this.onClose();
   } else {
     console.error("Form is invalid");
