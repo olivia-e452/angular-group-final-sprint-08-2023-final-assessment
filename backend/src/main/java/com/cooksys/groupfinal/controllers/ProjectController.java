@@ -11,23 +11,21 @@ import java.util.List;
 @RestController
 @RequestMapping("/company")
 @RequiredArgsConstructor
+@CrossOrigin(origins="*")
 public class ProjectController {
 	
 	private final ProjectService projectService;
 
 	// duplicate endpoint; same function as an endpoint in CompanyController
 	@GetMapping("/{companyId}/teams/{teamId}/projects/team")
-	@CrossOrigin(origins="*")
-
 	public List<ProjectDto> getAllProjectsByTeam(
 			@PathVariable Long companyId,
 			@PathVariable Long teamId
 	){
 		return projectService.getAllProjectsByTeam(companyId,teamId);
 	}
-
+	
 	@PostMapping("/{companyId}/teams/{teamId}/projects")
-	@CrossOrigin(origins="*")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ProjectDto addProjectToTheTeam(@PathVariable Long companyId,
 										  @PathVariable Long teamId,
@@ -37,7 +35,6 @@ public class ProjectController {
 
 	@PatchMapping("/{companyId}/teams/{teamId}/projects/{projectId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@CrossOrigin(origins="*")
 	public ProjectDto editProject(@PathVariable Long companyId,
 								  @PathVariable Long teamId,
 								  @PathVariable Long projectId,
