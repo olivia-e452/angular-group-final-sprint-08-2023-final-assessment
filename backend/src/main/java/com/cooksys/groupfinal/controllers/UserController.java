@@ -1,23 +1,14 @@
 package com.cooksys.groupfinal.controllers;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.ProfileDto;
 import com.cooksys.groupfinal.dtos.UserRequestDto;
 import com.cooksys.groupfinal.services.UserService;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;;
+;
 
 @RestController
 @RequestMapping("/users")
@@ -26,7 +17,13 @@ import java.util.ArrayList;;
 public class UserController {
 	
 	private final UserService userService;
-	
+
+
+	@GetMapping("{username}/profile/credentials")
+	@CrossOrigin(origins="*")
+	public CredentialsDto getUserCredentials(@PathVariable String username){
+		return userService.getUserCredentials(username);
+	}
 	@PostMapping("/login")
 	@CrossOrigin(origins="*")
     public FullUserDto login(@RequestBody CredentialsDto credentialsDto) {
