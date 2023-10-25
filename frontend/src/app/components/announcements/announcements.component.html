@@ -1,3 +1,4 @@
+
 <div *ngIf="announcementsToDisplay; else loadingTemplate" class="announcements">
     <div class="announcements__container">
         <div class="title">
@@ -17,8 +18,8 @@
         </div>
     </div>
   </div>
-  <app-announcement-modal [user]="user" [modalOpen]="modalOpen" (modalClosed)="modalWasClosed()"></app-announcement-modal>
+  <app-announcement-modal [modalOpen]="modalOpen" (modalClosed)="modalWasClosed()"></app-announcement-modal>
   <ng-template #loadingTemplate>
-    <h1>Loading peepepeeppopopooopo...</h1>
+    <h1>Loading...</h1>
   </ng-template>
   

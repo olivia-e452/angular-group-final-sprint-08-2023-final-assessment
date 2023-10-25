@@ -2,7 +2,7 @@ const API_ROOT = 'http://localhost:8080/'
 
 
 // may need token?
-export default async function fetchFromAPI(method: string, endpoint: string, body: any) {
+export default async function fetchFromAPI(method: string, endpoint: string, body?: any) {
     let url = `${API_ROOT}${endpoint}`
     let options: any = { 
         method, 
