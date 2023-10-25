@@ -109,16 +109,13 @@ public class TeamServiceImpl implements TeamService {
 
 
     @Override
-    public TeamDto editTeamByTeamId(Long teamId, TeamRequestDto teamRequestDto) {
+    public TeamDto editTeamMembersByTeamId(Long teamId, TeamRequestDto teamRequestDto) {
         Optional<Team> optionalTeamToEdit = teamRepository.findById(teamId);
         if (optionalTeamToEdit.isEmpty()) {
             throw new NotFoundException("Team with this ID not found.");
         }
         Team teamToEdit = optionalTeamToEdit.get();
         // Edit the team based on provided request details.
-        if (teamRequestDto.getName() != null) {
-            teamToEdit.setName(teamRequestDto.getName());
-        }
         if (teamRequestDto.getDescription() != null) {
             teamToEdit.setDescription(teamRequestDto.getDescription());
         }

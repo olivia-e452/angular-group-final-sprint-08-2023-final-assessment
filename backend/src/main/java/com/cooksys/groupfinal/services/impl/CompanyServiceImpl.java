@@ -106,7 +106,6 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyMapper.entitiesToDtos(allCompanies);
 	}
 
-	@Override
 	public FullUserDto addUserToCompany(Long id, String username) {
 		Company company = findCompany(id);
 		User user = findUser(username);
