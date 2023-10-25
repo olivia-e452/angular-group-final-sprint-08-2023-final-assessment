@@ -183,7 +183,8 @@ const DUMMY_ANNOUNCEMENTS: Announcement[] = [
 })
 
 export class UserService {
- 
+
+  // dummy user for testing
   user: User = dummyUser;
   company: Company | undefined;
   team: Team | undefined;
@@ -208,6 +209,7 @@ export class UserService {
     return this.company;
   }
 
+  // dummy announcements for testing
   async getAnnouncements(): Promise<Announcement[]> {
     // const endpoint = `company/${this.company!.id}/announcements`;
     return DUMMY_ANNOUNCEMENTS
