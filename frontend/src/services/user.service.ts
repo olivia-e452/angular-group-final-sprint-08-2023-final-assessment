@@ -191,6 +191,7 @@ export class UserService {
 
   constructor() { }
 
+  // for use with login
   async fetchUser(username: string) {
     this.user = await fetchFromAPI('GET', `users/${username}`);
   }
@@ -213,7 +214,7 @@ export class UserService {
     // await fetchFromAPI('GET', endpoint, 'announcements')
   }
 
-  // getters and setters for team and project
+  // getters and setters for team, project, users, etc.
 
   // API calls, etc.
 
