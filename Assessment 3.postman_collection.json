@@ -208,6 +208,34 @@
 			"name": "Team Requests",
 			"item": [
 				{
+					"name": "GET /teams/{id}",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "GET /teams/{id}/users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/teams/14/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"teams",
+								"14",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "POST /teams",
 					"request": {
 						"method": "POST",
@@ -261,60 +289,12 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "GET /teams/{id}/users",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/teams/14/users",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"teams",
-								"14",
-								"users"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
 		{
 			"name": "User Requests",
 			"item": [
-				{
-					"name": "POST /users/login",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"username\": \"cousingreg\",\n    \"password\": \"mosteligiblebachelor\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/users/login",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"users",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "GET /users/{username}",
 					"request": {
@@ -391,6 +371,34 @@
 							"path": [
 								"users",
 								"validate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /users/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"cousingreg\",\n    \"password\": \"mosteligiblebachelor\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/users/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"login"
 							]
 						}
 					},
@@ -527,7 +535,7 @@
 			]
 		},
 		{
-			"name": "Project Request",
+			"name": "Project Requests",
 			"item": [
 				{
 					"name": "POST /company/{companyId}/teams/{teamId}/projects",
