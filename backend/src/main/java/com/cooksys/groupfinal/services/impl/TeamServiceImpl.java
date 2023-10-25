@@ -1,16 +1,16 @@
 package com.cooksys.groupfinal.services.impl;
 
-import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.entities.Team;
 import org.springframework.stereotype.Service;
 import com.cooksys.groupfinal.dtos.TeamRequestDto;
+import com.cooksys.groupfinal.dtos.BasicUserDto;
 import com.cooksys.groupfinal.entities.Company;
-import com.cooksys.groupfinal.entities.Team;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.exceptions.NotAuthorizedException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
 import com.cooksys.groupfinal.mappers.TeamMapper;
+import com.cooksys.groupfinal.mappers.BasicUserMapper;
 import com.cooksys.groupfinal.repositories.CompanyRepository;
 import com.cooksys.groupfinal.repositories.TeamRepository;
 import com.cooksys.groupfinal.repositories.UserRepository;
@@ -28,6 +28,7 @@ public class TeamServiceImpl implements TeamService {
     private final TeamMapper teamMapper;
     private final TeamRepository teamRepository;
     private final CompanyRepository companyRepository;
+    private final BasicUserMapper basicUserMapper;
     private final UserRepository userRepository;
 
     @Override
@@ -40,6 +41,7 @@ public class TeamServiceImpl implements TeamService {
       
       return basicUserMapper.entitiesToBasicUserDtos(foundTeam.get().getTeammates());
     }
+
 
     @Override
     public TeamDto createTeam(TeamRequestDto teamRequestDto) {
