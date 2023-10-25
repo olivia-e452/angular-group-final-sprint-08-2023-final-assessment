@@ -17,7 +17,7 @@ export class AuthService {
 
     return of(this.isLoggedIn).pipe(
       delay(1000),
-      tap(val => { 
+      tap(val => {
          console.log("Is User Authentication is successful: " + val); 
       })
    );

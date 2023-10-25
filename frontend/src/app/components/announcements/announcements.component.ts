@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import fetchFromAPI from 'src/services/api';
+import { UserService } from 'src/services/user.service';
 
 const DEFAULT_USER: User = {
   profile: {
@@ -26,62 +28,7 @@ const DUMMY_USER: User = {
   "status": "ACTIVE"
 }
 
-const DUMMY_ANNOUNCEMENTS: Announcement[] = [
-  {
-    "id": 201,
-    "date": "2023-10-24T09:15:30Z",
-    "title": "New Features Rollout",
-    "message": "We are excited to announce the rollout of several new features starting tomorrow. Check the updates section for more details.",
-    "author": {
-      "id": 2,
-      "profile": {
-        "firstname": "Alice",
-        "lastname": "Smith",
-        "email": "alice.smith@example.com",
-        "phone": "234-567-8901"
-      },
-      "isAdmin": true,
-      "active": true,
-      "status": "ACTIVE"
-    }
-  },
-  {
-    "id": 202,
-    "date": "2023-10-25T10:45:15Z",
-    "title": "Server Upgrade",
-    "message": "Our servers are being upgraded on the weekend. Minor interruptions might occur. We appreciate your patience.",
-    "author": {
-      "id": 3,
-      "profile": {
-        "firstname": "Bob",
-        "lastname": "Johnson",
-        "email": "bob.johnson@example.com",
-        "phone": "345-678-9012"
-      },
-      "isAdmin": false,
-      "active": true,
-      "status": "ACTIVE"
-    }
-  },
-  {
-    "id": 203,
-    "date": "2023-10-26T08:20:45Z",
-    "title": "Holiday Schedule",
-    "message": "Please note our support will have limited availability during the upcoming holiday. Regular hours will resume post-holiday.",
-    "author": {
-      "id": 4,
-      "profile": {
-        "firstname": "Carol",
-        "lastname": "White",
-        "email": "carol.white@example.com",
-        "phone": "456-789-0123"
-      },
-      "isAdmin": false,
-      "active": true,
-      "status": "ACTIVE"
-    }
-  },
-];
+
 
 @Component({
   selector: 'app-announcements',
@@ -92,36 +39,44 @@ export class AnnouncementsComponent {
 
     user: User = DEFAULT_USER;
     announcementsToDisplay: Announcement[] | undefined;
+    company: Company | undefined;
+    
     // announcementToCreate: Announcement = DEFAULT_ANNOUNCEMENT
     modalOpen = false;
   
-    constructor() { }
+    constructor(private userService: UserService) { }
   
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
       // retrieve a user from somwhere, used to determine admin access & post author
-      this.setDummyData()
-      this.user = JSON.parse(localStorage.getItem('userData') || '{}');
-      this.announcementsToDisplay = JSON.parse(localStorage.getItem('announcements') || '[]');
-      this.getAnnouncements();
+      // this.setDummyData()
+      this.user = this.userService.getUser();
+      // JSON.parse(localStorage.getItem('userData') || '{}');
+      
+      this.company = this.userService.getCompany();
+      
+      //this.announcementsToDisplay = JSON.parse(localStorage.getItem('announcements') || '[]');
+      this.announcementsToDisplay = await this.userService.getAnnouncements();
+      console.log(this.announcementsToDisplay)
     }
 
-    setDummyData(): void {
-      localStorage.setItem('userData', JSON.stringify(DUMMY_USER));
-      localStorage.setItem('announcements', JSON.stringify(DUMMY_ANNOUNCEMENTS));
-    }
+    // setDummyData(): void {
+    //   localStorage.setItem('userData', JSON.stringify(DUMMY_USER));
+    //   localStorage.setItem('announcements', JSON.stringify(DUMMY_ANNOUNCEMENTS));
+    // }
   
-    async getAnnouncements(): Promise<void> {
-      const company = localStorage.getItem('company');
-      // this.announcementsToDisplay = await fetchFromAPI('GET', company, 'announcements')
-    }
+    // async getAnnouncements(): Promise<void> {
+    //   const endpoint = `company/${this.company!.id}/announcements`;
+    //   this.announcementsToDisplay = await fetchFromAPI('GET', endpoint, 'announcements')
+    // }
   
     openModal(): void {
       this.modalOpen = true;
     }
   
-    modalWasClosed(): void {
+    async modalWasClosed(): Promise<void> {
       this.modalOpen = false;
-      this.getAnnouncements();
+      this.announcementsToDisplay = await this.userService.getAnnouncements()
+      // this.getAnnouncements();
     }
 
 }
