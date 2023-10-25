@@ -18,5 +18,9 @@ public interface UserService {
 	FullUserDto editUserProfile(String username, ProfileDto profileDto);
 
 	FullUserDto editUserCredentials(String username, CredentialsDto credentialsDto);
+
+	FullUserDto editUserAdmin(String username, boolean adminStatus);
+
+	FullUserDto editUserActive(String username, boolean activeStatus);
    
 }

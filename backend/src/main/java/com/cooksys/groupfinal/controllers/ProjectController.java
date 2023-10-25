@@ -15,6 +15,7 @@ public class ProjectController {
 	
 	private final ProjectService projectService;
 
+	// duplicate endpoint; same function as an endpoint in CompanyController
 	@GetMapping("/{companyId}/teams/{teamId}/projects/team")
 	@CrossOrigin(origins="*")
 
@@ -35,7 +36,7 @@ public class ProjectController {
 	}
 
 	@PatchMapping("/{companyId}/teams/{teamId}/projects/{projectId}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseStatus(HttpStatus.ACCEPTED)
 	@CrossOrigin(origins="*")
 	public ProjectDto editProject(@PathVariable Long companyId,
 								  @PathVariable Long teamId,

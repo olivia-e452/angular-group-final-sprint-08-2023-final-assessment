@@ -112,4 +112,21 @@ public class UserServiceImpl implements UserService {
 		user.setCredentials(credentialsMapper.dtoToEntity(credentialsDto));
 		return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(user));
 	}
+
+	@Override
+	public FullUserDto editUserAdmin(String username, boolean adminStatus) {
+		User user = findUser(username);
+		user.setAdmin(adminStatus);
+		return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(user));
+	}
+
+	@Override
+	public FullUserDto editUserActive(String username, boolean activeStatus) {
+		Optional<User> user = userRepository.findByCredentialsUsername(username);
+        if (user.isEmpty()) {
+            throw new NotFoundException("The username provided does not belong to an active user.");
+        }
+		user.get().setActive(activeStatus);
+		return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(user.get()));
+	}
 }

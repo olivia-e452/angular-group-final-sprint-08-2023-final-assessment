@@ -56,4 +56,14 @@ public class UserController {
 	public FullUserDto editUserCredentials(@PathVariable String username, @RequestBody CredentialsDto credentialsDto) {
 		return userService.editUserCredentials(username, credentialsDto);
 	}
+	
+	@PatchMapping("/{username}/admin/{adminStatus}")
+	public FullUserDto editUserAdmin(@PathVariable String username, @PathVariable boolean adminStatus) {
+		return userService.editUserAdmin(username, adminStatus);
+	}
+	
+	@PatchMapping("/{username}/active/{activeStatus}")
+	public FullUserDto editUserActive(@PathVariable String username, @PathVariable boolean activeStatus) {
+		return userService.editUserActive(username, activeStatus);
+	}
 }

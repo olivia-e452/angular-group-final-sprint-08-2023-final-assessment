@@ -98,7 +98,7 @@ public class ProjectServiceImpl implements ProjectService {
 //        Get the existing project
         Project existingProject = projectToEdit.get();
 //        Check if the project belongs to the specified team
-        if(!existingProject.getTeam().getName().equals(team.getName())){
+        if(!existingProject.getTeam().getId().equals(team.getId())){
             throw new NotFoundException("The specified project does not belong to the team");
 
         }
@@ -113,7 +113,7 @@ public class ProjectServiceImpl implements ProjectService {
 //        Update the active field
         existingProject.setActive(projectDto.isActive());
 //        Update the team
-        existingProject.setTeam(team);
+//        existingProject.setTeam(team);
 // Save and return the updated project
 
         return projectMapper.entityToDto(projectRepository.saveAndFlush(existingProject));
