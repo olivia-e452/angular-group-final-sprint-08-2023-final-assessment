@@ -57,8 +57,8 @@ export class ProjectsComponent implements OnInit{
     let newProject : Project = {
       "name": "",
       "description": "",
-      "team": this.team === null ? {"id": -1, "name": "", "description": "", users: []} : this.team,
       "active": true,
+      "team": this.team === null ? {"id": -1, "name": "", "description": "", users: []} : this.team,
     }
     return newProject;
   }
@@ -66,9 +66,7 @@ export class ProjectsComponent implements OnInit{
   modalClosed(closeType : String) {
     console.log(closeType);
     this.showEdit = false;
-    if (closeType === "NONE") {
-    }
-    else {
+    if (closeType !== "NONE") {
       this.getProjects();
     }
   }

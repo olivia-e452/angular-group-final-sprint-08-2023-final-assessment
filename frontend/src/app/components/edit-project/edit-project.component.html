@@ -10,7 +10,7 @@
             <label for="name">Name</label>
             <input 
                 type="text" 
-                [(ngModel)]="project.name" 
+                [(ngModel)]="projectName" 
                 required 
                 class="modal__input"
                 name="name"
@@ -18,13 +18,13 @@
             <label for="description">Description</label>
             <input 
                 type="text" 
-                [(ngModel)]="project.description" 
+                [(ngModel)]="projectDescription" 
                 required 
                 class="modal__input"
                 name="description"
             >
             <label for="active" *ngIf="!isNew"> Active?</label>
-            <select class="dropdown" *ngIf="!isNew" [(ngModel)]="selectedStatus" (ngModelChange)="setProjectStatus($event)">
+            <select class="dropdown" name="statusDropdown" *ngIf="!isNew" (ngModel)="statusString" (ngModelChange)="setProjectStatus($event)">
                 <option value="" selected disabled>Select an option</option>
                 <option class="dropdown-box">Yes</option>
                 <option class="dropdown-box">No</option>

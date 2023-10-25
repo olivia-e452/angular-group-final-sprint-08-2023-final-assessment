@@ -14,31 +14,45 @@ export class EditProjectComponent {
   @Input() team: any;
   @Input() isNew: Boolean = false;
   @Output() modalClosed = new EventEmitter<String>();
-  selectedStatus : boolean = true;
+  selectedStatus : Boolean = true;
+  statusString = "";
+
+  projectName : String = "";
+  projectDescription : String = "";
 
   constructor(private userService : UserService) { }
 
   ngOnInit(): void {
+    this.projectName = this.project.name;
+    this.projectDescription = this.project.description;
   }
 
   async handleSubmit() {
-    if (this.project.name === "" || this.project.description ==="") {
+    if (this.projectName === "" || this.projectDescription ==="") {
       alert("Project name and description cannot be blank.");
       return;
     }
+
     if (this.project === null) {
         this.project = {
         "id": this.project.id,
-        "name": this.project.name,
-        "description": this.project.description,
-        "team": this.team,
-        "active": this.selectedStatus
+        "name": this.projectName,
+        "description": this.projectDescription,
+        "active": this.selectedStatus,
+        "team": this.team
       }
     }
+
+    this.project.name = this.projectName;
+    this.project.description = this.projectDescription;
+    this.project.active = this.selectedStatus;
+
     if(this.isNew){
       await this.userService.createNewProject(this.project);
       this.closeModal("NEW");
     } else{
+      this.project.name = this.projectName;
+      this.project.description = this.projectDescription;
       await this.userService.editProject(this.project);
       this.closeModal("EDIT");
     }
@@ -52,5 +66,6 @@ export class EditProjectComponent {
 
   setProjectStatus(selectedStatus : any) {
     this.selectedStatus = (selectedStatus === "No" ? false : true);
+    console.log(this.selectedStatus);
   }
 }

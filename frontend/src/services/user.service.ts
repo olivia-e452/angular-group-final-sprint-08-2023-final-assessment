@@ -250,7 +250,7 @@ export class UserService {
 
   async editProject(editedProject: Project) {
     //const endpoint = `company/${this.company?.id}/teams/${editedProject.team.id}/projects/${editedProject.id}`;
-    const endpoint = `company/11/teams/6/projects/${editedProject.id}`;
+    const endpoint = `company/6/teams/11/projects/${editedProject.id}`;
     const response = await fetchFromAPI('PATCH', endpoint, editedProject);
     return response;
   }
