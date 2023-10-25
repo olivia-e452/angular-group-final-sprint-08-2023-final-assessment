@@ -1,5 +1,4 @@
 interface Announcement {
-  
   title: string;
   message: string;
   author: User;
@@ -14,6 +13,10 @@ interface DisplayAnnouncement extends Announcement {
     date: string;
 }
 
+type UserCredentials = {
+  username: string;
+  password: string;
+}
 
 type UserProfile = {
   firstname: string;
@@ -25,6 +28,7 @@ type UserProfile = {
 type User = {
   id?: number;
   profile: UserProfile;
+  credentials: UserCredentials;
   isAdmin: boolean;
   active: boolean;
   status: string;

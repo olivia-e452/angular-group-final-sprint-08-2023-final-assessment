@@ -9,6 +9,10 @@ const DEFAULT_USER: User = {
     email: '',
     phone: ''
   },
+  credentials: {
+    username: "testy",
+    password: "test"
+  },
   isAdmin: false,
   active: false,
   status: ''
@@ -22,6 +26,10 @@ const DUMMY_USER: User = {
     "lastname": "Doe",
     "email": "john.doe@example.com",
     "phone": "123-456-7890"
+  },
+  "credentials": {
+    "username": "testy",
+    "password": "test"
   },
   "isAdmin": true,
   "active": true,
@@ -46,40 +54,24 @@ export class AnnouncementsComponent {
   
     async ngOnInit(): Promise<void> {
       // retrieve a user from somwhere, used to determine admin access & post author
-      // this.setDummyData()
       this.user = this.userService.getUser();
-      // JSON.parse(localStorage.getItem('userData') || '{}');
+
+      //actual data from API call
       
-      this.company = this.userService.getCompany();
-      
-      //this.announcementsToDisplay = JSON.parse(localStorage.getItem('announcements') || '[]');
       //this.announcementsToDisplay = await this.userService.getAnnouncements();
-      //console.log(this.announcementsToDisplay)
-
-      //actual data from API call -> hardcoded to get company id 6's announcements for now
-      this.announcementsToDisplay = await fetchFromAPI("GET", "company/6/announcements");
-      console.log(this.announcementsToDisplay)
-
+      this.announcementsToDisplay = await fetchFromAPI("GET", 'company/6/announcements');
+      console.log(this.announcementsToDisplay);
     }
-
-    // setDummyData(): void {
-    //   localStorage.setItem('userData', JSON.stringify(DUMMY_USER));
-    //   localStorage.setItem('announcements', JSON.stringify(DUMMY_ANNOUNCEMENTS));
-    // }
-  
-    // async getAnnouncements(): Promise<void> {
-    //   const endpoint = `company/${this.company!.id}/announcements`;
-    //   this.announcementsToDisplay = await fetchFromAPI('GET', endpoint, 'announcements')
-    // }
   
     openModal(): void {
       this.modalOpen = true;
     }
   
+    //reload announcements after new one was posted
     async modalWasClosed(): Promise<void> {
       this.modalOpen = false;
-      this.announcementsToDisplay = await this.userService.getAnnouncements()
-      // this.getAnnouncements();
+      //this.announcementsToDisplay = await this.userService.getAnnouncements()
+      this.announcementsToDisplay = await fetchFromAPI("GET", 'company/6/announcements');
     }
 
 }

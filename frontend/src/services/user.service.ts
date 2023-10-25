@@ -9,6 +9,10 @@ const DEFAULT_USER: User = {
     email: '',
     phone: ''
   },
+  credentials: {
+    username: "testy",
+    password: "test"
+  },
   isAdmin: false,
   active: false,
   status: '',
@@ -23,6 +27,10 @@ const dummyUser: User = {
       lastname: "Doe",
       email: "johndoe@example.com",
       phone: "+1234567890"
+  },
+  credentials: {
+    username: "testy",
+    password: "test"
   },
   isAdmin: true,
   active: true,
@@ -80,6 +88,10 @@ const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
         "email": "alice.smith@example.com",
         "phone": "234-567-8901"
       },
+      "credentials": {
+        "username": "",
+        "password": ""
+      },
       "isAdmin": true,
       "active": true,
       "status": "ACTIVE"
@@ -98,6 +110,10 @@ const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
         "email": "bob.johnson@example.com",
         "phone": "345-678-9012"
       },
+      "credentials": {
+        "username": "",
+        "password": ""
+      },
       "isAdmin": false,
       "active": true,
       "status": "ACTIVE"
@@ -115,6 +131,10 @@ const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
         "lastname": "White",
         "email": "carol.white@example.com",
         "phone": "456-789-0123"
+      },
+      "credentials": {
+        "username": "",
+        "password": ""
       },
       "isAdmin": false,
       "active": true,
@@ -134,6 +154,10 @@ const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
         "email": "alice.smith@example.com",
         "phone": "234-567-8901"
       },
+      "credentials": {
+        "username": "",
+        "password": ""
+      },
       "isAdmin": true,
       "active": true,
       "status": "ACTIVE"
@@ -152,6 +176,10 @@ const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
         "email": "bob.johnson@example.com",
         "phone": "345-678-9012"
       },
+      "credentials": {
+        "username": "",
+        "password": ""
+      },
       "isAdmin": false,
       "active": true,
       "status": "ACTIVE"
@@ -169,6 +197,10 @@ const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
         "lastname": "White",
         "email": "carol.white@example.com",
         "phone": "456-789-0123"
+      },
+      "credentials": {
+        "username": "",
+        "password": ""
       },
       "isAdmin": false,
       "active": true,
@@ -215,10 +247,9 @@ export class UserService {
 
   // dummy announcements for testing
   async getAnnouncements(): Promise<DisplayAnnouncement[]> {
-    // const endpoint = `company/${this.company!.id}/announcements`;
-    // const response = await fetchFromAPI('GET', endpoint, 'announcements')
-    // parse response and return
-    return DUMMY_ANNOUNCEMENTS
+    const endpoint = `company/${this.company!.id}/announcements`;
+    const response = await fetchFromAPI("GET", endpoint);
+    return response;
   }
 
   // API calls, etc.
