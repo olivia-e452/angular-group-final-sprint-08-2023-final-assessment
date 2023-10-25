@@ -7,7 +7,6 @@ form {
     align-items: center;
 }
 
-
 .modal-container {
     width: 60vh;
     max-width: 900px;
@@ -62,14 +61,13 @@ form {
     font-family: Inter;
     font-weight: 800;
     color: #deb992;
-
 }
 
 .close_icon {
     align-self: flex-end;
     position: absolute;
     top: 1rem;
-    right:1rem;
+    right: 1rem;
 }
 
 .close_icon:hover {
@@ -79,6 +77,8 @@ form {
 .dropdown-field {
     width: 100%;
     margin-top: 1rem;
+    justify-content: center;
+    border-radius: 8px;
 }
 
 .selected-members {

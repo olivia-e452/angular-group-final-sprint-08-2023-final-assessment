@@ -15,6 +15,7 @@ import { UserRegistryComponent } from './components/user-registry/user-registry.
 import { AddUserComponent } from './components/add-user/add-user.component';
 import { UserModalComponent } from './components/user-modal/user-modal.component';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   { path: "", component: CompanyComponent },
@@ -39,6 +40,7 @@ const routes: Routes = [
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     RouterModule.forRoot(routes),
   ],
 
