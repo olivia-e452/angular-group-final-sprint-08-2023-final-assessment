@@ -40,8 +40,6 @@ export class AnnouncementsComponent {
     user: User = DEFAULT_USER;
     announcementsToDisplay: Announcement[] | undefined;
     company: Company | undefined;
-    
-    // announcementToCreate: Announcement = DEFAULT_ANNOUNCEMENT
     modalOpen = false;
   
     constructor(private userService: UserService) { }

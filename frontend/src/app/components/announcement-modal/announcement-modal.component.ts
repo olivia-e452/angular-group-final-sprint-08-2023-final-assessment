@@ -27,7 +27,6 @@ const DEFAULT_ANNOUNCEMENT: Announcement = {
 })
 export class AnnouncementModalComponent {
   
-  @Input() user: User | undefined;
   @Input() modalOpen: boolean = false;
   @Output() modalClosed = new EventEmitter<void>();
 
@@ -39,8 +38,10 @@ export class AnnouncementModalComponent {
   }
 
   handleNewAnnouncement(): void {
+    
     // TODO: look at requestDTO to see how to send data to backend
-    this.announcementToCreate.author = this.user!;
+    
+    this.announcementToCreate.author = this.userService.getUser();
     this.announcementToCreate.date = new Date().toString();
     console.log("a2c", this.announcementToCreate)
     
