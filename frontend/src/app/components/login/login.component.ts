@@ -38,7 +38,7 @@ export class LoginComponent {
     ).subscribe({
         next: async (res) => {
           console.log(res)
-          //get user
+          //get user from DB and set company in user service
           let username = this.form.get('username')!.value;
           this.userService.setUser(await fetchFromAPI('GET', `users/${username}`));
           console.log(this.userService.getUser());
@@ -55,5 +55,8 @@ export class LoginComponent {
         complete: ()=> console.info('complete')
       })
   }
+
+
+
 
 }
