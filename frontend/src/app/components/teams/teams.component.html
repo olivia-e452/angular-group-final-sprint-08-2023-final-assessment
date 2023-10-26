@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <div class="team-card" (click)="openModal()">
+        <div *ngIf="isUserAdmin" class="team-card" (click)="openModal()">
             <div class="team-card-border"></div>
             <div class="plus-container">
                 <div class="horizontal-line"></div>
