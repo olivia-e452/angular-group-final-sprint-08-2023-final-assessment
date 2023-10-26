@@ -49,7 +49,8 @@ export class TeamsComponent {
     this.showModal = true;
   }
 
-  closeModal() {
+  async closeModal() {
+    this.teamData = await fetchFromAPI("GET", "company/6/teams");
     this.showModal = false;
   }
 
