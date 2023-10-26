@@ -31,7 +31,7 @@ export class AuthService {
     if(this.noUser) return of({ login_status: false, role: '' });
     localStorage.setItem('LOGIN_STATE', 'true')
     this.isLogin = true
-    this.userService.setUser(this.user);
+    this.userService.setUser(this.user, username, password);
     if (this.userService.getUser().admin) {
       localStorage.setItem('ROLE', 'ADMIN')
       this.roleAs = 'ADMIN'

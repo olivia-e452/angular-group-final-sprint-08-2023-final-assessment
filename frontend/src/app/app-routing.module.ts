@@ -31,9 +31,7 @@ const routes: Routes = [
     }
   },
   {
-    path: "projects/:teamid", component: ProjectsComponent, canActivate: [authGuard], data: {
-      role: 'ROLE_ADMIN'
-    }
+    path: "projects/:teamid", component: ProjectsComponent, canActivate: [authGuard]
   },
   { path: '**', component: LoginComponent }
 ]

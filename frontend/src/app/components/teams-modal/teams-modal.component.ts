@@ -41,7 +41,6 @@ export class TeamsModalComponent {
 
   @Output() close = new EventEmitter<void>();
   @Input() showModal: boolean = false;
-  // @Output() newTeamCreated = new EventEmitter<Team>();
 
   constructor(private formBuilder: FormBuilder) {
     this.teamForm = this.formBuilder.group({
@@ -89,20 +88,14 @@ removeMember(member: User): void {
 async onSubmit() : Promise<void> {
 
   if (this.teamForm.valid) {
-
-    const credentials = await fetchFromAPI("GET", "users/thisismycompany/profile/credentials")
-    console.log(credentials);
-
     const body = {
       name: this.teamForm.get('teamName')?.value,
       description: this.teamForm.get('teamDescription')?.value,
       teammateIds: this.selectedMembers.map(member => member.id),
-      companyId: 6,
-      userCredentials: credentials
+      companyId: 6
     }
     this.teamData = await fetchFromAPI("POST", "teams", body);
     alert('Team created successfully');
-    // this.newTeamCreated.emit(this.teamData);
     this.onClose();
   } else {
     console.error("Form is invalid");
@@ -110,6 +103,4 @@ async onSubmit() : Promise<void> {
 
 }
 
-
-// {username}/profile/credentials
 }

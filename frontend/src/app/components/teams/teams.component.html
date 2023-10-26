@@ -2,12 +2,12 @@
     <div class="title">Teams</div>
     <div class="flex-container">
         <div *ngFor="let team of teamData">
-            <div class="team-card">
+            <div [routerLink]="['/projects', team.id]" class="team-card">
                 <div class="team-header">
                     <div class="team-name">
-                        <span [routerLink]="['/projects', team.id]">{{ team.name }}</span> 
+                        <span>{{ team.name }}</span>
                     </div>
-                    <div class="number-of-projects"># of Projects: 4</div>
+                    <div class="number-of-projects"># of Projects: {{ team.numberOfProjects }}</div>
                 </div>
                 <div class="members">Members</div>
                 <div class="members-list">
@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <div class="team-card" (click)="openModal()">
+        <div *ngIf="isUserAdmin" class="team-card" (click)="openModal()">
             <div class="team-card-border"></div>
             <div class="plus-container">
                 <div class="horizontal-line"></div>

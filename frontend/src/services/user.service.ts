@@ -66,16 +66,23 @@ export class UserService {
   user: User = dummyUser;
   company: Company | undefined;
   companyID : number = 0;
+  username : String = "";
+  password : String = "";
+  isAdmin : boolean = false;
   
   team: Team | undefined;
   project: Project | undefined;
 
   constructor(private errorService: ErrorService) { }
 
-  setUser(user: any){
+  setUser(user: any, username : String, password : String){
     this.user = user;
     this.company = user['companies'][0];
-    this.setCompany(user['companies'][0]['id']);
+    console.log(this.company?.id);
+    this.companyID = user['companies'][0]['id'];
+    this.username = username;
+    this.password = password;
+    this.isAdmin = user['admin'];
   }
 
   getUser() {
@@ -107,29 +114,20 @@ export class UserService {
     console.log(`Announcement created with id: ${response.id}`) 
   }
 
-  getProjects = async() => {
-    let projects : Project[] = [];
-    //if (this.user.teams !== undefined) {
-    //  for (let i = 0; i < this.user.teams.length; i++) {
-    //     const endpoint = `company/${this.company?.id}/teams/${this.user.teams[i]}/projects/team`;
-        const endpoint = `company/${this.companyID}/teams/11/projects/team`;
-        const response = await fetchFromAPI('GET', endpoint);
-        projects.push.apply(projects, response);
-    // }
-    //}
-    return projects;
+  getProjectsByTeam = async(id : number) => {
+    const endpoint = `company/${this.company?.id}/teams/${id}/projects/team`;
+    const response = await fetchFromAPI('GET', endpoint);
+    return response;
   }
 
   async createNewProject(projectToCreate: Project) {
-    //const endpoint = `company/${this.company?.id}/teams/${projectToCreate.team.id}/projects`;
-    const endpoint = `company/${this.companyID}/teams/11/projects`;
+    const endpoint = `company/${this.company?.id}/teams/${projectToCreate.team.id}/projects`;
     const response = await fetchFromAPI('POST', endpoint, projectToCreate);
     return response;
   }
 
   async editProject(editedProject: Project) {
-    //const endpoint = `company/${this.company?.id}/teams/${editedProject.team.id}/projects/${editedProject.id}`;
-    const endpoint = `company/${this.companyID}/teams/11/projects/${editedProject.id}`;
+    const endpoint = `company/${this.company?.id}/teams/${editedProject.team.id}/projects/${editedProject.id}`;
     const response = await fetchFromAPI('PATCH', endpoint, editedProject);
     return response;
   }
