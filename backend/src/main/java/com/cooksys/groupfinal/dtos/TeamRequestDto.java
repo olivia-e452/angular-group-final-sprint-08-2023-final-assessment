@@ -17,6 +17,6 @@ public class TeamRequestDto {
 
     private Long companyId;
 
-    private CredentialsDto userCredentials;
+    //private CredentialsDto userCredentials;
 
 }
