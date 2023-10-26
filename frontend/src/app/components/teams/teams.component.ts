@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TeamsServiceService } from 'src/services/teams-service.service';
 import fetchFromAPI from 'src/services/api';
+import { UserService } from 'src/services/user.service';
 
 interface Profile {
   firstName: string,
@@ -36,12 +37,12 @@ export class TeamsComponent {
   userData: any = {};
   teamData: Team[] | undefined;
 
-  constructor() { }
+  constructor(private userService : UserService) { }
 
   showModal: boolean = false;
 
   async ngOnInit(): Promise<void> {
-    this.teamData = await fetchFromAPI('GET', 'company/6/teams');
+    await this.fetchTeams();
     console.log(this.teamData);
     // Fetch the number of projects for each team and update teamData
     if (this.teamData) {
@@ -74,8 +75,16 @@ export class TeamsComponent {
   }
 
   async closeModal() {
-    this.teamData = await fetchFromAPI("GET", "company/6/teams");
+    await this.fetchTeams();
     this.showModal = false;
   }
 
+  async fetchTeams() {
+    this.teamData = await fetchFromAPI("GET", "company/" + this.userService.companyID + "/teams");
+    if (this.teamData !== undefined) {
+      this.teamData.sort((a, b) => {
+        return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0
+      });;
+    }
+  }
 }

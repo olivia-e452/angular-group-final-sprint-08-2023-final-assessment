@@ -29,10 +29,11 @@ export class ProjectsComponent implements OnInit{
 
   ngOnInit(): void {
     this.teamId = Number(this.route.snapshot.paramMap.get('teamid'));
-    if (this.teamId != null){
+    if (this.teamId != null)
+    {
       this.fetchTeam();
+      this.fetchProjects();
     }
-    this.fetchProjects();
   }
 
   getTeam(): Team {
@@ -52,7 +53,7 @@ export class ProjectsComponent implements OnInit{
   fetchProjects(): void {
     console.log("getting projects");
     this.reloadProjects = true;
-    this.userService.getProjects().then((result) => {
+    this.userService.getProjectsByTeam(this.teamId).then((result) => {
       this.projects = result;
       this.reloadProjects = false;
     });

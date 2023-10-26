@@ -15,7 +15,7 @@ export class AuthService {
   login(username: string, password: string) {
     const payload = { "username": username, "password": password }
     let headers = { 'Content-Type': 'application/json' }
-    return this.http.post('http://localhost:8080/users/validate', payload, { headers })
+    return this.http.post('http://localhost:8080/users/login', payload, { headers })
       /*.subscribe({
         next: (res) => {
           localStorage.setItem(this.tokenKey, "login_token")

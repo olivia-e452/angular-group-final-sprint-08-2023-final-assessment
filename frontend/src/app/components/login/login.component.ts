@@ -40,14 +40,19 @@ export class LoginComponent {
           console.log(res)
           //get user from DB and set company in user service
           let username = this.form.get('username')!.value;
-          this.userService.setUser(await fetchFromAPI('GET', `users/${username}`));
+          let password = this.form.get('password')!.value;
+          const user = await fetchFromAPI('GET', `users/${username}`);
+          this.userService.setUser(user, username, password);
           console.log(this.userService.getUser());
-          if(this.userService.getUser().isAdmin){
+          console.log("admin? ", this.userService.isAdmin);
+          if(this.userService.isAdmin === true){
             //select company
-            this.router.navigateByUrl('/company'); 
-          }
-          //route to announcements page
-          this.router.navigateByUrl('/home'); 
+            console.log('im here');
+            return this.router.navigateByUrl('/select_company'); 
+          } else {
+            //route to announcements page
+            return this.router.navigateByUrl('/home');
+          } 
         },
         error: (e) => {
           this.acc_not_found = true;
