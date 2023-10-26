@@ -1,16 +1,25 @@
 import { Injectable, inject } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { AuthService } from './auth.service';
 
+@Injectable({
+  providedIn: 'root'
+})
+class PermissionsService {
 
-export const authGuard = () => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
+  constructor(private authService: AuthService,
+    private router: Router) {}
 
-  //canActivate status boolean
-  if (authService.isLoggedIn) {
-    return true;
-  }
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
   // Redirect to the login page if not logged in
-  return router.parseUrl('/login');
+  if (!this.authService.isLoggedIn()) {
+    this.router.parseUrl('/')
+  }
+  //canActivate status boolean
+  return true;
+  }
+}
+
+export const authGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
+  return inject(PermissionsService).canActivate(next, state);
 };

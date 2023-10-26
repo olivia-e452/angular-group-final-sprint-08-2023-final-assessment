@@ -58,3 +58,8 @@ type Project = {
   active: boolean;
   team: Team;
 };
+
+type Credentials = {
+  username: string; 
+  password: string;
+}
