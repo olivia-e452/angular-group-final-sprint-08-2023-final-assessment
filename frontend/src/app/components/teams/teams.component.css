@@ -52,7 +52,8 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.45);
     border-radius: 20px;
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; */
+    padding: 20px;
 }
 
 .team-card:hover {
@@ -125,10 +126,10 @@
 .members-list {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 10px;
     justify-content: space-around;
     align-items: center;
-    flex-wrap: wrap;
     margin-top: 10px;
 }
 

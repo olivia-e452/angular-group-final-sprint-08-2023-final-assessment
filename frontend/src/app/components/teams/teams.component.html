@@ -4,7 +4,9 @@
         <div *ngFor="let team of teamData">
             <div class="team-card">
                 <div class="team-header">
-                    <div class="team-name">{{ team.name }}</div>
+                    <div class="team-name">
+                        <span [routerLink]="['/projects', team.id]">{{ team.name }}</span> 
+                    </div>
                     <div class="number-of-projects"># of Projects: 4</div>
                 </div>
                 <div class="members">Members</div>
