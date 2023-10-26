@@ -7,6 +7,14 @@
                 </svg>
         </span>
         <form (submit)="handleNewAnnouncement(); $event.preventDefault()" class="modal__content">
+            <label for="message">title</label>
+            <input 
+                type="text" 
+                [(ngModel)]="announcementToCreate.title" 
+                required 
+                class="modal__input"
+                name="title"
+            >
             <label for="message">announcement</label>
             <input 
                 type="text" 
