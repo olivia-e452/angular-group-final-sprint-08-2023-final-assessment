@@ -108,8 +108,8 @@ export class UserService {
   user: User = DEFAULT_USER
   company: Company = DEFAULT_COMPANY
   companyID : number = 0;
-  username : String = "";
-  password : String = "";
+  username : string = "";
+  password : string = "";
   admin : boolean = false;
   
   team: Team | undefined;
@@ -117,7 +117,7 @@ export class UserService {
 
   constructor(private errorService: ErrorService, private cookieService: CookieService) {}
 
-  setUser(user: any, username : String, password : String){
+  setUser(user: any, username : string, password : string){
     this.user = user;
     this.company = user['companies'][0];
     this.companyID = user['companies'][0]['id'];
@@ -157,10 +157,25 @@ export class UserService {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });;
   }
-  
-  async createNewAnnouncement(announcementToCreate: Announcement) {
-    // const response: Announcement = await fetchFromAPI('POST', `company/${this.company?.id}/announcements`, announcementToCreate)
-    announcementToCreate.author = this.user;
+  async createNewAnnouncement(announcementToCreate: NewAnnouncement) {
+    announcementToCreate.author = {
+      profile : {
+        firstName : "",
+        lastName: "",
+        phone: "",
+        email: ""
+      },
+      credentials: {
+        username: this.username,
+        password: this.password
+      },
+      admin: this.getUser().admin,
+      active: this.getUser().active,
+      status: this.getUser().status
+    }
+    if(this.user.admin){
+      announcementToCreate.companyName = this.company?.name;
+    }
     const response: DisplayAnnouncement = await fetchFromAPI('POST', 'announcements/add', announcementToCreate)
     console.log(`Announcement created with id: ${response.id}`) 
   }
@@ -171,9 +186,7 @@ export class UserService {
     console.log('id', id)
     console.log("old", announcementToUpdate)
     console.log("updated", response)
-    // console.log(`Announcement updated with id: ${response.id}`)
   }
-
 
   async getProjectsByTeam(id : number) {
     const endpoint = `company/${this.company?.id}/teams/${id}/projects/team`;
