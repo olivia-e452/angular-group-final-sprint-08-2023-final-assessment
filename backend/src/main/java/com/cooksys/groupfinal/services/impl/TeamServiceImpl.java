@@ -51,20 +51,20 @@ public class TeamServiceImpl implements TeamService {
                 || teamRequestDto.getTeammateIds() == null) {
             throw new BadRequestException("Teams must have a name, description and at least 1 member");
         }
-        if (teamRequestDto.getUserCredentials() == null) {
-            throw new BadRequestException("User credentials are required.");
-        }
+//        if (teamRequestDto.getUserCredentials() == null) {
+//            throw new BadRequestException("User credentials are required.");
+//        }
         if (teamRequestDto.getCompanyId() == null) {
             throw new BadRequestException("Company Id is required.");
         }
 
         // Checks to see if the user that is creating the team is Authenticated and Active.
-        Optional<User> optionalUser = userRepository.findByCredentialsUsernameAndActiveTrue(teamRequestDto
-                .getUserCredentials().getUsername());
-        if (optionalUser.isEmpty()) {
-            throw new NotFoundException("User with provided username not found.");
-        }
-        User creatingUser = optionalUser.get();
+//        Optional<User> optionalUser = userRepository.findByCredentialsUsernameAndActiveTrue(teamRequestDto
+//                .getUserCredentials().getUsername());
+//        if (optionalUser.isEmpty()) {
+//            throw new NotFoundException("User with provided username not found.");
+//        }
+//        User creatingUser = optionalUser.get();
 
         Optional<Company> optionalCompany = companyRepository.findById(teamRequestDto.getCompanyId());
         if (optionalCompany.isEmpty()) {
@@ -72,17 +72,17 @@ public class TeamServiceImpl implements TeamService {
         }
 
         Company company = optionalCompany.get();
-        if (!creatingUser.getCompanies().contains(company)) {
-            throw new NotAuthorizedException("User not authorized to create a team in this company.");
-        }
-
-        if (!creatingUser.getCredentials().getPassword().equals(teamRequestDto.getUserCredentials().getPassword())) {
-            throw new NotAuthorizedException("Incorrect password.");
-        }
-
-        if (!(creatingUser.isAdmin())) {
-            throw new NotAuthorizedException("Admin privileges needed to create a team.");
-        }
+//        if (!creatingUser.getCompanies().contains(company)) {
+//            throw new NotAuthorizedException("User not authorized to create a team in this company.");
+//        }
+//
+//        if (!creatingUser.getCredentials().getPassword().equals(teamRequestDto.getUserCredentials().getPassword())) {
+//            throw new NotAuthorizedException("Incorrect password.");
+//        }
+//
+//        if (!(creatingUser.isAdmin())) {
+//            throw new NotAuthorizedException("Admin privileges needed to create a team.");
+//        }
 
         Team teamToCreate = teamMapper.requestDtoToEntity(teamRequestDto);
 
@@ -145,27 +145,27 @@ public class TeamServiceImpl implements TeamService {
             teamToEdit.setTeammates(teammates);
         }
 
-        Optional<User> optionalUser = userRepository.findByCredentialsUsernameAndActiveTrue(teamRequestDto.getUserCredentials().getUsername());
-        if (optionalUser.isEmpty()) {
-            throw new NotFoundException("User with provided username not found.");
-        }
-
-        User editingUser = optionalUser.get();
-        // Check the editingUser's credentials
-        if (!editingUser.getCredentials().getPassword().equals(teamRequestDto.getUserCredentials().getPassword())) {
-            throw new NotAuthorizedException("Incorrect password.");
-        }
-
-        // Check if the user is an admin
-        if (!(editingUser.isAdmin())) {
-            throw new NotAuthorizedException("Admin privileges are needed to edit a team.");
-        }
-
-        // Check that the admin editing the team is part of the company that the team belongs to
-        Company teamCompany = teamToEdit.getCompany();
-        if (!editingUser.getCompanies().contains(teamCompany)) {
-            throw new NotAuthorizedException("User not authorized to edit a team in this company.");
-        }
+//        Optional<User> optionalUser = userRepository.findByCredentialsUsernameAndActiveTrue(teamRequestDto.getUserCredentials().getUsername());
+//        if (optionalUser.isEmpty()) {
+//            throw new NotFoundException("User with provided username not found.");
+//        }
+//
+//        User editingUser = optionalUser.get();
+//        // Check the editingUser's credentials
+//        if (!editingUser.getCredentials().getPassword().equals(teamRequestDto.getUserCredentials().getPassword())) {
+//            throw new NotAuthorizedException("Incorrect password.");
+//        }
+//
+//        // Check if the user is an admin
+//        if (!(editingUser.isAdmin())) {
+//            throw new NotAuthorizedException("Admin privileges are needed to edit a team.");
+//        }
+//
+//        // Check that the admin editing the team is part of the company that the team belongs to
+//        Company teamCompany = teamToEdit.getCompany();
+//        if (!editingUser.getCompanies().contains(teamCompany)) {
+//            throw new NotAuthorizedException("User not authorized to edit a team in this company.");
+//        }
 
         Team updatedTeam = teamRepository.save(teamToEdit);
         return teamMapper.entityToDto(updatedTeam);
