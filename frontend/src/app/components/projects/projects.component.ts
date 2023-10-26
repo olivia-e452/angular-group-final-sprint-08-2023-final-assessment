@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class ProjectsComponent implements OnInit{
   showEdit: boolean = false;
   showNew: boolean = false;
   reloadProjects : boolean = false;
+  accessDenied : boolean = true;
   projects: Project[] = [];
   selectedProject: Project | null = null;
   teamId: number = -1;
@@ -23,16 +25,48 @@ export class ProjectsComponent implements OnInit{
   }
   user: User;
 
-  constructor(private route: ActivatedRoute, private userService: UserService){
+  constructor(private route: ActivatedRoute, private userService: UserService, private authService: AuthService){
     this.user = this.userService.getUser();
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    if (this.userService.username === "") {
+      await this.authService.cookieCall();
+      this.user = this.userService.getUser();
+    }
+
     this.teamId = Number(this.route.snapshot.paramMap.get('teamid'));
-    if (this.teamId != null)
-    {
-      this.fetchTeam();
-      this.fetchProjects();
+    if (this.teamId != null) {
+      // check if the team belongs to the current company
+      if (this.user.admin) {
+        if (this.user.companies != undefined) {
+          let company = this.user.companies.find(c => c.id === this.userService.companyID);
+          if (company != undefined) {
+            let team = company.teams.find(t => t.id === this.teamId);
+            if (team != undefined) {
+              this.accessDenied = false;
+            }
+          }
+        }
+      }
+      // if user is not an admin, check if the user belongs to this team
+      else {
+        if (this.userService.user.teams != undefined) {
+          let team = this.userService.user.teams.find(t => t.id === this.teamId);
+          if (team != undefined) {
+            this.accessDenied = false;
+          }
+        }
+      }
+
+      // if user is an admin of a different company, or is not an admin and not a member of the team they are trying to view
+      if (this.accessDenied) {
+        alert("This user does not have permission to access this team.");
+      }
+      else {
+        this.fetchTeam();
+        this.fetchProjects();
+      }
     }
   }
 

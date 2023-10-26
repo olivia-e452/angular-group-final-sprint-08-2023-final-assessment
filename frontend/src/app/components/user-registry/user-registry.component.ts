@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import fetchFromAPI from 'src/services/api';
+import { AuthService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
 
 type User = {
@@ -36,13 +37,16 @@ export class UserRegistryComponent {
   showModal: boolean = false;
   t: any
   company: any
-  constructor (private userService : UserService, private cdr: ChangeDetectorRef) {
+  constructor (private userService : UserService, private cdr: ChangeDetectorRef, private authService: AuthService) {
 
   }
 
   
 
   async ngOnInit()  {
+    if (this.userService.username === "") {
+      await this.authService.cookieCall();
+    }
     
     
     this.company = this.userService.getCompany()

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import fetchFromAPI from './api';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorService } from './error.service';
+import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from './auth.service';
 
 const dummyUser: User = {
   id: 1,
@@ -73,16 +75,18 @@ export class UserService {
   team: Team | undefined;
   project: Project | undefined;
 
-  constructor(private errorService: ErrorService) { }
+  constructor(private errorService: ErrorService, private cookieService: CookieService) {}
 
   setUser(user: any, username : String, password : String){
     this.user = user;
     this.company = user['companies'][0];
-    console.log(this.company?.id);
     this.companyID = user['companies'][0]['id'];
     this.username = username;
     this.password = password;
     this.isAdmin = user['admin'];
+
+    this.cookieService.set("companyId", this.companyID.toString());
+    this.cookieService.set("username", username.toString());
   }
 
   getUser() {

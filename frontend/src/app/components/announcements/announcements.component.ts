@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import fetchFromAPI from 'src/services/api';
+import { AuthService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
 
 const DEFAULT_USER: User = {
@@ -50,9 +51,13 @@ export class AnnouncementsComponent {
     company: Company | undefined;
     modalOpen = false;
   
-    constructor(private userService: UserService) { }
+    constructor(private userService: UserService, private authService: AuthService) { }
   
     async ngOnInit(): Promise<void> {
+      if (this.userService.username === "") {
+        await this.authService.cookieCall();
+      }
+
       this.user = this.userService.getUser();
       this.announcementsToDisplay = await this.userService.getSortedAnnouncements()
     }

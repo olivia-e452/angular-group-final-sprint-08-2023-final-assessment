@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TeamsServiceService } from 'src/services/teams-service.service';
 import fetchFromAPI from 'src/services/api';
 import { UserService } from 'src/services/user.service';
+import { AuthService } from 'src/services/auth.service';
 
 interface Profile {
   firstName: string,
@@ -38,11 +39,15 @@ export class TeamsComponent {
   teamData: Team[] | undefined;
   isUserAdmin: boolean = false;
 
-  constructor(private userService : UserService) { }
+  constructor(private userService : UserService, private authService: AuthService) { }
 
   showModal: boolean = false;
 
   async ngOnInit(): Promise<void> {
+    if (this.userService.username === "") {
+      await this.authService.cookieCall();
+    }
+
     if (this.userService.user.admin) {
       this.isUserAdmin = true;
       await this.fetchTeams();
