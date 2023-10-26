@@ -96,6 +96,7 @@ export class UserService {
   setCompany(companyId: number) {
     //this.company = this.user.companies?.find(company => company.id === companyId);
     this.companyID = companyId;
+    this.cookieService.set("companyId", this.companyID.toString());
   }
 
   getCompany() {
