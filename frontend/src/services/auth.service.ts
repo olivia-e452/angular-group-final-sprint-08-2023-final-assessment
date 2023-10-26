@@ -17,19 +17,17 @@ export class AuthService {
 
   login(username: string, password: string) {
     const payload = { "username": username, "password": password }
+    let headers =  { 'Content-Type': 'application/json' }
     console.log(payload)
-    /*
-    this.http.post('http://localhost:8080/users/validate', payload).subscribe(
+    this.http.post('http://localhost:8080/users/validate', payload, {headers}).subscribe(
       () => {
         localStorage.setItem(this.tokenKey, "login_token")
         this.router.navigate([this.redirectUrl])
       });
-      */
-
-    this.tryLogin(payload);
+    //this.tryLogin(payload);
   }
 
-  async tryLogin(item : any) {
+  async tryLogin(item: any) {
     const response = await fetchFromAPI("POST", 'users/validate', item);
   }
 
