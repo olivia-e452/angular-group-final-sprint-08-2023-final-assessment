@@ -64,16 +64,22 @@ export class UserService {
   user: User = dummyUser;
   company: Company | undefined;
   companyID : number = 0;
+  username : String = "";
+  password : String = "";
+  isAdmin : boolean = false;
   
   team: Team | undefined;
   project: Project | undefined;
 
   constructor() { }
 
-  setUser(user: any){
+  setUser(user: any, username : String, password : String){
     this.user = user;
     this.company = user['companies'][0];
-    this.setCompany(user['companies'][0]['id']);
+    this.companyID = user['companies'][0]['id'];
+    this.username = username;
+    this.password = password;
+    this.isAdmin = user['admin'];
   }
 
   getUser() {
