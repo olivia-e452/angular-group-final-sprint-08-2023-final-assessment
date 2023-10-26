@@ -107,6 +107,12 @@ export class TeamsComponent {
         team.teammates.some(teammate => teammate.id === this.userService.user.id)
       );
 
+      if (this.teamData) {
+        for (const team of this.teamData) {
+          team.numberOfProjects = await this.getNumberOfProjects(this.userService.companyID, team.id);
+        }
+      }
+
       this.teamData.sort((a, b) => {
         return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0
       });;

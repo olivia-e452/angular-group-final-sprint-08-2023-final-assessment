@@ -53,8 +53,6 @@ export class TeamsModalComponent {
 
   async ngOnInit(): Promise<void> {
     this.memberData = await fetchFromAPI("GET", `company/${this.userService.companyID}/users`);
-    console.log(this.selectedMembers + 'selected members');
-    console.log(JSON.stringify(this.memberData));
   }
 
   onClose() {
@@ -67,7 +65,6 @@ export class TeamsModalComponent {
     const selectedMember = this.memberData?.find(member => member.id === selectedId)
     if (selectedMember && this.selectedMembers.indexOf(selectedMember) === -1) {
       this.selectedMembers.push(selectedMember);
-      console.log(this.selectedMembers)
     }
   }
 
@@ -82,7 +79,6 @@ removeMember(member: User): void {
   const index = this.selectedMembers.findIndex((m: User) => m.id === member.id);
   if (index > -1) {
       this.selectedMembers.splice(index, 1);
-      console.log(this.selectedMembers)
   }
 }
 
