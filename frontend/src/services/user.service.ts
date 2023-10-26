@@ -4,8 +4,8 @@ import fetchFromAPI from './api';
 const DEFAULT_USER: User = {
   id: 0,
   profile: {
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: ''
   },
@@ -22,19 +22,19 @@ const DEFAULT_USER: User = {
 
 const dummyUser: User = {
   id: 1,
-  profile: {
-      firstname: "John",
-      lastname: "Doe",
-      email: "johndoe@example.com",
-      phone: "+1234567890"
-  },
   credentials: {
-    username: "testy",
-    password: "test"
+    username: "cousingreg",
+    password: "mosteligiblebachelor"
+  },
+  profile: {
+    firstName: "Greg",
+    lastName: "Hirsch",
+    email: "ghirsch@email.com",
+    phone: "000-000-0000"
   },
   isAdmin: true,
-  active: true,
-  status: "active",
+  active: false,
+  status: '',
   companies: [
       {
           id: 1,
@@ -83,8 +83,8 @@ const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
     "author": {
       "id": 2,
       "profile": {
-        "firstname": "Alice",
-        "lastname": "Smith",
+        "firstName": "Alice",
+        "lastName": "Smith",
         "email": "alice.smith@example.com",
         "phone": "234-567-8901"
       },
@@ -105,8 +105,8 @@ const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
     "author": {
       "id": 3,
       "profile": {
-        "firstname": "Bob",
-        "lastname": "Johnson",
+        "firstName": "Bob",
+        "lastName": "Johnson",
         "email": "bob.johnson@example.com",
         "phone": "345-678-9012"
       },
@@ -127,8 +127,8 @@ const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
     "author": {
       "id": 4,
       "profile": {
-        "firstname": "Carol",
-        "lastname": "White",
+        "firstName": "Carol",
+        "lastName": "White",
         "email": "carol.white@example.com",
         "phone": "456-789-0123"
       },
@@ -149,8 +149,8 @@ const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
     "author": {
       "id": 2,
       "profile": {
-        "firstname": "Alice",
-        "lastname": "Smith",
+        "firstName": "Alice",
+        "lastName": "Smith",
         "email": "alice.smith@example.com",
         "phone": "234-567-8901"
       },
@@ -171,8 +171,8 @@ const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
     "author": {
       "id": 3,
       "profile": {
-        "firstname": "Bob",
-        "lastname": "Johnson",
+        "firstName": "Bob",
+        "lastName": "Johnson",
         "email": "bob.johnson@example.com",
         "phone": "345-678-9012"
       },
@@ -193,8 +193,8 @@ const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
     "author": {
       "id": 4,
       "profile": {
-        "firstname": "Carol",
-        "lastname": "White",
+        "firstName": "Carol",
+        "lastName": "White",
         "email": "carol.white@example.com",
         "phone": "456-789-0123"
       },
@@ -216,11 +216,9 @@ const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
 
 export class UserService {
 
-  // dummy user for testing
   user: User = dummyUser;
   company: Company | undefined;
   
-  // sample fields, you may need something else derived from a user or other API call
   team: Team | undefined;
   project: Project | undefined;
 
@@ -230,8 +228,6 @@ export class UserService {
   async fetchUser(username: string) {
     this.user = await fetchFromAPI('GET', `users/${username}`);
   }
-
-  // getters and setters for team, project, users, etc.
 
   getUser() {
     return this.user;
@@ -245,18 +241,20 @@ export class UserService {
     return this.company;
   }
 
-  // dummy announcements for testing
-  async getAnnouncements(): Promise<DisplayAnnouncement[]> {
-    const endpoint = `company/${this.company!.id}/announcements`;
-    const response = await fetchFromAPI("GET", endpoint);
-    return response;
+  async getSortedAnnouncements(): Promise<DisplayAnnouncement[]> {
+    // const endpoint = `company/${this.company!.id}/announcements`;
+    const endpoint = `company/6/announcements`;
+    const response: DisplayAnnouncement[] = await fetchFromAPI("GET", endpoint);
+    return response.sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });;
   }
-
-  // API calls, etc.
   
   async createNewAnnouncement(announcementToCreate: Announcement) {
-    const response: Announcement = await fetchFromAPI('POST', `company/${this.company?.id}/announcements`, announcementToCreate)
-    console.log(`Announcement created with id: ${response}`) 
+    // const response: Announcement = await fetchFromAPI('POST', `company/${this.company?.id}/announcements`, announcementToCreate)
+    announcementToCreate.author = this.user;
+    const response: DisplayAnnouncement = await fetchFromAPI('POST', 'announcements/add', announcementToCreate)
+    console.log(`Announcement created with id: ${response.id}`) 
   }
 
   getProjects = async() => {

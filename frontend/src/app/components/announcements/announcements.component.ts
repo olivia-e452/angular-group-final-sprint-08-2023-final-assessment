@@ -4,8 +4,8 @@ import { UserService } from 'src/services/user.service';
 
 const DEFAULT_USER: User = {
   profile: {
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: ''
   },
@@ -22,8 +22,8 @@ const DEFAULT_USER: User = {
 const DUMMY_USER: User = {
   "id": 1,
   "profile": {
-    "firstname": "John",
-    "lastname": "Doe",
+    "firstName": "John",
+    "lastName": "Doe",
     "email": "john.doe@example.com",
     "phone": "123-456-7890"
   },
@@ -53,25 +53,18 @@ export class AnnouncementsComponent {
     constructor(private userService: UserService) { }
   
     async ngOnInit(): Promise<void> {
-      // retrieve a user from somwhere, used to determine admin access & post author
       this.user = this.userService.getUser();
-
-      //actual data from API call
-      
-      //this.announcementsToDisplay = await this.userService.getAnnouncements();
-      this.announcementsToDisplay = await fetchFromAPI("GET", 'company/6/announcements');
-      console.log(this.announcementsToDisplay);
+      this.announcementsToDisplay = await this.userService.getSortedAnnouncements()
     }
   
     openModal(): void {
       this.modalOpen = true;
     }
-  
+    
     //reload announcements after new one was posted
     async modalWasClosed(): Promise<void> {
       this.modalOpen = false;
-      //this.announcementsToDisplay = await this.userService.getAnnouncements()
-      this.announcementsToDisplay = await fetchFromAPI("GET", 'company/6/announcements');
+      this.announcementsToDisplay = await this.userService.getSortedAnnouncements()
     }
 
 }

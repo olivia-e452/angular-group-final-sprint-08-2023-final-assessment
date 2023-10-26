@@ -8,8 +8,8 @@ const DEFAULT_ANNOUNCEMENT: NewAnnouncement = {
   author: {
     id: 0, 
     profile: {
-      firstname: '',
-      lastname: '',
+      firstName: '',
+      lastName: '',
       email: '',
       phone: ''
     },
@@ -34,8 +34,8 @@ const TEST_ANNOUNCEMENT: NewAnnouncement = {
           password: "mosteligiblebachelor"
         },
         profile: {
-          firstname: "Greg",
-          lastname: "Hirsch",
+          firstName: "Greg",
+          lastName: "Hirsch",
           email: "ghirsch@email.com",
           phone: "000-000-0000"
         },
@@ -55,7 +55,7 @@ export class AnnouncementModalComponent {
   @Input() modalOpen: boolean = false;
   @Output() modalClosed = new EventEmitter<void>();
 
-  announcementToCreate: NewAnnouncement = TEST_ANNOUNCEMENT;
+  announcementToCreate: NewAnnouncement = DEFAULT_ANNOUNCEMENT;
   
   constructor(private userService: UserService) { }
 
@@ -76,8 +76,8 @@ export class AnnouncementModalComponent {
     */
 
    //hardcoded to post announcement to database
-    const response: Announcement = await fetchFromAPI('POST', 'announcements/add', this.announcementToCreate)
-    console.log(`Announcement created with id: ${response}`) 
+    // const response: DisplayAnnouncement = await fetchFromAPI('POST', 'announcements/add', this.announcementToCreate)
+    await this.userService.createNewAnnouncement(this.announcementToCreate);
     this.closeModal();
   }
 
