@@ -21,7 +21,8 @@ interface Team {
   id: number,
   name: string,
   description: string,
-  teammates: User[]
+  teammates: User[],
+  numberOfProjects?: number
 }
 
 
@@ -40,8 +41,31 @@ export class TeamsComponent {
   showModal: boolean = false;
 
   async ngOnInit(): Promise<void> {
-    this.teamData = await fetchFromAPI("GET", "company/6/teams");
+    this.teamData = await fetchFromAPI('GET', 'company/6/teams');
     console.log(this.teamData);
+    // Fetch the number of projects for each team and update teamData
+    if (this.teamData) {
+      for (const team of this.teamData) {
+        team.numberOfProjects = await this.getNumberOfProjects(6, team.id);
+      }
+    }
+    console.log(this.teamData);
+  }
+  async getNumberOfProjects(
+    companyId: number,
+    teamId: number
+  ): Promise<number> {
+    try {
+      const response = await fetchFromAPI(
+        'GET',
+        `company/${companyId}/teams/${teamId}/projects/team`
+      );
+      return response.length;
+    } catch (error) {
+      console.error(`Error fetching projects for Team ${teamId}:`, error);
+      // Return 0 projects in case of an error
+    }
+    return 0;
   }
 
 
