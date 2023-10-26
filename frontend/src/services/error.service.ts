@@ -13,4 +13,6 @@ export class ErrorService {
   getError(): Observable<ErrorData | undefined> {
     return this.errorSubject.asObservable();
   }
+
+  
 }

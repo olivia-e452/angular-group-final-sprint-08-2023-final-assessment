@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import fetchFromAPI from './api';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorService } from './error.service';
 
 const dummyUser: User = {
   id: 1,
@@ -13,7 +15,7 @@ const dummyUser: User = {
     email: "ghirsch@email.com",
     phone: "000-000-0000"
   },
-  isAdmin: true,
+  admin: true,
   active: false,
   status: '',
   companies: [
@@ -68,7 +70,7 @@ export class UserService {
   team: Team | undefined;
   project: Project | undefined;
 
-  constructor() { }
+  constructor(private errorService: ErrorService) { }
 
   setUser(user: any){
     this.user = user;
@@ -138,5 +140,29 @@ export class UserService {
       return response;
   }
 
-  
+
+  private handleHttpError(error: HttpErrorResponse) {
+    if (error.status === 403) {
+      // Handle rate limit exceeded error
+      const customError = {
+        error: 'API rate limit exceeded',
+        tips: 'Please try again later.',
+      };
+      this.errorService.setError(customError);
+    } else if (error.status === 404) {
+      // Handle not found error
+      const customError = {
+        error: 'Not found',
+        tips: 'The user was not found.',
+      };
+      this.errorService.setError(customError);
+    } else {
+      // Handle other HTTP errors
+      const customError = {
+        error: 'An error occurred',
+        tips: 'Please try again later.',
+      };
+      this.errorService.setError(customError);
+    }
+  }
 }

@@ -17,7 +17,7 @@ const DEFAULT_ANNOUNCEMENT: NewAnnouncement = {
       username: '',
       password: ''
     },
-    isAdmin: false,
+    admin: false,
     active: false,
     status: ''
   },
@@ -39,7 +39,7 @@ const TEST_ANNOUNCEMENT: NewAnnouncement = {
           email: "ghirsch@email.com",
           phone: "000-000-0000"
         },
-        isAdmin: false,
+        admin: false,
         active: false,
         status: ''
     }

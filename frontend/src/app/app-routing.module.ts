@@ -17,14 +17,13 @@ const routes: Routes = [
       role: 'ROLE_ADMIN'
     }
   },
-  { path: "home", component: AnnouncementsComponent },
   {
     path: "teams", component: TeamsComponent, canActivate: [authGuard], data: {
       role: 'ROLE_ADMIN'
     }
   },
   {
-    path: "announcements", component: AnnouncementsComponent
+    path: "announcements", component: AnnouncementsComponent, canActivate: [authGuard]
   },
   {
     path: "userRegistry", component: UserRegistryComponent, canActivate: [authGuard], data: {
@@ -33,7 +32,7 @@ const routes: Routes = [
   },
   {
     path: "projects/:teamid", component: ProjectsComponent, canActivate: [authGuard], data: {
-      role: ['ROLE_ADMIN', "ROLE_WORKER"]
+      role: 'ROLE_ADMIN'
     }
   },
   { path: '**', component: LoginComponent }

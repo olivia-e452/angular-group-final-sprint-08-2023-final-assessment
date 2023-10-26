@@ -36,9 +36,8 @@ export class LoginComponent {
     this.authService.login(
       this.form.get('username')!.value,
       this.form.get('password')!.value
-      ).subscribe({
+      ).then((result) =>  result.subscribe({
         next: async (res) => {
-          console.log(res)
           if(res.login_status == true){
             if(res.role == 'ADMIN'){
               this.router.navigateByUrl('/select_company'); 
@@ -53,9 +52,9 @@ export class LoginComponent {
         },
         error: (e) => {
           this.acc_not_found = true;
-        },
-        complete: ()=> console.info('complete')
-      })
+        }
+      }))
+
   }
 
 

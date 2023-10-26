@@ -29,7 +29,7 @@ type User = {
     id?: number;
     profile: UserProfile;
     credentials: UserCredentials;
-    isAdmin: boolean;
+    admin: boolean;
     active: boolean;
     status: string;
     companies?: Company[];

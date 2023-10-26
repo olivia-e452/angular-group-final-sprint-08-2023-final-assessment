@@ -4,7 +4,7 @@
 }
 
 .navbar-brand img {
-    max-width: 15%;
+    max-width: 65px;
     margin-left: 2vw;
     display: inline-block;
     padding-top: 10px;
@@ -78,4 +78,9 @@ a {
     background-color: transparent;
     border: none;
     color: rgba(27, 160, 152, 1);
+}
+
+.admin-msg[hidden]{
+        visibility: hidden;
+        display: block !important;
 }

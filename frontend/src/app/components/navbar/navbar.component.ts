@@ -8,9 +8,12 @@ import { AuthService } from 'src/services/auth.service';
 })
 
 export class NavbarComponent {
+  showAdminMsg = false
+
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
+    //if(localStorage.getItem('ROLE') == 'ADMIN') this.showAdminMsg = true
   }
 
   public logout() {
