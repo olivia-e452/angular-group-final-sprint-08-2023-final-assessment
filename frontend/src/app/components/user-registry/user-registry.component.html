@@ -11,8 +11,8 @@
         </thead>
         <tbody>
             <tr *ngFor="let user of users">
-                <td>{{ user.name }}</td>
-                <td>{{ user.email }}</td>
+                <td>{{ user.profile.firstName}} {{user.profile.lastName }}</td>
+                <td>{{ user.profile.email }}</td>
                 <td>{{ user.active ? 'Yes' : 'No' }}</td>
                 <td>{{ user.admin ? 'Yes' : 'No' }}</td>
                 <td>{{ user.status }}</td>

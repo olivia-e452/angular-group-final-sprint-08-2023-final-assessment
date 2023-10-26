@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import fetchFromAPI from 'src/services/api';
+import { UserService } from 'src/services/user.service';
 
 function passwordMatchValidator(control: AbstractControl) {
   const password = control.get('password')?.value;
@@ -28,11 +30,11 @@ export class UserModalComponent {
   }
 
   register: FormGroup;
-  firstName: string = "hi";
+  
   selectedRole: string = "";
   adminRole: string = '';
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private userService : UserService) {
     this.register = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -49,21 +51,40 @@ export class UserModalComponent {
     this.selectedRole = (event.target as HTMLSelectElement).value;
   }
 
-  onSubmit() {
-    console.log(this.register.get('adminRole')?.value)
+  async onSubmit() {
+    console.log(this.register.get('email')?.value)
+    console.log(this.register.get('password')?.value)
     if (this.register.valid) {
-      const password = this.register.get('password')?.value;
-      const confirmPassword = this.register.get('confirmPassword')?.value;
-      console.log("hit")
-      if (password === confirmPassword) {
-        // Passwords match, proceed with form submission
-        
-        alert('Form submitted successfully!');
-        this.onClose();
-        //send a post request for the user. 
-      } else {
-        alert('Passwords do not match. Please try again.');
+      // Passwords match, proceed with form submission
+      
+      const c = {
+        username: this.register.get('email')?.value,
+        password: this.register.get('password')?.value
       }
+
+      const p = {
+        firstName : this.register.get('firstName')?.value,
+        lastName : this.register.get('lastName')?.value,
+        email : this.register.get('email')?.value,
+        phone: '000-000-0000'
+      }
+
+      const user = {
+        credentials : c,
+        profile: p,
+        admin: this.register.get('adminRole')?.value
+      }
+      await fetchFromAPI("POST", "users/new", user);
+      const companyID = this.userService.getCompany()?.id
+      const str = 'company/' + companyID + '/users/' + this.register.get('email')?.value
+      await fetchFromAPI("POST", str)
+
+
+      
+      alert('Form submitted successfully!');
+      this.onClose();
+        //send a post request for the user. 
+      
     }
   }
 }
