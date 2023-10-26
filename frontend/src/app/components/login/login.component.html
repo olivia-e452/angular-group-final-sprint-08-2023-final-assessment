@@ -1,28 +1,24 @@
 <div class="container">
-    <div
-        style="width: 660px; height: 604px; left: 534px; top: 323px; position: absolute; box-shadow: 4px 4px 10px 5px rgba(202.94, 202.94, 202.94, 0.49); border-radius: 15px; border: 5px #DEB992 solid">
-    </div>
     <div class="header"><span class="title">COOK
             SYSTEMS<br /></span><span class="subtitle">A
             FINAL APP</span></div>
-    <div class="logo"><img src="../../assets/img/logo.svg" /></div>
-    <form [formGroup]="form">
-        <div class="username">
-            <input type="text" class="input_box" id="uname" name="uname" placeholder="username" formControlName="username"
-                required>
-        </div>
-        <div class="spacing-username"></div>
-        <div class="password">
-            <input type="text" class="input_box" id="pwd" name="pwd" placeholder="password" formControlName="password"
-                required>
-        </div>
-        <div class="spacing-password"></div>
-
-        <div class="login-border">
-            <button class="login" (click)="login()">
-                LOGIN</button>
-        </div>
-    </form>
+    <div class="login-items">
+        <div class="logo"><img src="../../assets/img/logo.svg" /></div>
+        <form [formGroup]="form" class="input-items">
+            <div class="username">
+                <input type="text" class="input_box" id="uname" name="uname" placeholder="username"
+                    formControlName="username" required>
+            </div>
+            <div class="spacing-username"></div>
+            <div class="password">
+                <input  type = "password" class="input_box" id="pwd" name="pwd" placeholder="password"
+                    formControlName="password" required>
+            </div>
+            <div class="spacing-password"></div>
+            <p class="error-msg" [hidden]="!acc_not_found">User not found!</p>
+            <button class="login-btn" (click)="login()">LOGIN</button>
+        </form>
+    </div>
 </div>
 
 

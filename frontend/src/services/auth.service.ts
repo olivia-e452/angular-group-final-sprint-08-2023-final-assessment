@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, delay, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, delay, map, of, tap } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Router } from '@angular/router';
 import fetchFromAPI from 'src/services/api';
@@ -9,26 +9,29 @@ import fetchFromAPI from 'src/services/api';
 })
 export class AuthService {
 
-  private tokenKey = 'token';
-  redirectUrl: string | null = '';
-  credentials!: Credentials;
+  private tokenKey = 'user_logged_in';
+  //redirectUrl: string | null = '';
+  private cred_Status!: Observable<boolean | null>;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+  }
 
   login(username: string, password: string) {
     const payload = { "username": username, "password": password }
-    let headers =  { 'Content-Type': 'application/json' }
-    console.log(payload)
-    this.http.post('http://localhost:8080/users/validate', payload, {headers}).subscribe(
-      () => {
+    let headers = { 'Content-Type': 'application/json' }
+    return this.http.post('http://localhost:8080/users/validate', payload, { headers })
+      /*.subscribe({
+        next: (res) => {
+          localStorage.setItem(this.tokenKey, "login_token")
+        },
+        error: (e) => alert("error"),
+        complete: ()=> console.info('complete')
+      })*/
+      .pipe(map(user => {
         localStorage.setItem(this.tokenKey, "login_token")
-        this.router.navigate([this.redirectUrl])
-      });
-    //this.tryLogin(payload);
-  }
-
-  async tryLogin(item: any) {
-    const response = await fetchFromAPI("POST", 'users/validate', item);
+        //console.log(localStorage.getItem('user')); 
+        return user;
+      }))
   }
 
   logout() {
