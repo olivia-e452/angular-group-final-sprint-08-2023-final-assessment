@@ -212,6 +212,16 @@ export class UserService {
       return response;
   }
 
+  async getUsersFromCompany(id : number): Promise<User[]> {
+    const endpoint = `company/${id}/users`;
+    const response = await fetchFromAPI('GET', endpoint);
+    return response;
+  }
+
+  async addUser(user : NewUser) {
+    const endpoint = `users/new`;
+    await fetchFromAPI('POST', endpoint, user);
+  }
 
   private handleHttpError(error: HttpErrorResponse) {
     if (error.status === 403) {

@@ -3,13 +3,13 @@ import fetchFromAPI from 'src/services/api';
 import { AuthService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
 
-type User = {
-  name: string
-  email: string;
-  active: boolean;
-  admin: boolean;
-  status: string;
-}
+// type User = {
+//   name: string
+//   email: string;
+//   active: boolean;
+//   admin: boolean;
+//   status: string;
+// }
 /*type Company = {
   id: number;
   name: string;
@@ -33,7 +33,7 @@ type UserProfile = {
   styleUrls: ['./user-registry.component.css']
 })
 export class UserRegistryComponent {
-  users: any[] = [];
+  users: User[] = [];
   showModal: boolean = false;
   t: any
   company: any
@@ -41,29 +41,13 @@ export class UserRegistryComponent {
 
   }
 
-  
-
   async ngOnInit()  {
     if (this.userService.username === "") {
       await this.authService.cookieCall();
     }
-    
-    
     this.company = this.userService.getCompany()
-    const r = 'company/' + this.company.id + '/users'
-    const a =  await fetchFromAPI('GET', r)
-    console.log(a)
-    this.users = [...this.users, ...Array.from(a)];
-
-
-
+    this.users = await this.userService.getUsersFromCompany(this.company.id)
   }
-
-  
-
-
-  
-  
 
   openModal() {
     this.showModal = true;
@@ -72,11 +56,6 @@ export class UserRegistryComponent {
   async CloseModal() {
     this.showModal = false
     this.company = this.userService.getCompany()
-    const r = 'company/' + this.company.id + '/users'
-    const a =  await fetchFromAPI('GET', r)
-    this.users = []
-    this.users = [...this.users, ...Array.from(a)];
-  }
-
-  
+    this.users = await this.userService.getUsersFromCompany(this.company.id)
+  }  
 }
