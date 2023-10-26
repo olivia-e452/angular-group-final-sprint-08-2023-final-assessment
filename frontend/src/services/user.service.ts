@@ -17,6 +17,7 @@ const dummyUser: User = {
     email: "ghirsch@email.com",
     phone: "000-000-0000"
   },
+
   admin: true,
   active: false,
   status: '',
@@ -58,6 +59,152 @@ const dummyUser: User = {
       { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] }
   ]
 }
+const dummyCompany: Company = {
+  id: 6,
+  name: "EcoSolutions",
+  description: "Environmentally friendly products.",
+  teams: [
+      { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] },
+      { id: 6, name: "Marketing", description: "Promotes the products.", users: [] }
+  ],
+  users: []
+}
+
+const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
+  {
+    "id": 201,
+    "date": "2023-10-24T09:15:30Z",
+    "title": "New Features Rollout",
+    "message": "We are excited to announce the rollout of several new features starting tomorrow. Check the updates section for more details.",
+    "author": {
+      "id": 2,
+      "profile": {
+        "firstName": "Alice",
+        "lastName": "Smith",
+        "email": "alice.smith@example.com",
+        "phone": "234-567-8901"
+      },
+      "credentials": {
+        "username": "",
+        "password": ""
+      },
+      "admin": true,
+      "active": true,
+      "status": "ACTIVE"
+    }
+  },
+  {
+    "id": 202,
+    "date": "2023-10-25T10:45:15Z",
+    "title": "Server Upgrade",
+    "message": "Our servers are being upgraded on the weekend. Minor interruptions might occur. We appreciate your patience.",
+    "author": {
+      "id": 3,
+      "profile": {
+        "firstName": "Bob",
+        "lastName": "Johnson",
+        "email": "bob.johnson@example.com",
+        "phone": "345-678-9012"
+      },
+      "credentials": {
+        "username": "",
+        "password": ""
+      },
+      "admin": false,
+      "active": true,
+      "status": "ACTIVE"
+    }
+  },
+  {
+    "id": 203,
+    "date": "2023-10-26T08:20:45Z",
+    "title": "Holiday Schedule",
+    "message": "Please note our support will have limited availability during the upcoming holiday. Regular hours will resume post-holiday.",
+    "author": {
+      "id": 4,
+      "profile": {
+        "firstName": "Carol",
+        "lastName": "White",
+        "email": "carol.white@example.com",
+        "phone": "456-789-0123"
+      },
+      "credentials": {
+        "username": "",
+        "password": ""
+      },
+      "admin": false,
+      "active": true,
+      "status": "ACTIVE"
+    }
+  },
+  {
+    "id": 201,
+    "date": "2023-10-24T09:15:30Z",
+    "title": "New Features Rollout",
+    "message": "We are excited to announce the rollout of several new features starting tomorrow. Check the updates section for more details.",
+    "author": {
+      "id": 2,
+      "profile": {
+        "firstName": "Alice",
+        "lastName": "Smith",
+        "email": "alice.smith@example.com",
+        "phone": "234-567-8901"
+      },
+      "credentials": {
+        "username": "",
+        "password": ""
+      },
+      "admin": true,
+      "active": true,
+      "status": "ACTIVE"
+    }
+  },
+  {
+    "id": 202,
+    "date": "2023-10-25T10:45:15Z",
+    "title": "Server Upgrade",
+    "message": "Our servers are being upgraded on the weekend. Minor interruptions might occur. We appreciate your patience.",
+    "author": {
+      "id": 3,
+      "profile": {
+        "firstName": "Bob",
+        "lastName": "Johnson",
+        "email": "bob.johnson@example.com",
+        "phone": "345-678-9012"
+      },
+      "credentials": {
+        "username": "",
+        "password": ""
+      },
+      "admin": false,
+      "active": true,
+      "status": "ACTIVE"
+    }
+  },
+  {
+    "id": 203,
+    "date": "2023-10-26T08:20:45Z",
+    "title": "Holiday Schedule",
+    "message": "Please note our support will have limited availability during the upcoming holiday. Regular hours will resume post-holiday.",
+    "author": {
+      "id": 4,
+      "profile": {
+        "firstName": "Carol",
+        "lastName": "White",
+        "email": "carol.white@example.com",
+        "phone": "456-789-0123"
+      },
+      "credentials": {
+        "username": "",
+        "password": ""
+      },
+      "admin": false,
+      "active": true,
+      "status": "ACTIVE"
+    }
+  },
+];
+
 
 @Injectable({
   providedIn: 'root'
@@ -65,12 +212,13 @@ const dummyUser: User = {
 
 export class UserService {
 
+
   user: User = dummyUser;
-  company: Company | undefined;
+  company: Company | undefined = dummyCompany;
   companyID : number = 0;
   username : String = "";
   password : String = "";
-  isAdmin : boolean = false;
+  admin : boolean = false;
   
   team: Team | undefined;
   project: Project | undefined;
@@ -83,7 +231,7 @@ export class UserService {
     this.companyID = user['companies'][0]['id'];
     this.username = username;
     this.password = password;
-    this.isAdmin = user['admin'];
+    this.admin = user['admin'];
 
     this.cookieService.set("companyId", this.companyID.toString());
     this.cookieService.set("username", username.toString());
@@ -118,6 +266,16 @@ export class UserService {
     const response: DisplayAnnouncement = await fetchFromAPI('POST', 'announcements/add', announcementToCreate)
     console.log(`Announcement created with id: ${response.id}`) 
   }
+
+  async patchAnnouncement(id: number, announcementToUpdate: NewAnnouncement) {
+    console.log(this.user)
+    const response: DisplayAnnouncement = await fetchFromAPI('PATCH', `announcements/update/${id}`, announcementToUpdate)
+    console.log('id', id)
+    console.log("old", announcementToUpdate)
+    console.log("updated", response)
+    // console.log(`Announcement updated with id: ${response.id}`)
+  }
+
 
   getProjectsByTeam = async(id : number) => {
     const endpoint = `company/${this.company?.id}/teams/${id}/projects/team`;
