@@ -8,10 +8,14 @@ const DEFAULT_ANNOUNCEMENT: NewAnnouncement = {
   author: {
     id: 0, 
     profile: {
-      firstname: '',
-      lastname: '',
+      firstName: '',
+      lastName: '',
       email: '',
       phone: ''
+    },
+    credentials: {
+      username: '',
+      password: ''
     },
     isAdmin: false,
     active: false,
@@ -19,6 +23,27 @@ const DEFAULT_ANNOUNCEMENT: NewAnnouncement = {
   },
   companyName: ''
 };
+
+//announcement with valid user credentials from database
+const TEST_ANNOUNCEMENT: NewAnnouncement = {
+    title: "",
+    message: "",
+    author: {
+        credentials: {
+          username: "cousingreg",
+          password: "mosteligiblebachelor"
+        },
+        profile: {
+          firstName: "Greg",
+          lastName: "Hirsch",
+          email: "ghirsch@email.com",
+          phone: "000-000-0000"
+        },
+        isAdmin: false,
+        active: false,
+        status: ''
+    }
+  }
 
 @Component({
   selector: 'app-announcement-modal',
@@ -37,17 +62,22 @@ export class AnnouncementModalComponent {
   ngOnInit(): void {
   }
 
-  handleNewAnnouncement(): void {
+  async handleNewAnnouncement(){
     
     // TODO: look at requestDTO to see how to send data to backend
-    
+    /*
     this.announcementToCreate.author = this.userService.getUser();
     if (this.announcementToCreate.author.isAdmin) {
       this.announcementToCreate.companyName = this.userService.getCompany()?.name;
     }
     console.log("a2c", this.announcementToCreate)
     // company set in service from previous page
-    this.userService.createNewAnnouncement(this.announcementToCreate);
+    //this.userService.createNewAnnouncement(this.announcementToCreate);
+    */
+
+   //hardcoded to post announcement to database
+    // const response: DisplayAnnouncement = await fetchFromAPI('POST', 'announcements/add', this.announcementToCreate)
+    await this.userService.createNewAnnouncement(this.announcementToCreate);
     this.closeModal();
   }
 

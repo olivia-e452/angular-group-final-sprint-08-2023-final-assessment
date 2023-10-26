@@ -5,20 +5,24 @@
     <div class="header"><span class="title">COOK
             SYSTEMS<br /></span><span class="subtitle">A
             FINAL APP</span></div>
-    <div class="logo"><img
-            src="../../assets/img/logo.svg" /></div>
+    <div class="logo"><img src="../../assets/img/logo.svg" /></div>
+    <form [formGroup]="form">
+        <div class="username">
+            <input type="text" class="input_box" id="uname" name="uname" placeholder="username" formControlName="username"
+                required>
+        </div>
+        <div class="spacing-username"></div>
+        <div class="password">
+            <input type="text" class="input_box" id="pwd" name="pwd" placeholder="password" formControlName="password"
+                required>
+        </div>
+        <div class="spacing-password"></div>
 
-    <div class ="username">
-        username</div>
-    <div
-        class="login-border">
-        <div class="login">
-            LOGIN</div>
-    </div>
-    <div class="spacing-username"></div>
-    <div class="password">
-        password</div>
-    <div class="spacing-password"></div>
+        <div class="login-border">
+            <button class="login" (click)="login()">
+                LOGIN</button>
+        </div>
+    </form>
 </div>
 
 

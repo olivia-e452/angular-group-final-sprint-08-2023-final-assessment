@@ -8,6 +8,14 @@ h1 {
     margin-bottom: 0px
 }
 
+h3 {
+    font-family: 'Mulish';
+    font-weight: 400;
+    font-size: 18px;
+    color: #FFFFFF;
+    margin-bottom: 10px
+}
+
 .announcements {
     display: flex;
     flex-direction: column ;

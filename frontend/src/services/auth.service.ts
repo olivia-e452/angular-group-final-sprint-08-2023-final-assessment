@@ -1,30 +1,47 @@
 import { Injectable } from '@angular/core';
 import { Observable, delay, of, tap } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { Router } from '@angular/router';
+import fetchFromAPI from 'src/services/api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  isLoggedIn: boolean = false;
-  redirectUrl: string | null = null;
+  private tokenKey = 'token';
+  redirectUrl: string | null = '';
+  credentials!: Credentials;
 
-  constructor() { }
+  constructor(private http: HttpClient, private router: Router) { }
 
-  login(userName: string, password: string): Observable<boolean> {
-    this.isLoggedIn = userName == 'fetched_username' && password == 'fetched_password';
-    localStorage.setItem('LoginStatus', this.isLoggedIn ? "true" : "false");
-
-    return of(this.isLoggedIn).pipe(
-      delay(1000),
-      tap(val => {
-         console.log("Is User Authentication is successful: " + val); 
-      })
-   );
+  login(username: string, password: string) {
+    const payload = { "username": username, "password": password }
+    let headers =  { 'Content-Type': 'application/json' }
+    console.log(payload)
+    this.http.post('http://localhost:8080/users/validate', payload, {headers}).subscribe(
+      () => {
+        localStorage.setItem(this.tokenKey, "login_token")
+        this.router.navigate([this.redirectUrl])
+      });
+    //this.tryLogin(payload);
   }
 
-  logout(): void {
-    this.isLoggedIn = false;
-       localStorage.removeItem('isUserLoggedIn'); 
-    }
+  async tryLogin(item: any) {
+    const response = await fetchFromAPI("POST", 'users/validate', item);
+  }
+
+  logout() {
+    localStorage.removeItem(this.tokenKey);
+    this.router.navigate(['']);
+  }
+
+  public isLoggedIn(): boolean {
+    let token = localStorage.getItem(this.tokenKey);
+    return token != null && token.length > 0;
+  }
+
+  public getToken(): string | null {
+    return this.isLoggedIn() ? localStorage.getItem(this.tokenKey) : null;
+  }
 }

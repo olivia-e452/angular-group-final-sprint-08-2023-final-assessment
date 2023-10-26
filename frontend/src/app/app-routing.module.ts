@@ -6,9 +6,10 @@ import { AnnouncementsComponent } from './components/announcements/announcements
 import { TeamsComponent } from './components/teams/teams.component';
 import { UserRegistryComponent } from './components/user-registry/user-registry.component';
 import { ProjectsComponent } from './components/projects/projects.component';
+import { authGuard } from 'src/services/auth.guard';
 
 const routes: Routes = [
-   { path: "", component: LoginComponent },
+   { path: "", component: LoginComponent, canActivate:[authGuard] },
    { path: "select_company", component: CompanyComponent },
    { path: "home", component: AnnouncementsComponent },
    { path: "teams", component: TeamsComponent },
