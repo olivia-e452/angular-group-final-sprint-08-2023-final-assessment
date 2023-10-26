@@ -1,5 +1,5 @@
 
-<div (click)="onOutsideClick($event)">
+<div class="modal__wrapper" (click)="onClose()">
     <div class="modal-container" (click)="$event.stopPropagation()">
         <span class="close_icon" title="Close" (click)="onClose()">
             <svg xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +26,7 @@
             </div>
             <label class="select-members" for="members-dropdown">Select Members</label>
             <select id="members-dropdown" (change)="onMemberSelect($event)" class="dropdown-field">
-            <option value="" disabled selected>Pick an option</option>
+                <option value="" disabled selected>Pick an option</option>
                 <option *ngFor="let member of memberData" [value]="member.id">{{ member.profile.firstName }} {{ member.profile.lastName[0] }}.</option>
             </select>
             <div class="selected-members">

@@ -1,3 +1,39 @@
+
+.modal__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.modal-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60vh;
+    max-width: 900px;
+    background: #0b2d45;
+    border-radius: 20px;
+    padding: 3rem;
+    position: relative;
+}
+
+
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
 form {
     margin: 0;
     padding: 0;
@@ -7,28 +43,6 @@ form {
     align-items: center;
 }
 
-.modal-container {
-    width: 60vh;
-    max-width: 900px;
-    background: #0b2d45;
-    border-radius: 20px;
-    padding: 3rem;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
 
 .input-container {
     width: 100%;
@@ -113,16 +127,17 @@ form {
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-
 select.dropdown-field {
-    width: 100%;
-    background: transparent;
-    border: 1px solid #deb992;
-    color: #deb992;
-    padding: 0.5rem;
-    font-size: 1rem;
-    margin-bottom: 1rem;
-    appearance: none;
+    display: flex;
+    width: 163px;
+    height: 36px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid var(--Stroke, rgba(0, 0, 0, 0.10));
+    color: #5533FF;
+    padding: 0px 10px;
 }
 
 .exit-button {
@@ -152,7 +167,7 @@ select.dropdown-field {
 
 
 
-div[appModalOutsideClick] {
+/* div[appModalOutsideClick] {
     position: fixed;
     top: 0;
     left: 0;
@@ -162,7 +177,7 @@ div[appModalOutsideClick] {
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.3);
-}
+} */
 
 
 .member-close {
