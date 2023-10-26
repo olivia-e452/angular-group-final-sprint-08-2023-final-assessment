@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import fetchFromAPI from 'src/services/api';
 import { UserService } from 'src/services/user.service';
 
 type User = {
@@ -8,14 +9,14 @@ type User = {
   admin: boolean;
   status: string;
 }
-type Company = {
+/*type Company = {
   id: number;
   name: string;
   description: string;
   teams: Team[];
   users: User[];
 };
-
+*/
 type UserProfile = {
   firstname: string;
   lastname: string;
@@ -31,24 +32,24 @@ type UserProfile = {
   styleUrls: ['./user-registry.component.css']
 })
 export class UserRegistryComponent {
-  users: User[] = [
-    
-  ];
+  users: any[] = [];
   showModal: boolean = false;
-  constructor (private userService : UserService) {
+  t: any
+  company: any
+  constructor (private userService : UserService, private cdr: ChangeDetectorRef) {
 
   }
 
   
 
-  ngOnInit() {
-    const a = { name: 'User1', email: 'user1@example.com',  active: true, admin: false, status: 'JOINED' }
-    const b = { name: 'User2', email: 'user2@example.com', active: false, admin: true, status: 'Inactive' }
-    this.users.push(a)
-    this.users.push(b)
-    const t = this.userService.getCompany
-    console.log(t)
-   
+  async ngOnInit()  {
+    
+    
+    this.company = this.userService.getCompany()
+    const r = 'company/' + this.company.id + '/users'
+    const a =  await fetchFromAPI('GET', r)
+    console.log(a)
+    this.users = [...this.users, ...Array.from(a)];
 
 
 
@@ -57,19 +58,20 @@ export class UserRegistryComponent {
   
 
 
-
-  getUsers() {
-    //send a getAllUsers to the backend. 
-    //assuming it returns a list, add each user to the users array. This will be called on initialization. 
-  }
+  
   
 
   openModal() {
     this.showModal = true;
   }
-
-  CloseModal() {
+ 
+  async CloseModal() {
     this.showModal = false
+    this.company = this.userService.getCompany()
+    const r = 'company/' + this.company.id + '/users'
+    const a =  await fetchFromAPI('GET', r)
+    this.users = []
+    this.users = [...this.users, ...Array.from(a)];
   }
 
   
