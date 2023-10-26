@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import fetchFromAPI from 'src/services/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from 'src/services/user.service';
 
 
 interface Profile {
@@ -42,7 +43,7 @@ export class TeamsModalComponent {
   @Output() close = new EventEmitter<void>();
   @Input() showModal: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private userService : UserService, private formBuilder: FormBuilder) {
     this.teamForm = this.formBuilder.group({
       teamName: ['', Validators.required],
       teamDescription: ['', Validators.required]
@@ -51,7 +52,7 @@ export class TeamsModalComponent {
 
 
   async ngOnInit(): Promise<void> {
-    this.memberData = await fetchFromAPI("GET", "company/6/users");
+    this.memberData = await fetchFromAPI("GET", `company/${this.userService.companyID}/users`);
     console.log(this.selectedMembers + 'selected members');
     console.log(JSON.stringify(this.memberData));
   }
@@ -92,7 +93,7 @@ async onSubmit() : Promise<void> {
       name: this.teamForm.get('teamName')?.value,
       description: this.teamForm.get('teamDescription')?.value,
       teammateIds: this.selectedMembers.map(member => member.id),
-      companyId: 6
+      companyId: this.userService.companyID
     }
     this.teamData = await fetchFromAPI("POST", "teams", body);
     alert('Team created successfully');
