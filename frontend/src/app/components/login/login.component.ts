@@ -32,13 +32,13 @@ export class LoginComponent {
     ).subscribe({
         next: (res) => {
           console.log(res)
-          
+
         },
         error: (e) => {
           this.acc_not_found = true;
         },
         complete: ()=> console.info('complete')
-      }) 
+      })
   }
 
 
