@@ -1,12 +1,29 @@
 import { Component } from '@angular/core';
+import { UserService } from 'src/services/user.service';
 
-interface User {
+type User = {
   name: string
   email: string;
   active: boolean;
   admin: boolean;
   status: string;
 }
+type Company = {
+  id: number;
+  name: string;
+  description: string;
+  teams: Team[];
+  users: User[];
+};
+
+type UserProfile = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
+};
+
+
 
 @Component({
   selector: 'app-user-registry',
@@ -18,6 +35,9 @@ export class UserRegistryComponent {
     
   ];
   showModal: boolean = false;
+  constructor (private userService : UserService) {
+
+  }
 
   
 
@@ -26,6 +46,12 @@ export class UserRegistryComponent {
     const b = { name: 'User2', email: 'user2@example.com', active: false, admin: true, status: 'Inactive' }
     this.users.push(a)
     this.users.push(b)
+    const t = this.userService.getCompany
+    console.log(t)
+   
+
+
+
   }
 
   
