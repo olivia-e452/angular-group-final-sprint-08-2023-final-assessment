@@ -18,5 +18,8 @@ export default async function fetchFromAPI(method: string, endpoint: string, bod
         return data
     } catch (error) {
         console.error(error)
+        return undefined
     }
 }
+
+

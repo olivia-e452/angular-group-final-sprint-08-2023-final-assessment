@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,16 +9,27 @@ import { AuthService } from './auth.service';
 class PermissionsService {
 
   constructor(private authService: AuthService,
-    private router: Router) {}
+    private router: Router) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-  // Redirect to the login page if not logged in
-  if (!this.authService.isLoggedIn()) {
-    this.router.parseUrl('/')
+    let url: string = state.url;
+    return this.checkUserLogin(next, url);
   }
-  //canActivate status boolean
-  return true;
+
+  checkUserLogin(route: ActivatedRouteSnapshot, url: any): boolean {
+    if (this.authService.isLoggedIn()) {
+      const userRole = this.authService.getRole();
+      if (route.data['role'] && route.data['role'].indexOf(userRole) === -1) {
+        this.router.navigate(['']);
+        return false;
+      }
+      return true;
+    }
+
+    this.router.navigate(['']);
+    return false;
   }
+
 }
 
 export const authGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {

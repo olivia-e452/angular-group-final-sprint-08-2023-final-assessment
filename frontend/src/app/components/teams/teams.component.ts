@@ -43,12 +43,12 @@ export class TeamsComponent {
   showModal: boolean = false;
 
   async ngOnInit(): Promise<void> {
-    if (this.userService.user.isAdmin) {
+    if (this.userService.user.admin) {
       this.isUserAdmin = true;
       await this.fetchTeams();
     }
 
-    if (!this.userService.user.isAdmin) {
+    if (!this.userService.user.admin) {
       await this.fetchWorkerTeams();
     }
     console.log(this.teamData);

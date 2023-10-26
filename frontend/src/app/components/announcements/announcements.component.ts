@@ -13,7 +13,7 @@ const DEFAULT_USER: User = {
     username: "testy",
     password: "test"
   },
-  isAdmin: false,
+  admin: false,
   active: false,
   status: ''
 };
@@ -31,7 +31,7 @@ const DUMMY_USER: User = {
     "username": "testy",
     "password": "test"
   },
-  "isAdmin": true,
+  "admin": true,
   "active": true,
   "status": "ACTIVE"
 }

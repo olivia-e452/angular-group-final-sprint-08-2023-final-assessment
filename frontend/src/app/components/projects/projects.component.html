@@ -3,7 +3,7 @@
     <a class="breadcrumb" routerLink="/teams">&lt; Back</a>
     <div class="header">Projects for {{getTeam().name}} </div>
     <div *ngIf="!reloadProjects" class="projects-container">
-        <div *ngIf="user.isAdmin" class="new-button-container">
+        <div *ngIf="user.admin" class="new-button-container">
             <button class="new-button" (click)="toggleNew()">New</button>
         </div>
         <div *ngFor="let project of getProjects()" class="project-item">
