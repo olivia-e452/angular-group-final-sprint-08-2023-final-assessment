@@ -3,21 +3,6 @@ import fetchFromAPI from 'src/services/api';
 import { UserService } from 'src/services/user.service';
 import { AuthService } from 'src/services/auth.service';
 
-interface Profile {
-  firstName: string,
-  lastName: string,
-  email:string,
-  phone: string
-}
-
-interface User {
-    id: number,
-    profile: Profile,
-    isAdmin: boolean,
-    active: boolean,
-    status: string
-  }
-
 interface Team {
   id: number,
   name: string,
@@ -37,8 +22,11 @@ export class TeamsComponent {
   userData: any = {};
   teamData: Team[] | undefined;
   isUserAdmin: boolean = false;
+  user: User;
 
-  constructor(private userService : UserService, private authService: AuthService) { }
+  constructor(private userService : UserService, private authService: AuthService) {
+    this.user = this.userService.getUser();
+  }
 
   showModal: boolean = false;
 
@@ -47,18 +35,15 @@ export class TeamsComponent {
       await this.authService.cookieCall();
     }
 
-    if (this.userService.user.admin) {
-      this.isUserAdmin = true;
-      await this.fetchTeams();
-    }
+    this.user = this.userService.getUser();
 
-    if (!this.userService.user.admin) {
-      await this.fetchWorkerTeams();
-    }
+    this.isUserAdmin = this.user.admin;
+    await this.fetchTeams();
+    
     console.log(this.teamData);
-    console.log(this.teamData);
-    console.log(this.userService.user);
+    console.log(this.user);
   }
+
   async getNumberOfProjects(
     companyId: number,
     teamId: number
@@ -89,9 +74,14 @@ export class TeamsComponent {
   async fetchTeams() {
     this.teamData = await fetchFromAPI("GET", "company/" + this.userService.companyID + "/teams");
     if (this.teamData !== undefined) {
-      this.teamData.sort((a, b) => {
-        return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0
+      this.teamData = this.teamData.sort((a, b) => {
+        return (a.name.toUpperCase() < b.name.toUpperCase()) ? -1 : (a.name.toUpperCase() > b.name.toUpperCase()) ? 1 : 0
       });;
+      if (!this.isUserAdmin) {
+        this.teamData = this.teamData.filter(team =>
+          team.teammates.find(teammate => teammate.id === this.user.id)
+        );
+      }
     }
     if (this.teamData) {
       for (const team of this.teamData) {
@@ -99,6 +89,7 @@ export class TeamsComponent {
       }
     }
   }
+<<<<<<< HEAD
 
   async fetchWorkerTeams() {
     this.teamData = await fetchFromAPI("GET", "company/" + this.userService.companyID + "/teams");
@@ -120,3 +111,6 @@ export class TeamsComponent {
   }
 
 }
+=======
+}
+>>>>>>> efb2ce98c0b41ad513f6829e35053b1be1ad6bf0

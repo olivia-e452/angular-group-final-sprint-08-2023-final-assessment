@@ -17,7 +17,7 @@ export class AuthService {
   user!: User
 
   constructor(private http: HttpClient, private router: Router, private userService: UserService, private errorService: ErrorService, private cookieService : CookieService) {
-  }
+}
 
   async login(username: string, password: string) {
     const payload = { "username": username, "password": password }
@@ -54,7 +54,7 @@ export class AuthService {
       await this.cookieLogin(this.cookieService.get("username"));
     }
     if (companyId != -1) {
-      this.userService.setCompany(Number(this.cookieService.get("companyId")));
+      this.userService.setCompany(companyId);
     }
   }
 
@@ -92,8 +92,8 @@ export class AuthService {
     this.roleAs = '';
     localStorage.setItem('LOGIN_STATE', 'false');
     localStorage.setItem('ROLE', '');
-    this.router.navigateByUrl(''); 
-    this.cookieService.deleteAll();
+    this.router.navigateByUrl('');
+    this.cookieService.deleteAll("/");
     return of({ success: this.isLogin, role: '' });
   }
 

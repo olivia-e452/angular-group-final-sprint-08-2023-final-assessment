@@ -125,8 +125,8 @@ export class UserService {
     this.password = password;
     this.admin = user['admin'];
 
-    this.cookieService.set("companyId", this.companyID.toString());
-    this.cookieService.set("username", username.toString());
+    this.cookieService.set("companyId", this.companyID.toString(), undefined, "/");
+    this.cookieService.set("username", username.toString(), undefined, "/");
   }
 
   getUser() {
@@ -142,7 +142,7 @@ export class UserService {
     }
     this.company = company;
     this.companyID = companyId;
-    this.cookieService.set("companyId", this.companyID.toString());
+    this.cookieService.set("companyId", this.companyID.toString(), undefined, "/");
   }
 
   getCompany() {
@@ -222,7 +222,7 @@ export class UserService {
     const endpoint = `users/new`;
     await fetchFromAPI('POST', endpoint, user);
   }
-
+  
   private handleHttpError(error: HttpErrorResponse) {
     if (error.status === 403) {
       // Handle rate limit exceeded error
