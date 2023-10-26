@@ -18,9 +18,7 @@ const routes: Routes = [
     }
   },
   {
-    path: "teams", component: TeamsComponent, canActivate: [authGuard], data: {
-      role: 'ROLE_ADMIN'
-    }
+    path: "teams", component: TeamsComponent, canActivate: [authGuard]
   },
   {
     path: "announcements", component: AnnouncementsComponent, canActivate: [authGuard]
