@@ -9,14 +9,35 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { authGuard } from 'src/services/auth.guard';
 
 const routes: Routes = [
-   { path: "", component: LoginComponent, canActivate:[authGuard] },
-   { path: "select_company", component: CompanyComponent },
-   { path: "home", component: AnnouncementsComponent },
-   { path: "teams", component: TeamsComponent },
-   { path: "announcements", component: AnnouncementsComponent },
-   { path: "userRegistry", component: UserRegistryComponent},
-   { path: "projects/:teamid", component: ProjectsComponent },
- ]
+  {
+    path: "", component: LoginComponent
+  },
+  {
+    path: "select_company", component: CompanyComponent, canActivate: [authGuard], data: {
+      role: 'ROLE_ADMIN'
+    }
+  },
+  { path: "home", component: AnnouncementsComponent },
+  {
+    path: "teams", component: TeamsComponent, canActivate: [authGuard], data: {
+      role: 'ROLE_ADMIN'
+    }
+  },
+  {
+    path: "announcements", component: AnnouncementsComponent
+  },
+  {
+    path: "userRegistry", component: UserRegistryComponent, canActivate: [authGuard], data: {
+      role: 'ROLE_ADMIN'
+    }
+  },
+  {
+    path: "projects/:teamid", component: ProjectsComponent, canActivate: [authGuard], data: {
+      role: ['ROLE_ADMIN', "ROLE_WORKER"]
+    }
+  },
+  { path: '**', component: LoginComponent }
+]
 
 
 @NgModule({

@@ -9,7 +9,7 @@ export default async function fetchFromAPI(method: string, endpoint: string, bod
         body: JSON.stringify(body)
     }
     console.log("options", options, "url", url)
-    try {
+    /*try {
         const response = await fetch(url, options)
         const data = await response.json()
         if (!response.ok) {
@@ -18,5 +18,13 @@ export default async function fetchFromAPI(method: string, endpoint: string, bod
         return data
     } catch (error) {
         console.error(error)
-    }
+    }*/
+    const response = await fetch(url, options)
+        const data = await response.json()
+        if (!response.ok) {
+            throw new Error(response.statusText)
+        }
+    return data
 }
+
+

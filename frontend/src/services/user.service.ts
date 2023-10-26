@@ -137,4 +137,6 @@ export class UserService {
       const response = await fetchFromAPI('GET', endpoint);
       return response;
   }
+
+  
 }

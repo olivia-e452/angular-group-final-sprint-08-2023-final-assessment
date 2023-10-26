@@ -3,41 +3,96 @@ import { BehaviorSubject, Observable, catchError, delay, map, of, tap } from 'rx
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Router } from '@angular/router';
 import fetchFromAPI from 'src/services/api';
+import { UserService } from './user.service';
+import { ErrorService } from './error.service';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private tokenKey = 'user_logged_in';
-  //redirectUrl: string | null = '';
-  private cred_Status!: Observable<boolean | null>;
-  constructor(private http: HttpClient, private router: Router) {
+  isLogin = false;
+  roleAs!: string | null;
+
+  constructor(private http: HttpClient, private router: Router, private userService: UserService, private errorService: ErrorService) {
   }
+
   login(username: string, password: string) {
+    this.settingUser(username, password)
+    if(this.errorService.getError() != undefined){
+      return of({ login_status: false, role: '' });
+    }
+    localStorage.setItem('LOGIN_STATE', 'true')
+    this.isLogin = true
+    if (this.userService.getUser().isAdmin) {
+      localStorage.setItem('ROLE', 'ADMIN')
+      this.roleAs = 'ADMIN'
+    }
+    else {
+      localStorage.setItem('ROLE', 'WORKER')
+      this.roleAs = 'WORKER'
+    }
+    return of({ login_status: this.isLogin, role: this.roleAs });
+  }
+
+  async settingUser(username: string, password: string) {
     const payload = { "username": username, "password": password }
-    let headers = { 'Content-Type': 'application/json' }
-    return this.http.post('http://localhost:8080/users/validate', payload, { headers })
-      /*.subscribe({
-        next: (res) => {
-          localStorage.setItem(this.tokenKey, "login_token")
-        },
-        error: (e) => alert("error"),
-        complete: ()=> console.info('complete')
-      })*/
-      .pipe(map(user => {
-        localStorage.setItem(this.tokenKey, "login_token")
-        //console.log(localStorage.getItem('user'));
-        return user;
-      }))
+    //this.userService.setUser(await fetchFromAPI('POST', `users/login`, payload));
+    try {
+      await fetchFromAPI('POST', `users/login`, payload)
+    } catch (error) {
+      console.log("fdsjskajhgfasjkdhgjkh")
+      if (error instanceof HttpErrorResponse) {
+        this.handleHttpError(error);
+      }
+    } finally {
+      console.log('We do cleanup here');
+    }
   }
+
+
   logout() {
-    localStorage.removeItem(this.tokenKey);
-    this.router.navigate(['']);
+    this.isLogin = false;
+    this.roleAs = '';
+    localStorage.setItem('LOGIN_STATE', 'false');
+    localStorage.setItem('ROLE', '');
+    return of({ success: this.isLogin, role: '' });
   }
+
   public isLoggedIn(): boolean {
-    let token = localStorage.getItem(this.tokenKey);
-    return token != null && token.length > 0;
+    const loggedIn = localStorage.getItem('LOGIN_STATE');
+    if (loggedIn == 'true')
+      this.isLogin = true;
+    else
+      this.isLogin = false;
+    return this.isLogin;
   }
-  public getToken(): string | null {
-    return this.isLoggedIn() ? localStorage.getItem(this.tokenKey) : null;
+
+  getRole() {
+    this.roleAs = localStorage.getItem('ROLE');
+    return this.roleAs;
+  }
+
+  private handleHttpError(error: HttpErrorResponse) {
+    if (error.status === 403) {
+      // Handle rate limit exceeded error
+      const customError = {
+        error: 'API rate limit exceeded',
+        tips: 'Please try again later.',
+      };
+      this.errorService.setError(customError);
+    } else if (error.status === 404) {
+      // Handle not found error
+      const customError = {
+        error: 'Not found',
+        tips: 'The user was not found.',
+      };
+      this.errorService.setError(customError);
+    } else {
+      // Handle other HTTP errors
+      const customError = {
+        error: 'An error occurred',
+        tips: 'Please try again later.',
+      };
+      this.errorService.setError(customError);
+    }
   }
 }

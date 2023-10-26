@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
-import {Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import fetchFromAPI from 'src/services/api';
 
 @Component({
@@ -13,10 +13,11 @@ import fetchFromAPI from 'src/services/api';
 export class LoginComponent {
   form!: FormGroup;
   acc_not_found: boolean = false;
+  admin_Status: boolean = false;
 
   constructor(
-    private fb: FormBuilder, 
-    private authService: AuthService, 
+    private fb: FormBuilder,
+    private authService: AuthService,
     private userService: UserService,
     private router: Router) {
     this.form = this.fb.group({
@@ -29,25 +30,26 @@ export class LoginComponent {
   }
 
   public login() {
-    if(this.form.invalid){
+    if (this.form.invalid) {
       return;
     }
     this.authService.login(
       this.form.get('username')!.value,
       this.form.get('password')!.value
-    ).subscribe({
+      ).subscribe({
         next: async (res) => {
           console.log(res)
-          //get user from DB and set company in user service
-          let username = this.form.get('username')!.value;
-          this.userService.setUser(await fetchFromAPI('GET', `users/${username}`));
-          console.log(this.userService.getUser());
-          if(this.userService.getUser().isAdmin){
-            //select company
-            this.router.navigateByUrl('/company'); 
+          if(res.login_status == true){
+            if(res.role == 'ADMIN'){
+              this.router.navigateByUrl('/select_company'); 
+            }
+            if(res.role == 'WORKER'){
+              this.router.navigateByUrl('/announcements'); 
+            }
           }
-          //route to announcements page
-          this.router.navigateByUrl('/home'); 
+          else{
+            this.acc_not_found = true;
+          }
         },
         error: (e) => {
           this.acc_not_found = true;
