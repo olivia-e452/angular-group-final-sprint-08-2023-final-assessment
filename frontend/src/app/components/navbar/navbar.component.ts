@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/services/auth.service';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +11,9 @@ import { AuthService } from 'src/services/auth.service';
 export class NavbarComponent {
   showAdminMsg = false
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UserService) {}
 
   ngOnInit(): void {
     //if(localStorage.getItem('ROLE') == 'ADMIN') this.showAdminMsg = true
@@ -18,6 +21,10 @@ export class NavbarComponent {
 
   public logout() {
     this.authService.logout()
+  }
+
+  isAdmin(){
+    return this.userService.getUser().admin;
   }
 
 }
