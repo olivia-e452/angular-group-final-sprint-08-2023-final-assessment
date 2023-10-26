@@ -5,59 +5,98 @@ import { ErrorService } from './error.service';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from './auth.service';
 
-const dummyUser: User = {
-  id: 1,
+const DEFAULT_USER: User = {
+  id: 0,
   credentials: {
-    username: "cousingreg",
-    password: "mosteligiblebachelor"
+    username: "",
+    password: ""
   },
   profile: {
-    firstName: "Greg",
-    lastName: "Hirsch",
-    email: "ghirsch@email.com",
-    phone: "000-000-0000"
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: ""
   },
-  admin: true,
+  admin: false,
   active: false,
   status: '',
-  companies: [
-      {
-          id: 1,
-          name: "Tech Corp",
-          description: "A leading tech company.",
-          teams: [
-              { id: 1, name: "Engineering", description: "Builds the main products.", users: [] },
-              { id: 2, name: "Design", description: "Designs interfaces and experiences.", users: [] }
-          ],
-          users: [] 
-      },
-      {
-          id: 2,
-          name: "Health Inc",
-          description: "Revolutionizing health solutions.",
-          teams: [
-              { id: 3, name: "Research", description: "Discovers new health solutions.", users: [] },
-              { id: 4, name: "Support", description: "Assists customers with their issues.", users: [] }
-          ],
-          users: []
-      },
-      {
-          id: 3,
-          name: "EcoSolutions",
-          description: "Environmentally friendly products.",
-          teams: [
-              { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] },
-              { id: 6, name: "Marketing", description: "Promotes the products.", users: [] }
-          ],
-          users: []
-      }
-  ],
-  teams: [
-      { id: 1, name: "Engineering", description: "Builds the main products.", users: [] },
-      { id: 3, name: "Research", description: "Discovers new health solutions.", users: [] },
-      { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] }
-  ]
+  companies: [],
+  teams: []
+
 }
+
+const DEFAULT_COMPANY: Company = {
+  id: 0,
+  name: "",
+  description: "",
+  teams: [],
+  users: []
+}
+
+// const dummyUser: User = {
+//   id: 1,
+//   credentials: {
+//     username: "cousingreg",
+//     password: "mosteligiblebachelor"
+//   },
+//   profile: {
+//     firstName: "Greg",
+//     lastName: "Hirsch",
+//     email: "ghirsch@email.com",
+//     phone: "000-000-0000"
+//   },
+
+//   admin: true,
+//   active: false,
+//   status: '',
+//   companies: [
+//       {
+//           id: 1,
+//           name: "Tech Corp",
+//           description: "A leading tech company.",
+//           teams: [
+//               { id: 1, name: "Engineering", description: "Builds the main products.", users: [] },
+//               { id: 2, name: "Design", description: "Designs interfaces and experiences.", users: [] }
+//           ],
+//           users: [] 
+//       },
+//       {
+//           id: 2,
+//           name: "Health Inc",
+//           description: "Revolutionizing health solutions.",
+//           teams: [
+//               { id: 3, name: "Research", description: "Discovers new health solutions.", users: [] },
+//               { id: 4, name: "Support", description: "Assists customers with their issues.", users: [] }
+//           ],
+//           users: []
+//       },
+//       {
+//           id: 3,
+//           name: "EcoSolutions",
+//           description: "Environmentally friendly products.",
+//           teams: [
+//               { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] },
+//               { id: 6, name: "Marketing", description: "Promotes the products.", users: [] }
+//           ],
+//           users: []
+//       }
+//   ],
+//   teams: [
+//       { id: 1, name: "Engineering", description: "Builds the main products.", users: [] },
+//       { id: 3, name: "Research", description: "Discovers new health solutions.", users: [] },
+//       { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] }
+//   ]
+// }
+// const dummyCompany: Company = {
+//   id: 6,
+//   name: "EcoSolutions",
+//   description: "Environmentally friendly products.",
+//   teams: [
+//       { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] },
+//       { id: 6, name: "Marketing", description: "Promotes the products.", users: [] }
+//   ],
+//   users: []
+// }
 
 @Injectable({
   providedIn: 'root'
@@ -65,12 +104,13 @@ const dummyUser: User = {
 
 export class UserService {
 
-  user: User = dummyUser;
-  company: Company | undefined;
+
+  user: User = DEFAULT_USER
+  company: Company = DEFAULT_COMPANY
   companyID : number = 0;
   username : String = "";
   password : String = "";
-  isAdmin : boolean = false;
+  admin : boolean = false;
   
   team: Team | undefined;
   project: Project | undefined;
@@ -83,7 +123,7 @@ export class UserService {
     this.companyID = user['companies'][0]['id'];
     this.username = username;
     this.password = password;
-    this.isAdmin = user['admin'];
+    this.admin = user['admin'];
 
     this.cookieService.set("companyId", this.companyID.toString());
     this.cookieService.set("username", username.toString());
@@ -94,7 +134,13 @@ export class UserService {
   }
 
   setCompany(companyId: number) {
-    //this.company = this.user.companies?.find(company => company.id === companyId);
+    // TODO: fix this    
+    // using == to allow for string comparison
+    const company = this.user.companies?.find(company => company.id == companyId);
+    if (!company) {
+      throw new Error('Company not found');
+    }
+    this.company = company;
     this.companyID = companyId;
     this.cookieService.set("companyId", this.companyID.toString());
   }
@@ -119,7 +165,17 @@ export class UserService {
     console.log(`Announcement created with id: ${response.id}`) 
   }
 
-  getProjectsByTeam = async(id : number) => {
+  async patchAnnouncement(id: number, announcementToUpdate: NewAnnouncement) {
+    console.log(this.user)
+    const response: DisplayAnnouncement = await fetchFromAPI('PATCH', `announcements/update/${id}`, announcementToUpdate)
+    console.log('id', id)
+    console.log("old", announcementToUpdate)
+    console.log("updated", response)
+    // console.log(`Announcement updated with id: ${response.id}`)
+  }
+
+
+  async getProjectsByTeam(id : number) {
     const endpoint = `company/${this.company?.id}/teams/${id}/projects/team`;
     const response = await fetchFromAPI('GET', endpoint);
     return response;
@@ -137,7 +193,7 @@ export class UserService {
     return response;
   }
 
-  getTeamById = async(id : number) => {
+  async getTeamById(id : number) {
       const endpoint = `teams/${id}`;
       const response = await fetchFromAPI('GET', endpoint);
       return response;

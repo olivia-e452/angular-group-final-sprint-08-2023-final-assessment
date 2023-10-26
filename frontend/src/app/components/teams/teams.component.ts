@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { TeamsServiceService } from 'src/services/teams-service.service';
 import fetchFromAPI from 'src/services/api';
 import { UserService } from 'src/services/user.service';
 import { AuthService } from 'src/services/auth.service';
@@ -57,12 +56,6 @@ export class TeamsComponent {
       await this.fetchWorkerTeams();
     }
     console.log(this.teamData);
-    // Fetch the number of projects for each team and update teamData
-    if (this.teamData) {
-      for (const team of this.teamData) {
-        team.numberOfProjects = await this.getNumberOfProjects(this.userService.companyID, team.id);
-      }
-    }
     console.log(this.teamData);
     console.log(this.userService.user);
   }
@@ -99,6 +92,11 @@ export class TeamsComponent {
       this.teamData.sort((a, b) => {
         return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0
       });;
+    }
+    if (this.teamData) {
+      for (const team of this.teamData) {
+        team.numberOfProjects = await this.getNumberOfProjects(this.userService.companyID, team.id);
+      }
     }
   }
 

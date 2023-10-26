@@ -50,6 +50,9 @@ export class AnnouncementsComponent {
     announcementsToDisplay: DisplayAnnouncement[] | undefined;
     company: Company | undefined;
     modalOpen = false;
+
+    editingAnnouncement: DisplayAnnouncement | null = null;
+
   
     constructor(private userService: UserService, private authService: AuthService) { }
   
@@ -65,6 +68,12 @@ export class AnnouncementsComponent {
     openModal(): void {
       this.modalOpen = true;
     }
+
+    openModalForEdit(announcement: DisplayAnnouncement): void {
+      console.log(announcement)
+      this.editingAnnouncement = announcement;
+      this.openModal();
+  }
     
     //reload announcements after new one was posted
     async modalWasClosed(): Promise<void> {

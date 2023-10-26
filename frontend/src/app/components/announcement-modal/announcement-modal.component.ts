@@ -53,6 +53,8 @@ const TEST_ANNOUNCEMENT: NewAnnouncement = {
 export class AnnouncementModalComponent {
   
   @Input() modalOpen: boolean = false;
+  @Input() announcementToEdit: DisplayAnnouncement | null = null;
+
   @Output() modalClosed = new EventEmitter<void>();
 
   announcementToCreate: NewAnnouncement = DEFAULT_ANNOUNCEMENT;
@@ -62,6 +64,12 @@ export class AnnouncementModalComponent {
   ngOnInit(): void {
   }
 
+  ngOnChanges(): void {
+    if (this.announcementToEdit) {
+        this.announcementToCreate.title = this.announcementToEdit.title;
+        this.announcementToCreate.message = this.announcementToEdit.message;
+    }
+}
   async handleNewAnnouncement(){
     
     // TODO: look at requestDTO to see how to send data to backend
@@ -77,7 +85,16 @@ export class AnnouncementModalComponent {
 
    //hardcoded to post announcement to database
     // const response: DisplayAnnouncement = await fetchFromAPI('POST', 'announcements/add', this.announcementToCreate)
-    await this.userService.createNewAnnouncement(this.announcementToCreate);
+    if (this.announcementToEdit) {
+      if (this.userService.getUser().admin) {
+        console.log("user is admin")
+        this.announcementToCreate.companyName = this.userService.getCompany()?.name;
+      }
+      console.log(this.announcementToEdit.id)
+      await this.userService.patchAnnouncement(this.announcementToEdit.id, this.announcementToCreate);
+    } else {
+      await this.userService.createNewAnnouncement(this.announcementToCreate);
+    }
     this.closeModal();
   }
 
