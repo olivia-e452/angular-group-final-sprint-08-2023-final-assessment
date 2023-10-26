@@ -19,9 +19,8 @@ function passwordMatchValidator(control: AbstractControl) {
   styleUrls: ['./user-modal.component.css']
 })
 export class UserModalComponent {
-  @Input() showModal: boolean = false;
   
-
+  @Input() showModal: boolean = false;
   @Output() close = new EventEmitter<void>();
 
   onClose() {
@@ -30,7 +29,7 @@ export class UserModalComponent {
 
   register: FormGroup;
   firstName: string = "hi";
-  selectedRole: string = 'Pick a role';
+  selectedRole: string = "";
   adminRole: string = '';
 
   constructor(private formBuilder: FormBuilder) {
