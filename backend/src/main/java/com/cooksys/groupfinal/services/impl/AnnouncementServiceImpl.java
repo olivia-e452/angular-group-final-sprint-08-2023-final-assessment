@@ -124,7 +124,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		Credentials credentials = credentialsMapper.dtoToEntity(announcementRequestDto.getAuthor().getCredentials());
         
 		//check if user exists in DB with provided username
-		Optional<User> optionalUser = userRepository.findByCredentialsUsernameAndActiveTrue(credentials.getUsername());
+		Optional<User> optionalUser = userRepository.findByCredentialsUsername(credentials.getUsername());
 		if(optionalUser.isEmpty()) {
 			throw new BadRequestException("user with provided username not found");
 		}
@@ -142,9 +142,19 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		}
 		Announcement announcement = optionalAnnouncement.get();
 		
-		//check that author of announcement matches author of patch announcement
+		//only original author or an admin can patch an announcement
+		//check if author of patch request is an admin
 		Announcement newAnnouncement = announcementMapper.requestDtoToEntity(announcementRequestDto);
-		if(!(announcement.getAuthor().getCredentials().equals(newAnnouncement.getAuthor().getCredentials()))) {
+		if(user.isAdmin()) {
+			//apply changes to announcement title and/or message
+			announcement.setTitle(newAnnouncement.getTitle());
+			announcement.setMessage(newAnnouncement.getMessage());
+			
+			//save announcement to repository and return dto
+			return announcementMapper.entityToDto(announcementRepository.saveAndFlush(announcement));
+			
+		//check that author of announcement matches author of patch announcement
+		} else if(!(announcement.getAuthor().getCredentials().equals(newAnnouncement.getAuthor().getCredentials()))) {
 			throw new BadRequestException("provided credentials do not match announcement author's credentials. "
 										+ "only the author of an announcement can make changes to the announcement");
 		}
