@@ -5,206 +5,98 @@ import { ErrorService } from './error.service';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from './auth.service';
 
-const dummyUser: User = {
-  id: 1,
+const DEFAULT_USER: User = {
+  id: 0,
   credentials: {
-    username: "cousingreg",
-    password: "mosteligiblebachelor"
+    username: "",
+    password: ""
   },
   profile: {
-    firstName: "Greg",
-    lastName: "Hirsch",
-    email: "ghirsch@email.com",
-    phone: "000-000-0000"
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: ""
   },
-
-  admin: true,
+  admin: false,
   active: false,
   status: '',
-  companies: [
-      {
-          id: 1,
-          name: "Tech Corp",
-          description: "A leading tech company.",
-          teams: [
-              { id: 1, name: "Engineering", description: "Builds the main products.", users: [] },
-              { id: 2, name: "Design", description: "Designs interfaces and experiences.", users: [] }
-          ],
-          users: [] 
-      },
-      {
-          id: 2,
-          name: "Health Inc",
-          description: "Revolutionizing health solutions.",
-          teams: [
-              { id: 3, name: "Research", description: "Discovers new health solutions.", users: [] },
-              { id: 4, name: "Support", description: "Assists customers with their issues.", users: [] }
-          ],
-          users: []
-      },
-      {
-          id: 3,
-          name: "EcoSolutions",
-          description: "Environmentally friendly products.",
-          teams: [
-              { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] },
-              { id: 6, name: "Marketing", description: "Promotes the products.", users: [] }
-          ],
-          users: []
-      }
-  ],
-  teams: [
-      { id: 1, name: "Engineering", description: "Builds the main products.", users: [] },
-      { id: 3, name: "Research", description: "Discovers new health solutions.", users: [] },
-      { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] }
-  ]
+  companies: [],
+  teams: []
+
 }
-const dummyCompany: Company = {
-  id: 6,
-  name: "EcoSolutions",
-  description: "Environmentally friendly products.",
-  teams: [
-      { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] },
-      { id: 6, name: "Marketing", description: "Promotes the products.", users: [] }
-  ],
+
+const DEFAULT_COMPANY: Company = {
+  id: 0,
+  name: "",
+  description: "",
+  teams: [],
   users: []
 }
 
-const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
-  {
-    "id": 201,
-    "date": "2023-10-24T09:15:30Z",
-    "title": "New Features Rollout",
-    "message": "We are excited to announce the rollout of several new features starting tomorrow. Check the updates section for more details.",
-    "author": {
-      "id": 2,
-      "profile": {
-        "firstName": "Alice",
-        "lastName": "Smith",
-        "email": "alice.smith@example.com",
-        "phone": "234-567-8901"
-      },
-      "credentials": {
-        "username": "",
-        "password": ""
-      },
-      "admin": true,
-      "active": true,
-      "status": "ACTIVE"
-    }
-  },
-  {
-    "id": 202,
-    "date": "2023-10-25T10:45:15Z",
-    "title": "Server Upgrade",
-    "message": "Our servers are being upgraded on the weekend. Minor interruptions might occur. We appreciate your patience.",
-    "author": {
-      "id": 3,
-      "profile": {
-        "firstName": "Bob",
-        "lastName": "Johnson",
-        "email": "bob.johnson@example.com",
-        "phone": "345-678-9012"
-      },
-      "credentials": {
-        "username": "",
-        "password": ""
-      },
-      "admin": false,
-      "active": true,
-      "status": "ACTIVE"
-    }
-  },
-  {
-    "id": 203,
-    "date": "2023-10-26T08:20:45Z",
-    "title": "Holiday Schedule",
-    "message": "Please note our support will have limited availability during the upcoming holiday. Regular hours will resume post-holiday.",
-    "author": {
-      "id": 4,
-      "profile": {
-        "firstName": "Carol",
-        "lastName": "White",
-        "email": "carol.white@example.com",
-        "phone": "456-789-0123"
-      },
-      "credentials": {
-        "username": "",
-        "password": ""
-      },
-      "admin": false,
-      "active": true,
-      "status": "ACTIVE"
-    }
-  },
-  {
-    "id": 201,
-    "date": "2023-10-24T09:15:30Z",
-    "title": "New Features Rollout",
-    "message": "We are excited to announce the rollout of several new features starting tomorrow. Check the updates section for more details.",
-    "author": {
-      "id": 2,
-      "profile": {
-        "firstName": "Alice",
-        "lastName": "Smith",
-        "email": "alice.smith@example.com",
-        "phone": "234-567-8901"
-      },
-      "credentials": {
-        "username": "",
-        "password": ""
-      },
-      "admin": true,
-      "active": true,
-      "status": "ACTIVE"
-    }
-  },
-  {
-    "id": 202,
-    "date": "2023-10-25T10:45:15Z",
-    "title": "Server Upgrade",
-    "message": "Our servers are being upgraded on the weekend. Minor interruptions might occur. We appreciate your patience.",
-    "author": {
-      "id": 3,
-      "profile": {
-        "firstName": "Bob",
-        "lastName": "Johnson",
-        "email": "bob.johnson@example.com",
-        "phone": "345-678-9012"
-      },
-      "credentials": {
-        "username": "",
-        "password": ""
-      },
-      "admin": false,
-      "active": true,
-      "status": "ACTIVE"
-    }
-  },
-  {
-    "id": 203,
-    "date": "2023-10-26T08:20:45Z",
-    "title": "Holiday Schedule",
-    "message": "Please note our support will have limited availability during the upcoming holiday. Regular hours will resume post-holiday.",
-    "author": {
-      "id": 4,
-      "profile": {
-        "firstName": "Carol",
-        "lastName": "White",
-        "email": "carol.white@example.com",
-        "phone": "456-789-0123"
-      },
-      "credentials": {
-        "username": "",
-        "password": ""
-      },
-      "admin": false,
-      "active": true,
-      "status": "ACTIVE"
-    }
-  },
-];
+// const dummyUser: User = {
+//   id: 1,
+//   credentials: {
+//     username: "cousingreg",
+//     password: "mosteligiblebachelor"
+//   },
+//   profile: {
+//     firstName: "Greg",
+//     lastName: "Hirsch",
+//     email: "ghirsch@email.com",
+//     phone: "000-000-0000"
+//   },
 
+//   admin: true,
+//   active: false,
+//   status: '',
+//   companies: [
+//       {
+//           id: 1,
+//           name: "Tech Corp",
+//           description: "A leading tech company.",
+//           teams: [
+//               { id: 1, name: "Engineering", description: "Builds the main products.", users: [] },
+//               { id: 2, name: "Design", description: "Designs interfaces and experiences.", users: [] }
+//           ],
+//           users: [] 
+//       },
+//       {
+//           id: 2,
+//           name: "Health Inc",
+//           description: "Revolutionizing health solutions.",
+//           teams: [
+//               { id: 3, name: "Research", description: "Discovers new health solutions.", users: [] },
+//               { id: 4, name: "Support", description: "Assists customers with their issues.", users: [] }
+//           ],
+//           users: []
+//       },
+//       {
+//           id: 3,
+//           name: "EcoSolutions",
+//           description: "Environmentally friendly products.",
+//           teams: [
+//               { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] },
+//               { id: 6, name: "Marketing", description: "Promotes the products.", users: [] }
+//           ],
+//           users: []
+//       }
+//   ],
+//   teams: [
+//       { id: 1, name: "Engineering", description: "Builds the main products.", users: [] },
+//       { id: 3, name: "Research", description: "Discovers new health solutions.", users: [] },
+//       { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] }
+//   ]
+// }
+// const dummyCompany: Company = {
+//   id: 6,
+//   name: "EcoSolutions",
+//   description: "Environmentally friendly products.",
+//   teams: [
+//       { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] },
+//       { id: 6, name: "Marketing", description: "Promotes the products.", users: [] }
+//   ],
+//   users: []
+// }
 
 @Injectable({
   providedIn: 'root'
@@ -213,8 +105,8 @@ const DUMMY_ANNOUNCEMENTS: DisplayAnnouncement[] = [
 export class UserService {
 
 
-  user: User = dummyUser;
-  company: Company | undefined = dummyCompany;
+  user: User = DEFAULT_USER
+  company: Company = DEFAULT_COMPANY
   companyID : number = 0;
   username : String = "";
   password : String = "";
@@ -242,7 +134,13 @@ export class UserService {
   }
 
   setCompany(companyId: number) {
-    //this.company = this.user.companies?.find(company => company.id === companyId);
+    // TODO: fix this    
+    // using == to allow for string comparison
+    const company = this.user.companies?.find(company => company.id == companyId);
+    if (!company) {
+      throw new Error('Company not found');
+    }
+    this.company = company;
     this.companyID = companyId;
     this.cookieService.set("companyId", this.companyID.toString());
   }
@@ -277,7 +175,7 @@ export class UserService {
   }
 
 
-  getProjectsByTeam = async(id : number) => {
+  async getProjectsByTeam(id : number) {
     const endpoint = `company/${this.company?.id}/teams/${id}/projects/team`;
     const response = await fetchFromAPI('GET', endpoint);
     return response;
@@ -295,7 +193,7 @@ export class UserService {
     return response;
   }
 
-  getTeamById = async(id : number) => {
+  async getTeamById(id : number) {
       const endpoint = `teams/${id}`;
       const response = await fetchFromAPI('GET', endpoint);
       return response;
