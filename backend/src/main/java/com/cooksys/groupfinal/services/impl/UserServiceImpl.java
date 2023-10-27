@@ -1,9 +1,5 @@
 package com.cooksys.groupfinal.services.impl;
 
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
 import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.ProfileDto;
@@ -13,14 +9,16 @@ import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.exceptions.NotAuthorizedException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
+import com.cooksys.groupfinal.mappers.BasicUserMapper;
 import com.cooksys.groupfinal.mappers.CredentialsMapper;
 import com.cooksys.groupfinal.mappers.FullUserMapper;
-import com.cooksys.groupfinal.mappers.BasicUserMapper;
 import com.cooksys.groupfinal.mappers.ProfileMapper;
 import com.cooksys.groupfinal.repositories.UserRepository;
 import com.cooksys.groupfinal.services.UserService;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -128,5 +126,22 @@ public class UserServiceImpl implements UserService {
         }
 		user.get().setActive(activeStatus);
 		return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(user.get()));
+	}
+
+	@Override
+	public CredentialsDto getUserCredentials(String username) {
+		// Find the user by username
+		User user = findUser(username);
+
+		// Extract the credentials from the user entity
+		Credentials credentials = user.getCredentials();
+
+		// Create a new CredentialsDto and populate its properties
+		CredentialsDto credentialsDto = new CredentialsDto();
+		credentialsDto.setUsername(credentials.getUsername());
+		credentialsDto.setPassword(credentials.getPassword());
+
+		// Return the populated CredentialsDto
+		return credentialsDto;
 	}
 }
