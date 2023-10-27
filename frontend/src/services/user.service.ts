@@ -181,7 +181,22 @@ export class UserService {
     console.log(`Announcement created with id: ${response.id}`) 
   }
 
-  async patchAnnouncement(id: number, announcementToUpdate: NewAnnouncement) {
+  async patchAnnouncement(id: number, announcementToUpdate: Announcement) {
+    announcementToUpdate.author = {
+      profile : {
+        firstName : "",
+        lastName: "",
+        phone: "",
+        email: ""
+      },
+      credentials: {
+        username: this.username,
+        password: this.password
+      },
+      admin: this.getUser().admin,
+      active: this.getUser().active,
+      status: this.getUser().status
+    }
     const response: DisplayAnnouncement = await fetchFromAPI('PATCH', `announcements/update/${id}`, announcementToUpdate)
   }
 
