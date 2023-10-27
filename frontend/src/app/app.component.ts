@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { AuthService } from 'src/services/auth.service';
 
 
@@ -10,15 +11,22 @@ import { AuthService } from 'src/services/auth.service';
 export class AppComponent {
   title = 'client';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   isLoggedIn(){
     return this.authService.isLoggedIn()
   }
 
-  isAdmin(){
+  isWorker(){
     const role = localStorage.getItem('ROLE');
-    if(role == 'ADMIN') return true;
+    console.log(this.router.url)
+    if(role == 'WORKER' && this.router.url !== "/") return true;
+    else return false;
+  }
+
+  notOnCPSelectPg(){
+    const role = localStorage.getItem('ROLE');
+    if(role == 'ADMIN' && this.router.url != "/select_company" && this.router.url !== "/") return true;
     else return false;
   }
 }
