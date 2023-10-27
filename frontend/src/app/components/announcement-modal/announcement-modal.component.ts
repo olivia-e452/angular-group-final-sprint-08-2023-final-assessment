@@ -55,7 +55,6 @@ export class AnnouncementModalComponent {
   async handleNewAnnouncement(){
     if (this.announcementToEdit) {
       if (this.userService.getUser().admin) {
-        console.log("user is admin")
         this.announcementToCreate.companyName = this.userService.getCompany()?.name;
       }
       await this.userService.patchAnnouncement(this.announcementToEdit.id, this.announcementToCreate);

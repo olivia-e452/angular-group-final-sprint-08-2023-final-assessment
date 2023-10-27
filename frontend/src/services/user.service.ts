@@ -176,12 +176,11 @@ export class UserService {
     if(this.user.admin){
       announcementToCreate.companyName = this.company?.name;
     }
-    console.log("a2c", announcementToCreate)
     const response: DisplayAnnouncement = await fetchFromAPI('POST', 'announcements/add', announcementToCreate)
     console.log(`Announcement created with id: ${response.id}`) 
   }
 
-  async patchAnnouncement(id: number, announcementToUpdate: Announcement) {
+  async patchAnnouncement(id: number, announcementToUpdate: NewAnnouncement) {
     announcementToUpdate.author = {
       profile : {
         firstName : "",
@@ -198,6 +197,7 @@ export class UserService {
       status: this.getUser().status
     }
     const response: DisplayAnnouncement = await fetchFromAPI('PATCH', `announcements/update/${id}`, announcementToUpdate)
+    console.log(`Announcement updated with id: ${response.id}`) 
   }
 
   async getProjectsByTeam(id : number) {

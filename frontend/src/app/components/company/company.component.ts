@@ -16,11 +16,9 @@ export class CompanyComponent {
 
   ngOnInit(): void {
     this.currentUser = this.userService.getUser()
-    console.log(this.currentUser.companies)
   }
 
   selectCompany(): void {
-    console.log(this.companySelected_id)
     this.userService.setCompany(this.companySelected_id);
     if (this.companySelected_id !== -1) { 
       this.router.navigate(['/announcements']);
