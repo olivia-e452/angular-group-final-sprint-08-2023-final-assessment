@@ -47,6 +47,7 @@ export class UserRegistryComponent {
     }
     this.company = this.userService.getCompany()
     this.users = await this.userService.getUsersFromCompany(this.company.id)
+    console.log(this.users)
   }
 
   openModal() {
@@ -57,5 +58,6 @@ export class UserRegistryComponent {
     this.showModal = false
     this.company = this.userService.getCompany()
     this.users = await this.userService.getUsersFromCompany(this.company.id)
+    
   }  
 }
