@@ -54,6 +54,7 @@ export class UserModalComponent {
     console.log(this.register.get('email')?.value)
     console.log(this.register.get('password')?.value)
     if (this.register.valid) {
+      try {
       // Passwords match, proceed with form submission
       
       const credentials = {
@@ -78,7 +79,10 @@ export class UserModalComponent {
       await this.userService.addUserToCompany(companyID, this.register.get('email')?.value)
 
       alert('Form submitted successfully!');
-      
+    }
+    catch (error: any) {
+      alert('Error: ' + error.message)
+    }
       this.onClose();
         //send a post request for the user. 
       
