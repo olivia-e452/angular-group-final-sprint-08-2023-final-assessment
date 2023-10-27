@@ -1,23 +1,7 @@
 import { Component } from '@angular/core';
-import { TeamsServiceService } from 'src/services/teams-service.service';
 import fetchFromAPI from 'src/services/api';
 import { UserService } from 'src/services/user.service';
 import { AuthService } from 'src/services/auth.service';
-
-interface Profile {
-  firstName: string,
-  lastName: string,
-  email:string,
-  phone: string
-}
-
-interface User {
-    id: number,
-    profile: Profile,
-    isAdmin: boolean,
-    active: boolean,
-    status: string
-  }
 
 interface Team {
   id: number,
@@ -38,8 +22,11 @@ export class TeamsComponent {
   userData: any = {};
   teamData: Team[] | undefined;
   isUserAdmin: boolean = false;
+  user: User;
 
-  constructor(private userService : UserService, private authService: AuthService) { }
+  constructor(private userService : UserService, private authService: AuthService) {
+    this.user = this.userService.getUser();
+  }
 
   showModal: boolean = false;
 
@@ -48,24 +35,15 @@ export class TeamsComponent {
       await this.authService.cookieCall();
     }
 
-    if (this.userService.user.admin) {
-      this.isUserAdmin = true;
-      await this.fetchTeams();
-    }
+    this.user = this.userService.getUser();
 
-    if (!this.userService.user.admin) {
-      await this.fetchWorkerTeams();
-    }
+    this.isUserAdmin = this.user.admin;
+    await this.fetchTeams();
+    
     console.log(this.teamData);
-    // Fetch the number of projects for each team and update teamData
-    if (this.teamData) {
-      for (const team of this.teamData) {
-        team.numberOfProjects = await this.getNumberOfProjects(this.userService.companyID, team.id);
-      }
-    }
-    console.log(this.teamData);
-    console.log(this.userService.user);
+    console.log(this.user);
   }
+
   async getNumberOfProjects(
     companyId: number,
     teamId: number
@@ -96,9 +74,19 @@ export class TeamsComponent {
   async fetchTeams() {
     this.teamData = await fetchFromAPI("GET", "company/" + this.userService.companyID + "/teams");
     if (this.teamData !== undefined) {
-      this.teamData.sort((a, b) => {
-        return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0
+      this.teamData = this.teamData.sort((a, b) => {
+        return (a.name.toUpperCase() < b.name.toUpperCase()) ? -1 : (a.name.toUpperCase() > b.name.toUpperCase()) ? 1 : 0
       });;
+      if (!this.isUserAdmin) {
+        this.teamData = this.teamData.filter(team =>
+          team.teammates.find(teammate => teammate.id === this.user.id)
+        );
+      }
+    }
+    if (this.teamData) {
+      for (const team of this.teamData) {
+        team.numberOfProjects = await this.getNumberOfProjects(this.userService.companyID, team.id);
+      }
     }
   }
 
@@ -109,6 +97,12 @@ export class TeamsComponent {
         team.teammates.some(teammate => teammate.id === this.userService.user.id)
       );
 
+      if (this.teamData) {
+        for (const team of this.teamData) {
+          team.numberOfProjects = await this.getNumberOfProjects(this.userService.companyID, team.id);
+        }
+      }
+
       this.teamData.sort((a, b) => {
         return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0
       });;
@@ -116,3 +110,4 @@ export class TeamsComponent {
   }
 
 }
+

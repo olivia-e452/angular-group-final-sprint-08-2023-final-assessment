@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -8,22 +9,21 @@ import { UserService } from 'src/services/user.service';
 })
 export class CompanyComponent {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   currentUser!: User;
-  companySelected_id: number | undefined;
+  companySelected_id: number = -1;
 
   ngOnInit(): void {
     this.currentUser = this.userService.getUser()
     console.log(this.currentUser.companies)
   }
 
-  selectCompany(company: Company): void {
-    this.companySelected_id = company.id;
-    console.log()
+  selectCompany(): void {
+    console.log(this.companySelected_id)
     this.userService.setCompany(this.companySelected_id);
-    // localStorage.setItem('company', JSON.stringify(company));
+    if (this.companySelected_id !== -1) { 
+      this.router.navigate(['/announcements']);
+    }
   }
-
-  
 }

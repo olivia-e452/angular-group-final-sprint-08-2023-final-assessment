@@ -1,8 +1,10 @@
 <ng-container *ngIf="!isLoggedIn(); else displayNavbar"></ng-container>
+
 <ng-template #displayNavbar>
     <app-worker-navbar *ngIf="!isAdmin(); else adminNavbar"></app-worker-navbar>
 </ng-template>
 <ng-template #adminNavbar>
-    <app-navbar></app-navbar>
+    <app-navbar ></app-navbar>
 </ng-template>
+
 <router-outlet></router-outlet>

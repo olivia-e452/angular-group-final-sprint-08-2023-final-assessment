@@ -51,6 +51,7 @@ export class LoginComponent {
           }
         },
         error: (e) => {
+          console.log(e)
           this.acc_not_found = true;
         }
       }))

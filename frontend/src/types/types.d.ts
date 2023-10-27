@@ -60,6 +60,12 @@ type Project = {
 };
 
 type Credentials = {
-  username: string; 
-  password: string;
+    username: string; 
+    password: string;
+}
+
+type NewUser = {
+    credentials: Credentials;
+    profile: UserProfile;
+    admin: boolean;
 }

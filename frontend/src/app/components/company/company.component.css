@@ -1,32 +1,13 @@
 .container {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    background: #051622;
-}
-
-.wrapper {
-    height: 132px;
-    left: 405px;
-    top: 332px;
-    position: absolute;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 16.50px;
-    display: inline-flex;
-}
-
-.inner-wrapper {
-    align-self: stretch;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 16.50px;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .select-company {
+    margin-top: 35%;
+    margin-bottom: 20px;
     width: 917.81px;
     text-align: center;
     color: #1BA098;
@@ -34,33 +15,14 @@
     font-family: Inter;
     font-weight: 800;
     line-height: 64px;
-    word-wrap: break-word;
 }
 
 .option-wrapper {
-    width: 384.86px;
-    height: 85px;
-    padding-right: 0.92px;
-    left: 672px;
-    top: 515px;
-    position: absolute;
+    display: flex;
+    flex-direction: column;
     border-radius: 18.89px;
     justify-content: center;
     align-items: center;
-    display: inline-flex;
-}
-
-.option-inner-wrapper {
-    padding-left: 37.78px;
-    padding-right: 37.78px;
-    padding-top: 18.89px;
-    padding-bottom: 18.89px;
-    background: white;
-    border-radius: 18.89px;
-    border: 2.36px rgba(0, 0, 0, 0.10) solid;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 18.89px;
     display: inline-flex;
 }
 
@@ -74,10 +36,16 @@
 }
 
 .dropdown {
-    width: 42.50px;
-    height: 42.50px;
-    position: relative;
-    opacity: 0.50;
+    display: flex;
+    width: 200px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid var(--Stroke, rgba(0, 0, 0, 0.10));
+    color: #5533FF;
+    padding: 0px 10px;
 }
 
 .dropdown-box {

@@ -57,12 +57,12 @@ export class UserModalComponent {
     if (this.register.valid) {
       // Passwords match, proceed with form submission
       
-      const c = {
+      const credentials = {
         username: this.register.get('email')?.value,
         password: this.register.get('password')?.value
       }
 
-      const p = {
+      const profile = {
         firstName : this.register.get('firstName')?.value,
         lastName : this.register.get('lastName')?.value,
         email : this.register.get('email')?.value,
@@ -70,10 +70,11 @@ export class UserModalComponent {
       }
 
       const user = {
-        credentials : c,
-        profile: p,
+        credentials,
+        profile,
         admin: this.register.get('adminRole')?.value
       }
+      this.userService.addUser(user)
       await fetchFromAPI("POST", "users/new", user);
       const companyID = this.userService.getCompany()?.id
       const str = 'company/' + companyID + '/users/' + this.register.get('email')?.value

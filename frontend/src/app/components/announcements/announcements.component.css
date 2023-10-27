@@ -75,6 +75,10 @@ button {
 }
 
 .announcement__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
     font-family: 'Inter';
     size: 18px;
 }

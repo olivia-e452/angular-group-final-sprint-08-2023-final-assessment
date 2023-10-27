@@ -5,59 +5,98 @@ import { ErrorService } from './error.service';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from './auth.service';
 
-const dummyUser: User = {
-  id: 1,
+const DEFAULT_USER: User = {
+  id: 0,
   credentials: {
-    username: "cousingreg",
-    password: "mosteligiblebachelor"
+    username: "",
+    password: ""
   },
   profile: {
-    firstName: "Greg",
-    lastName: "Hirsch",
-    email: "ghirsch@email.com",
-    phone: "000-000-0000"
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: ""
   },
-  admin: true,
+  admin: false,
   active: false,
   status: '',
-  companies: [
-      {
-          id: 1,
-          name: "Tech Corp",
-          description: "A leading tech company.",
-          teams: [
-              { id: 1, name: "Engineering", description: "Builds the main products.", users: [] },
-              { id: 2, name: "Design", description: "Designs interfaces and experiences.", users: [] }
-          ],
-          users: [] 
-      },
-      {
-          id: 2,
-          name: "Health Inc",
-          description: "Revolutionizing health solutions.",
-          teams: [
-              { id: 3, name: "Research", description: "Discovers new health solutions.", users: [] },
-              { id: 4, name: "Support", description: "Assists customers with their issues.", users: [] }
-          ],
-          users: []
-      },
-      {
-          id: 3,
-          name: "EcoSolutions",
-          description: "Environmentally friendly products.",
-          teams: [
-              { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] },
-              { id: 6, name: "Marketing", description: "Promotes the products.", users: [] }
-          ],
-          users: []
-      }
-  ],
-  teams: [
-      { id: 1, name: "Engineering", description: "Builds the main products.", users: [] },
-      { id: 3, name: "Research", description: "Discovers new health solutions.", users: [] },
-      { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] }
-  ]
+  companies: [],
+  teams: []
+
 }
+
+const DEFAULT_COMPANY: Company = {
+  id: 0,
+  name: "",
+  description: "",
+  teams: [],
+  users: []
+}
+
+// const dummyUser: User = {
+//   id: 1,
+//   credentials: {
+//     username: "cousingreg",
+//     password: "mosteligiblebachelor"
+//   },
+//   profile: {
+//     firstName: "Greg",
+//     lastName: "Hirsch",
+//     email: "ghirsch@email.com",
+//     phone: "000-000-0000"
+//   },
+
+//   admin: true,
+//   active: false,
+//   status: '',
+//   companies: [
+//       {
+//           id: 1,
+//           name: "Tech Corp",
+//           description: "A leading tech company.",
+//           teams: [
+//               { id: 1, name: "Engineering", description: "Builds the main products.", users: [] },
+//               { id: 2, name: "Design", description: "Designs interfaces and experiences.", users: [] }
+//           ],
+//           users: [] 
+//       },
+//       {
+//           id: 2,
+//           name: "Health Inc",
+//           description: "Revolutionizing health solutions.",
+//           teams: [
+//               { id: 3, name: "Research", description: "Discovers new health solutions.", users: [] },
+//               { id: 4, name: "Support", description: "Assists customers with their issues.", users: [] }
+//           ],
+//           users: []
+//       },
+//       {
+//           id: 3,
+//           name: "EcoSolutions",
+//           description: "Environmentally friendly products.",
+//           teams: [
+//               { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] },
+//               { id: 6, name: "Marketing", description: "Promotes the products.", users: [] }
+//           ],
+//           users: []
+//       }
+//   ],
+//   teams: [
+//       { id: 1, name: "Engineering", description: "Builds the main products.", users: [] },
+//       { id: 3, name: "Research", description: "Discovers new health solutions.", users: [] },
+//       { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] }
+//   ]
+// }
+// const dummyCompany: Company = {
+//   id: 6,
+//   name: "EcoSolutions",
+//   description: "Environmentally friendly products.",
+//   teams: [
+//       { id: 5, name: "Product", description: "Designs eco-friendly products.", users: [] },
+//       { id: 6, name: "Marketing", description: "Promotes the products.", users: [] }
+//   ],
+//   users: []
+// }
 
 @Injectable({
   providedIn: 'root'
@@ -65,28 +104,29 @@ const dummyUser: User = {
 
 export class UserService {
 
-  user: User = dummyUser;
-  company: Company | undefined;
+
+  user: User = DEFAULT_USER
+  company: Company = DEFAULT_COMPANY
   companyID : number = 0;
-  username : String = "";
-  password : String = "";
-  isAdmin : boolean = false;
+  username : string = "";
+  password : string = "";
+  admin : boolean = false;
   
   team: Team | undefined;
   project: Project | undefined;
 
   constructor(private errorService: ErrorService, private cookieService: CookieService) {}
 
-  setUser(user: any, username : String, password : String){
+  setUser(user: any, username : string, password : string){
     this.user = user;
     this.company = user['companies'][0];
     this.companyID = user['companies'][0]['id'];
     this.username = username;
     this.password = password;
-    this.isAdmin = user['admin'];
+    this.admin = user['admin'];
 
-    this.cookieService.set("companyId", this.companyID.toString());
-    this.cookieService.set("username", username.toString());
+    this.cookieService.set("companyId", this.companyID.toString(), undefined, "/");
+    this.cookieService.set("username", username.toString(), undefined, "/");
   }
 
   getUser() {
@@ -94,9 +134,15 @@ export class UserService {
   }
 
   setCompany(companyId: number) {
-    //this.company = this.user.companies?.find(company => company.id === companyId);
+    // TODO: fix this    
+    // using == to allow for string comparison
+    const company = this.user.companies?.find(company => company.id == companyId);
+    if (!company) {
+      throw new Error('Company not found');
+    }
+    this.company = company;
     this.companyID = companyId;
-    this.cookieService.set("companyId", this.companyID.toString());
+    this.cookieService.set("companyId", this.companyID.toString(), undefined, "/");
   }
 
   getCompany() {
@@ -111,15 +157,38 @@ export class UserService {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });;
   }
-  
-  async createNewAnnouncement(announcementToCreate: Announcement) {
-    // const response: Announcement = await fetchFromAPI('POST', `company/${this.company?.id}/announcements`, announcementToCreate)
-    announcementToCreate.author = this.user;
+  async createNewAnnouncement(announcementToCreate: NewAnnouncement) {
+    announcementToCreate.author = {
+      profile : {
+        firstName : "",
+        lastName: "",
+        phone: "",
+        email: ""
+      },
+      credentials: {
+        username: this.username,
+        password: this.password
+      },
+      admin: this.getUser().admin,
+      active: this.getUser().active,
+      status: this.getUser().status
+    }
+    if(this.user.admin){
+      announcementToCreate.companyName = this.company?.name;
+    }
     const response: DisplayAnnouncement = await fetchFromAPI('POST', 'announcements/add', announcementToCreate)
     console.log(`Announcement created with id: ${response.id}`) 
   }
 
-  getProjectsByTeam = async(id : number) => {
+  async patchAnnouncement(id: number, announcementToUpdate: NewAnnouncement) {
+    console.log(this.user)
+    const response: DisplayAnnouncement = await fetchFromAPI('PATCH', `announcements/update/${id}`, announcementToUpdate)
+    console.log('id', id)
+    console.log("old", announcementToUpdate)
+    console.log("updated", response)
+  }
+
+  async getProjectsByTeam(id : number) {
     const endpoint = `company/${this.company?.id}/teams/${id}/projects/team`;
     const response = await fetchFromAPI('GET', endpoint);
     return response;
@@ -137,13 +206,23 @@ export class UserService {
     return response;
   }
 
-  getTeamById = async(id : number) => {
+  async getTeamById(id : number) {
       const endpoint = `teams/${id}`;
       const response = await fetchFromAPI('GET', endpoint);
       return response;
   }
 
+  async getUsersFromCompany(id : number): Promise<User[]> {
+    const endpoint = `company/${id}/users`;
+    const response = await fetchFromAPI('GET', endpoint);
+    return response;
+  }
 
+  async addUser(user : NewUser) {
+    const endpoint = `users/new`;
+    await fetchFromAPI('POST', endpoint, user);
+  }
+  
   private handleHttpError(error: HttpErrorResponse) {
     if (error.status === 403) {
       // Handle rate limit exceeded error
