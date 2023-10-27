@@ -69,34 +69,3 @@ a {
     padding-right: 20px;
 }
 
-.admin-msg[hidden]{
-        visibility: hidden;
-        display: block !important;
-}
-
-/*
-.navbar.collapsing,
-.navbar.show{
-    background: linear-gradient(0deg, rgba(13, 58, 89, 0.50) 0%, rgba(13, 58, 89, 0.50) 100%), linear-gradient(0deg, rgba(13, 58, 89, 0.50) 0%, rgba(13, 58, 89, 0.50) 100%), rgba(13, 58, 89, 0.50) !important;
-}
-
-.navbar.collapsing,
-.navbar-nav.show{
-    align-items: center;
-    text-align: center;
-}
-
-.nav-item,
-.navbar-collapse.show{
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border-bottom: 2px #1BA098 solid;
-    width: 80%;
-}
-
-.logout-btn,
-.navbar-collapse.show{
-    padding-top: 20px;
-    padding-bottom: 20px;
-}*/
-

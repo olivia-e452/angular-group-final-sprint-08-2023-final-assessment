@@ -19,6 +19,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { EditProjectComponent } from './components/edit-project/edit-project.component';
+import { WorkerNavbarComponent } from './components/worker-navbar/worker-navbar.component';
 
 const routes: Routes = [
   { path: "", component: CompanyComponent },
@@ -38,7 +39,8 @@ const routes: Routes = [
     AddUserComponent,
     UserModalComponent,
     ProjectsComponent,
-    EditProjectComponent
+    EditProjectComponent,
+    WorkerNavbarComponent
   ],
   imports: [
     BrowserModule,

@@ -112,10 +112,10 @@
     padding: 2px;
 }
 
-/*.error-msg[hidden] {
+.error-msg[hidden] {
     visibility: hidden;
     display: block !important;
-  }*/
+  }
 
 .login-btn {
     width: 160px;
