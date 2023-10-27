@@ -239,6 +239,18 @@ export class UserService {
     const endpoint = `company/${companyID}/users/${email}`
     await fetchFromAPI("POST", endpoint)
   }
+
+  async getCompanyTeams() {
+    const endpoint = `company/${this.companyID}/teams`;
+    const response = await fetchFromAPI('GET', endpoint);
+    return response;
+  }
+
+  async getProjectsFromTeam(teamId: number) {
+    const endpoint = `company/${this.companyID}/teams/${teamId}/projects/team`;
+    const response = await fetchFromAPI('GET', endpoint);
+    return response;
+  }
   
   private handleHttpError(error: HttpErrorResponse) {
     if (error.status === 403) {
