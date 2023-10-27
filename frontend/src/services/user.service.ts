@@ -127,7 +127,9 @@ export class UserService {
     this.username = username;
     this.password = password;
     this.admin = user['admin'];
-    this.cookieService.set("username", username.toString());
+
+    this.cookieService.set("companyId", this.companyID.toString(), undefined, "/");
+    this.cookieService.set("username", username.toString(), undefined, "/");
   }
 
   getUser() {
@@ -143,7 +145,8 @@ export class UserService {
     }
     this.company = company;
     this.companyID = companyId;
-    this.cookieService.set("companyId", this.companyID.toString());
+
+    this.cookieService.set("companyId", this.companyID.toString(), undefined, "/");
   }
 
   getCompany() {
@@ -238,6 +241,18 @@ export class UserService {
   async addUserToCompany(companyID: number, email: string) {
     const endpoint = `company/${companyID}/users/${email}`
     await fetchFromAPI("POST", endpoint)
+  }
+
+  async getCompanyTeams() {
+    const endpoint = `company/${this.companyID}/teams`;
+    const response = await fetchFromAPI('GET', endpoint);
+    return response;
+  }
+
+  async getProjectsFromTeam(teamId: number) {
+    const endpoint = `company/${this.companyID}/teams/${teamId}/projects/team`;
+    const response = await fetchFromAPI('GET', endpoint);
+    return response;
   }
   
   private handleHttpError(error: HttpErrorResponse) {

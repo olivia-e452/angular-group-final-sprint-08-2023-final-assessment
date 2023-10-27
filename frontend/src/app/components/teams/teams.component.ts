@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import fetchFromAPI from 'src/services/api';
 import { UserService } from 'src/services/user.service';
 import { AuthService } from 'src/services/auth.service';
 
@@ -44,15 +43,9 @@ export class TeamsComponent {
     console.log(this.user);
   }
 
-  async getNumberOfProjects(
-    companyId: number,
-    teamId: number
-  ): Promise<number> {
+  async getNumberOfProjects(teamId: number): Promise<number> {
     try {
-      const response = await fetchFromAPI(
-        'GET',
-        `company/${companyId}/teams/${teamId}/projects/team`
-      );
+      const response = await this.userService.getProjectsFromTeam(teamId)
       return response.length;
     } catch (error) {
       console.error(`Error fetching projects for Team ${teamId}:`, error);
@@ -72,7 +65,8 @@ export class TeamsComponent {
   }
 
   async fetchTeams() {
-    this.teamData = await fetchFromAPI("GET", "company/" + this.userService.companyID + "/teams");
+    
+    this.teamData = await this.userService.getCompanyTeams()
     if (this.teamData !== undefined) {
       this.teamData = this.teamData.sort((a, b) => {
         return (a.name.toUpperCase() < b.name.toUpperCase()) ? -1 : (a.name.toUpperCase() > b.name.toUpperCase()) ? 1 : 0
@@ -85,13 +79,13 @@ export class TeamsComponent {
     }
     if (this.teamData) {
       for (const team of this.teamData) {
-        team.numberOfProjects = await this.getNumberOfProjects(this.userService.companyID, team.id);
+        team.numberOfProjects = await this.getNumberOfProjects(team.id);
       }
     }
   }
 
   async fetchWorkerTeams() {
-    this.teamData = await fetchFromAPI("GET", "company/" + this.userService.companyID + "/teams");
+    this.teamData = await this.userService.getCompanyTeams()
     if (this.teamData !== undefined) {
       this.teamData = this.teamData.filter(team =>
         team.teammates.some(teammate => teammate.id === this.userService.user.id)
@@ -99,7 +93,7 @@ export class TeamsComponent {
 
       if (this.teamData) {
         for (const team of this.teamData) {
-          team.numberOfProjects = await this.getNumberOfProjects(this.userService.companyID, team.id);
+          team.numberOfProjects = await this.getNumberOfProjects(team.id);
         }
       }
 
