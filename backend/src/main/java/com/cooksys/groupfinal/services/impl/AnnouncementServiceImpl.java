@@ -126,6 +126,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		//check if user exists in DB with provided username
 		Optional<User> optionalUser = userRepository.findByCredentialsUsername(credentials.getUsername());
 		if(optionalUser.isEmpty()) {
+			System.out.println(credentials.getUsername());
 			throw new BadRequestException("user with provided username not found");
 		}
 		User user = optionalUser.get();

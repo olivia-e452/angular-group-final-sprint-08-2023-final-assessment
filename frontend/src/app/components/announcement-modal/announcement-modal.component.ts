@@ -55,9 +55,9 @@ export class AnnouncementModalComponent {
       if (this.userService.getUser().admin) {
         console.log("user is admin")
         this.announcementToCreate.companyName = this.userService.getCompany()?.name;
+        await this.userService.patchAnnouncement(this.announcementToEdit.id, this.announcementToCreate);
       }
       console.log(this.announcementToEdit.id)
-      await this.userService.patchAnnouncement(this.announcementToEdit.id, this.announcementToCreate);
     } else {
       await this.userService.createNewAnnouncement(this.announcementToCreate);
     }

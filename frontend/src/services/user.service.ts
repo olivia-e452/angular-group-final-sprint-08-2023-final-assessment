@@ -119,14 +119,15 @@ export class UserService {
 
   setUser(user: any, username : string, password : string){
     this.user = user;
-    this.company = user['companies'][0];
-    this.companyID = user['companies'][0]['id'];
+    if (!user.admin) {
+      this.company = user['companies'][0];
+      this.companyID = user['companies'][0]['id'];
+      this.cookieService.set("companyId", this.companyID.toString());
+    }
     this.username = username;
     this.password = password;
     this.admin = user['admin'];
-
-    this.cookieService.set("companyId", this.companyID.toString(), undefined, "/");
-    this.cookieService.set("username", username.toString(), undefined, "/");
+    this.cookieService.set("username", username.toString());
   }
 
   getUser() {
@@ -150,6 +151,7 @@ export class UserService {
   }
 
   async getSortedAnnouncements(): Promise<DisplayAnnouncement[]> {
+    console.log("153", this.companyID)
     // const endpoint = `company/${this.company!.id}/announcements`;
     const endpoint = `company/${this.companyID}/announcements`;
     const response: DisplayAnnouncement[] = await fetchFromAPI("GET", endpoint);
@@ -181,11 +183,7 @@ export class UserService {
   }
 
   async patchAnnouncement(id: number, announcementToUpdate: NewAnnouncement) {
-    console.log(this.user)
     const response: DisplayAnnouncement = await fetchFromAPI('PATCH', `announcements/update/${id}`, announcementToUpdate)
-    console.log('id', id)
-    console.log("old", announcementToUpdate)
-    console.log("updated", response)
   }
 
   async getProjectsByTeam(id : number) {
