@@ -219,9 +219,9 @@ export class UserService {
   }
 
   async getTeamById(id : number) {
-      const endpoint = `teams/${id}`;
-      const response = await fetchFromAPI('GET', endpoint);
-      return response;
+    const endpoint = `teams/${id}`;
+    const response = await fetchFromAPI('GET', endpoint);
+    return response;
   }
 
   async getUsersFromCompany(id : number): Promise<User[]> {
@@ -233,6 +233,11 @@ export class UserService {
   async addUser(user : NewUser) {
     const endpoint = `users/new`;
     await fetchFromAPI('POST', endpoint, user);
+  }
+
+  async addUserToCompany(companyID: number, email: string) {
+    const endpoint = `company/${companyID}/users/${email}`
+    await fetchFromAPI("POST", endpoint)
   }
   
   private handleHttpError(error: HttpErrorResponse) {

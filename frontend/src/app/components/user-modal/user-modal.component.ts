@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import fetchFromAPI from 'src/services/api';
 import { UserService } from 'src/services/user.service';
 
 function passwordMatchValidator(control: AbstractControl) {
@@ -74,15 +73,12 @@ export class UserModalComponent {
         profile,
         admin: this.register.get('adminRole')?.value
       }
-      this.userService.addUser(user)
-      await fetchFromAPI("POST", "users/new", user);
+      await this.userService.addUser(user)      
       const companyID = this.userService.getCompany()?.id
-      const str = 'company/' + companyID + '/users/' + this.register.get('email')?.value
-      await fetchFromAPI("POST", str)
+      await this.userService.addUserToCompany(companyID, this.register.get('email')?.value)
 
-
-      
       alert('Form submitted successfully!');
+      
       this.onClose();
         //send a post request for the user. 
       
