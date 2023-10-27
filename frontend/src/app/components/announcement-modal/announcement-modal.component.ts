@@ -48,6 +48,8 @@ export class AnnouncementModalComponent {
     if (this.announcementToEdit) {
         this.announcementToCreate.title = this.announcementToEdit.title;
         this.announcementToCreate.message = this.announcementToEdit.message;
+    } else {
+      this.announcementToCreate = {...DEFAULT_ANNOUNCEMENT}
     }
   }
   async handleNewAnnouncement(){
@@ -55,9 +57,8 @@ export class AnnouncementModalComponent {
       if (this.userService.getUser().admin) {
         console.log("user is admin")
         this.announcementToCreate.companyName = this.userService.getCompany()?.name;
-        await this.userService.patchAnnouncement(this.announcementToEdit.id, this.announcementToCreate);
       }
-      console.log(this.announcementToEdit.id)
+      await this.userService.patchAnnouncement(this.announcementToEdit.id, this.announcementToCreate);
     } else {
       await this.userService.createNewAnnouncement(this.announcementToCreate);
     }
@@ -65,6 +66,7 @@ export class AnnouncementModalComponent {
   }
 
   closeModal(): void {
+    this.announcementToEdit = null;
     this.announcementToCreate.title = '';
     this.announcementToCreate.message = '';
     this.modalClosed.emit();

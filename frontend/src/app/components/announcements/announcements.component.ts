@@ -70,12 +70,10 @@ export class AnnouncementsComponent {
     }
 
     openModalForEdit(announcement: DisplayAnnouncement): void {
-      console.log(announcement)
       this.editingAnnouncement = announcement;
       this.openModal();
-  }
+    }
     
-    //reload announcements after new one was posted
     async modalWasClosed(): Promise<void> {
       this.modalOpen = false;
       this.announcementsToDisplay = await this.userService.getSortedAnnouncements()

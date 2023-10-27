@@ -143,7 +143,7 @@ export class UserService {
     }
     this.company = company;
     this.companyID = companyId;
-    this.cookieService.set("companyId", this.companyID.toString(), undefined, "/");
+    this.cookieService.set("companyId", this.companyID.toString());
   }
 
   getCompany() {
@@ -151,8 +151,6 @@ export class UserService {
   }
 
   async getSortedAnnouncements(): Promise<DisplayAnnouncement[]> {
-    console.log("153", this.companyID)
-    // const endpoint = `company/${this.company!.id}/announcements`;
     const endpoint = `company/${this.companyID}/announcements`;
     const response: DisplayAnnouncement[] = await fetchFromAPI("GET", endpoint);
     return response.sort((a, b) => {
@@ -178,6 +176,7 @@ export class UserService {
     if(this.user.admin){
       announcementToCreate.companyName = this.company?.name;
     }
+    console.log("a2c", announcementToCreate)
     const response: DisplayAnnouncement = await fetchFromAPI('POST', 'announcements/add', announcementToCreate)
     console.log(`Announcement created with id: ${response.id}`) 
   }
