@@ -127,7 +127,9 @@ export class UserService {
     this.username = username;
     this.password = password;
     this.admin = user['admin'];
-    this.cookieService.set("username", username.toString());
+
+    this.cookieService.set("companyId", this.companyID.toString(), undefined, "/");
+    this.cookieService.set("username", username.toString(), undefined, "/");
   }
 
   getUser() {
@@ -143,7 +145,8 @@ export class UserService {
     }
     this.company = company;
     this.companyID = companyId;
-    this.cookieService.set("companyId", this.companyID.toString());
+
+    this.cookieService.set("companyId", this.companyID.toString(), undefined, "/");
   }
 
   getCompany() {
